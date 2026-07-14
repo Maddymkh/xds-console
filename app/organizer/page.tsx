@@ -35,15 +35,13 @@ console.dir(participants, { depth: null });
     <main className="min-h-screen bg-zinc-950">
       <TopBar />
 
-      <div className="mx-auto grid max-w-7xl grid-cols-3 gap-8 p-8">
+      <div className="mx-auto max-w-7xl p-8">
         {/* LEFT */}
-        <div className="col-span-2 space-y-6">
+        <div className="space-y-6">
         <div className="flex items-center gap-4">
 
 
-  <button className="mt-10 rounded-xl bg-indigo-600 px-5 py-3 font-medium text-white hover:bg-indigo-500 transition">
-    + Add Participant
-  </button>
+
 </div>
 
 <OrganizerClient
@@ -54,30 +52,7 @@ console.dir(participants, { depth: null });
         </div>
 
         {/* RIGHT */}
-        <div className="space-y-4">
-        {stations?.map((station) => {
-  const session = sessions?.find(
-    (s) =>
-      s.station_id === station.id &&
-      s.status !== "completed"
-  );
-
-  const participant = participants?.find(
-    (p) => p.id === session?.participant_id
-  );
-
-  return (
-    <StationCard
-      key={station.id}
-      station={{
-        ...station,
-        participantName: participant?.name,
-        status: session?.status,
-      }}
-    />
-  );
-})}
-        </div>
+        
       </div>
 </main>
   );

@@ -3,6 +3,8 @@ type Participant = {
   roll_number: string;
   name: string;
   checked_in: boolean;
+  stationName?: string;
+  status?: string;
 
   participant_verticals: {
     verticals: {

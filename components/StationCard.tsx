@@ -1,15 +1,16 @@
 type Station = {
   id: number;
   name: string;
-  active: boolean;
-
+  active?: boolean;
   participantName?: string;
   status?: string;
 };
 export default function StationCard({
   station,
+  onAction,
 }: {
   station: Station;
+  onAction?: () => void;
 }) {
     return (
       <div className="rounded-2xl border border-zinc-800 bg-zinc-900/60 p-5">
@@ -42,14 +43,55 @@ export default function StationCard({
 <p className="text-white">
   {station.participantName ?? "None"}
 </p>
+<p className="mt-2 text-sm text-zinc-400">
+  Status:{" "}
+  <span className="font-medium text-white capitalize">
+    {station.status ?? "Available"}
+  </span>
+</p>
 
 </div>
   
-        <button className="mt-6 w-full rounded-xl bg-indigo-600 py-3 font-medium text-white transition hover:bg-indigo-500">
-  
-          Assign Participant
-  
-        </button>
+{!station.participantName ? (
+  <button
+    disabled
+    className="mt-6 w-full rounded-xl bg-zinc-800 py-3 font-medium text-zinc-500"
+  >
+    Waiting...
+  </button>
+) : station.status === "assigned" ? (
+  <button
+  onClick={onAction}
+  className="mt-6 w-full rounded-xl bg-yellow-600 py-3 font-medium text-white"
+>
+  ▶ Start Preparation
+</button>
+) : station.status === "preparing" ? (
+  <button
+    className="mt-6 w-full rounded-xl bg-orange-600 py-3 font-medium text-white"
+  >
+    🎤 Start Speech
+  </button>
+) : station.status === "speaking" ? (
+  <button
+    className="mt-6 w-full rounded-xl bg-red-600 py-3 font-medium text-white"
+  >
+    ⏹ End Speech
+  </button>
+) : station.status === "evaluation" ? (
+  <button
+    className="mt-6 w-full rounded-xl bg-purple-600 py-3 font-medium text-white"
+  >
+    ✅ Complete Session
+  </button>
+) : (
+  <button
+    disabled
+    className="mt-6 w-full rounded-xl bg-green-700 py-3 font-medium text-white"
+  >
+    Completed
+  </button>
+)}
   
       </div>
     );

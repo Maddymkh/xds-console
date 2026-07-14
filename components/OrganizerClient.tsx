@@ -6,6 +6,7 @@ import ParticipantCard from "./ParticipantCard";
 import AssignStationModal from "./AssignStationModal";
 import { supabase } from "@/lib/supabase";
 import AddParticipantModal from "./AddParticipantModal";
+import StationCard from "./StationCard";
 
 type Participant = {
   id: number;
@@ -21,6 +22,7 @@ type Participant = {
 };
 
 type Session = {
+  id: number;
   participant_id: number;
   station_id: number;
   status: string;
@@ -29,6 +31,9 @@ type Session = {
 type Station = {
   id: number;
   name: string;
+  active: boolean;
+  participantName?: string;
+  status?: string;
 };
 
 export default function OrganizerClient({
@@ -136,6 +141,62 @@ const [showAssignModal, setShowAssignModal] =
           Station {session.station_id}
         </p>
       </div>
+    );
+  })}
+</div>
+<h2 className="mt-10 text-xl font-semibold text-white">
+  Stations
+</h2>
+
+<div className="mt-4 space-y-4">
+  {stations.map((station) => {
+    const session = sessions.find(
+      (s) =>
+        s.station_id === station.id &&
+        s.status !== "completed"
+    );
+
+    const participant = participants.find(
+      (p) => p.id === session?.participant_id
+    );
+
+    return (
+      <StationCard
+      key={station.id}
+      station={{
+        ...station,
+        participantName: participant?.name,
+        status: session?.status,
+      }}
+      onAction={async () => {
+        if (!session) return;
+    
+        const nextStatus =
+          session.status === "assigned"
+            ? "preparing"
+            : session.status === "preparing"
+            ? "speaking"
+            : session.status === "speaking"
+            ? "evaluation"
+            : session.status === "evaluation"
+            ? "completed"
+            : session.status;
+    
+        const { error } = await supabase
+          .from("sessions")
+          .update({
+            status: nextStatus,
+          })
+          .eq("id", session.id);
+    
+        if (error) {
+          alert(error.message);
+          return;
+        }
+    
+        router.refresh();
+      }}
+    />
     );
   })}
 </div>
