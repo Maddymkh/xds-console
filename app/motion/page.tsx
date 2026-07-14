@@ -4,7 +4,14 @@ import MotionDeskClient from "@/components/MotionDeskClient";
 export default async function MotionPage() {
   const { data: sessions } = await supabase
     .from("sessions")
-    .select("*")
+    .select(`
+        *,
+        participants (
+          id,
+          name,
+          roll_number
+        )
+      `)
     .eq("status", "assigned");
 
   return (

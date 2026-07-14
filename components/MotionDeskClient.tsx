@@ -4,9 +4,13 @@ import { useRouter } from "next/navigation";
 import { drawMotion } from "@/lib/drawMotion";
 
 type Session = {
-  id: number;
-  participant_id: number;
-};
+    id: number;
+  
+    participants: {
+      name: string;
+      roll_number: string;
+    };
+  };
 
 export default function MotionDeskClient({
   sessions,
@@ -22,14 +26,22 @@ export default function MotionDeskClient({
           key={session.id}
           className="rounded-xl border border-zinc-800 bg-zinc-900 p-5"
         >
-          <p className="text-white">
-            Participant #{session.participant_id}
-          </p>
+          
+          <div>
+  <h2 className="text-xl font-semibold text-white">
+    {session.participants.name}
+  </h2>
+
+  <p className="text-zinc-400">
+    {session.participants.roll_number}
+  </p>
+</div>
+        
 
           <button
             onClick={async () => {
               try {
-                await drawMotion(session.id);
+                router.push(`/motion/${session.id}`);
                 router.refresh();
               } catch (err) {
                 console.error(err);
