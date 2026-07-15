@@ -2,10 +2,18 @@ import { supabase } from "@/lib/supabase";
 import JudgeLoginClient from "@/components/JudgeLoginClient";
 
 export default async function JudgeLogin() {
-  const { data: judges } = await supabase
-    .from("judges")
-    .select("*")
-    .order("name");
+  const [{ data: judges }, { data: stations }] =
+  await Promise.all([
+    supabase
+      .from("judges")
+      .select("*")
+      .order("name"),
+
+    supabase
+      .from("stations")
+      .select("*")
+      .order("id"),
+  ]);
 
   return (
     <main className="flex min-h-screen items-center justify-center bg-zinc-950">
@@ -20,7 +28,10 @@ export default async function JudgeLogin() {
           Select your name
         </p>
 
-        <JudgeLoginClient judges={judges ?? []} />
+        <JudgeLoginClient
+  judges={judges ?? []}
+  stations={stations ?? []}
+/>
       </div>
 
     </main>

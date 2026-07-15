@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import ParticipantCard from "./ParticipantCard";
 import AssignStationModal from "./AssignStationModal";
@@ -54,15 +55,38 @@ const [showAssignModal, setShowAssignModal] =
   const [showAddParticipantModal, setShowAddParticipantModal] =
   useState(false);
   const router = useRouter();
+  useEffect(() => {
+    const channel = supabase
+      .channel("sessions-live")
+      .on(
+        "postgres_changes",
+        {
+          event: "*",
+          schema: "public",
+          table: "sessions",
+        },
+        () => {
+          router.refresh();
+        }
+      )
+      .subscribe();
+  
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [router]);
   const waitingParticipants = participants.filter(
     (participant) =>
       !sessions.some(
         (session) => session.participant_id === participant.id
       )
   );
+  const motionDrawSessions = sessions.filter(
+    (session) => session.status === "assigned"
+  );
   
   const preparingSessions = sessions.filter(
-    (session) => session.status === "assigned"
+    (session) => session.status === "preparing"
   );
   const occupiedStationIds = new Set(
     sessions
@@ -117,14 +141,15 @@ const [showAssignModal, setShowAssignModal] =
           
           </div>
           <h2 className="mt-10 text-xl font-semibold text-white">
-  Preparing
+          Motion Draw
 </h2>
 
 <div className="mt-4 space-y-2">
-  {preparingSessions.map((session) => {
+  {motionDrawSessions.map((session) => {
     const participant = participants.find(
       (p) => p.id === session.participant_id
     );
+    
 
     if (!participant) return null;
 
@@ -143,6 +168,34 @@ const [showAssignModal, setShowAssignModal] =
       </div>
     );
   })}
+  <h2 className="mt-10 text-xl font-semibold text-white">
+  Preparing
+</h2>
+
+<div className="mt-4 space-y-2">
+  {preparingSessions.map((session) => {
+    const participant = participants.find(
+      (p) => p.id === session.participant_id
+    );
+
+    if (!participant) return null;
+
+    return (
+      <div
+        key={session.id}
+        className="rounded-xl border border-zinc-800 bg-zinc-900 p-4"
+      >
+        <p className="font-medium text-white">
+          {participant.name}
+        </p>
+
+        <p className="text-sm text-zinc-500">
+          Station {session.station_id}
+        </p>
+      </div>
+    );
+  })}
+</div>
 </div>
 <h2 className="mt-10 text-xl font-semibold text-white">
   Stations
