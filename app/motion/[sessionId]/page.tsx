@@ -1,5 +1,5 @@
 import { supabase } from "@/lib/supabase";
-import MotionRevealClient from "@/components/MotionRevealClient";
+import MotionRevealFlow from "@/components/MotionRevealFlow";
 
 export default async function MotionRevealPage({
   params,
@@ -37,8 +37,10 @@ export default async function MotionRevealPage({
           {session.participants.roll_number}
         </p>
 
-        <MotionRevealClient
+        <MotionRevealFlow
   sessionId={session.id}
+  name={session.participants.name}
+  rollNumber={session.participants.roll_number}
 />
 
       </div>
