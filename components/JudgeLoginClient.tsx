@@ -37,7 +37,7 @@ export default function JudgeLoginClient({
 
     // Log everyone out from this station
     await supabase
-      .from("judges_stations")
+      .from("station_judges")
       .update({ logged_in: false })
       .eq("station_id", selectedStation);
 
@@ -49,7 +49,7 @@ export default function JudgeLoginClient({
     }));
 
     const { error } = await supabase
-      .from("judges_stations")
+      .from("station_judges")
       .upsert(rows);
 
     if (error) {

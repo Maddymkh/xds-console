@@ -1,12 +1,18 @@
 import { cookies } from "next/headers";
 import { supabase } from "@/lib/supabase";
+import JudgeDashboardClient from "@/components/JudgeDashboardClient";
+import SpeechTimer from "@/components/SpeechTimer";
+import { SessionStatus } from "@/lib/sessionStatus";
+import SpeechEvaluation from "@/components/SpeechEvaluation";
+import Interview from "@/components/Interview";
+import InterviewEvaluation from "@/components/InterviewEvaluation";
+import SkillsEvaluation from "@/components/SkillsEvaluation";
+import GeneralRemarks from "@/components/GeneralRemarks";
 
 export default async function JudgeDashboard() {
   const cookieStore = await cookies();
 
-  const stationId = Number(
-    cookieStore.get("stationId")?.value
-  );
+  const stationId = Number(cookieStore.get("stationId")?.value);
 
   if (!stationId) {
     return (
@@ -16,9 +22,8 @@ export default async function JudgeDashboard() {
     );
   }
 
-  // Logged-in judges
   const { data: judges } = await supabase
-    .from("judges_stations")
+    .from("station_judges")
     .select(`
       judges (
         id,
@@ -28,7 +33,6 @@ export default async function JudgeDashboard() {
     .eq("station_id", stationId)
     .eq("logged_in", true);
 
-  // Active participant
   const { data: session } = await supabase
     .from("sessions")
     .select(`
@@ -45,9 +49,12 @@ export default async function JudgeDashboard() {
     .neq("status", "completed")
     .single();
 
+  console.log("Session ID:", session?.id);
+  console.log("Speech started:", session?.speech_started_at);
+  console.log("Status:", session?.status);
+
   return (
     <main className="min-h-screen bg-zinc-950 p-8">
-
       <h1 className="text-4xl font-bold text-white">
         Station {stationId}
       </h1>
@@ -57,8 +64,36 @@ export default async function JudgeDashboard() {
       </p>
 
       <div className="mt-10 rounded-2xl bg-zinc-900 p-8">
-
-        {session ? (
+        {!session ? (
+          <p className="text-zinc-500">
+            Waiting for participant...
+          </p>
+        ) : session.status === SessionStatus.SPEAKING ? (
+          <SpeechTimer
+            speechStartedAt={session.speech_started_at}
+            sessionId={session.id}
+          />
+        ) : session.status === SessionStatus.SPEECH_EVALUATION ? (
+          <SpeechEvaluation
+            sessionId={session.id}
+          />
+        ) : session.status === SessionStatus.INTERVIEW ? (
+          <Interview
+            sessionId={session.id}
+          />
+        ) : session.status === SessionStatus.INTERVIEW_EVALUATION ? (
+          <InterviewEvaluation
+            sessionId={session.id}
+          />
+        ) : session.status === SessionStatus.VERTICAL ? (
+          <SkillsEvaluation
+            sessionId={session.id}
+          />
+        ) : session.status === SessionStatus.GENERAL_REMARKS ? (
+          <GeneralRemarks
+            sessionId={session.id}
+          />
+        ) : (
           <>
             <h2 className="text-3xl font-bold text-white">
               {session.participants.name}
@@ -69,9 +104,7 @@ export default async function JudgeDashboard() {
             </p>
 
             <div className="mt-8">
-              <p className="text-zinc-400">
-                Motion
-              </p>
+              <p className="text-zinc-400">Motion</p>
 
               <p className="mt-2 text-xl text-white">
                 {session.motions.motion}
@@ -79,27 +112,19 @@ export default async function JudgeDashboard() {
             </div>
 
             <div className="mt-8">
-              <p className="text-zinc-400">
-                Side
-              </p>
+              <p className="text-zinc-400">Side</p>
 
               <p className="mt-2 text-2xl font-bold text-indigo-400">
                 {session.stance}
               </p>
             </div>
 
-            <button className="mt-10 rounded-xl bg-indigo-600 px-6 py-3 text-white">
-              Start Speech
-            </button>
+            <JudgeDashboardClient
+              sessionId={session.id}
+            />
           </>
-        ) : (
-          <p className="text-zinc-500">
-            Waiting for participant...
-          </p>
         )}
-
       </div>
-
     </main>
   );
 }

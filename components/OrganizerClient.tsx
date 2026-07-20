@@ -221,7 +221,7 @@ const [showAssignModal, setShowAssignModal] =
         participantName: participant?.name,
         status: session?.status,
       }}
-      onAction={async () => {
+     /* onAction={async () => {
         if (!session) return;
     
         const nextStatus =
@@ -248,7 +248,7 @@ const [showAssignModal, setShowAssignModal] =
         }
     
         router.refresh();
-      }}
+      }}*/
     />
     );
   })}

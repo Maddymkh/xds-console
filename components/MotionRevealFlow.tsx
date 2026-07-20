@@ -1,11 +1,13 @@
 "use client";
 
 import { useState } from "react";
-
+import { useRouter } from "next/navigation";
 import WelcomeScreen from "./motion/WelcomeScreen";
 import GemJar from "./motion/GemJar";
 import { drawMotion } from "@/lib/drawMotion";
 import RevealScreen from "./motion/RevealScreen";
+
+
 
 export default function MotionRevealFlow({
   sessionId,
@@ -16,6 +18,7 @@ export default function MotionRevealFlow({
   name: string;
   rollNumber: string;
 }) {
+  const router = useRouter();
   const [step, setStep] = useState<
   "welcome" | "jar" | "reveal" | "qr"
 >("welcome");
@@ -50,7 +53,9 @@ const [result, setResult] = useState<any>(null);
         theme={result.theme.name}
         motion={result.motion.motion}
         stance={result.stance}
-        onContinue={() => setStep("qr")}
+        onContinue={() => {
+          router.push(`/participant/${sessionId}`);
+        }}
       />
     );
   }
