@@ -30,7 +30,7 @@ export default function JudgeDashboardClient({
   return (
     <button
       onClick={startSpeech}
-      className="mt-10 rounded-xl bg-indigo-600 px-6 py-3 text-white"
+      className="mt-10 rounded-xl bg-amber-500 text-black px-6 py-3 text-white"
     >
       Start Speech
     </button>

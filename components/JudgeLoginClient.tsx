@@ -121,7 +121,7 @@ export default function JudgeLoginClient({
 
       <button
         onClick={login}
-        className="mt-8 w-full rounded-xl bg-indigo-600 py-3 text-white"
+        className="mt-8 w-full rounded-xl bg-amber-500 text-black py-3 text-white"
       >
         Continue
       </button>

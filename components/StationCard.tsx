@@ -5,6 +5,7 @@ type Station = {
   participantName?: string;
   status?: string;
 };
+
 export default function StationCard({
   station,
   onAction,
@@ -12,87 +13,84 @@ export default function StationCard({
   station: Station;
   onAction?: () => void;
 }) {
-    return (
-      <div className="rounded-2xl border border-zinc-800 bg-zinc-900/60 p-5">
-  
-        <div className="flex items-center justify-between">
-  
-          <h2 className="text-lg font-semibold text-white">
-          {station.name}
-          </h2>
-  
-          <span
-  className={`rounded-full px-3 py-1 text-xs ${
-    station.participantName
-      ? "bg-yellow-500/15 text-yellow-400"
-      : "bg-green-500/15 text-green-400"
-  }`}
->
-  {station.participantName
-    ? station.status ?? "Reserved"
-    : "Available"}
-</span>
-  
-        </div>
-        <div className="mt-5 space-y-2">
+  const status = station.status ?? "idle";
 
-<p className="text-sm text-zinc-500">
-  Participant
-</p>
+  const badge =
+    status === "assigned" ||
+    status === "preparing" ||
+    status === "speaking" ||
+    status === "evaluation";
 
-<p className="text-white">
-  {station.participantName ?? "None"}
-</p>
-<p className="mt-2 text-sm text-zinc-400">
-  Status:{" "}
-  <span className="font-medium text-white capitalize">
-    {station.status ?? "Available"}
-  </span>
-</p>
+  let buttonText = "Waiting...";
+  let buttonStyle =
+    "bg-zinc-800 text-zinc-500 cursor-not-allowed";
 
-</div>
-  
-{!station.participantName ? (
-  <button
-    disabled
-    className="mt-6 w-full rounded-xl bg-zinc-800 py-3 font-medium text-zinc-500"
-  >
-    Waiting...
-  </button>
-) : station.status === "assigned" ? (
-  <button
-  onClick={onAction}
-  className="mt-6 w-full rounded-xl bg-yellow-600 py-3 font-medium text-white"
->
-  ▶ Start Preparation
-</button>
-) : station.status === "preparing" ? (
-  <button
-    className="mt-6 w-full rounded-xl bg-orange-600 py-3 font-medium text-white"
-  >
-    🎤 Start Speech
-  </button>
-) : station.status === "speaking" ? (
-  <button
-    className="mt-6 w-full rounded-xl bg-red-600 py-3 font-medium text-white"
-  >
-    ⏹ End Speech
-  </button>
-) : station.status === "evaluation" ? (
-  <button
-    className="mt-6 w-full rounded-xl bg-purple-600 py-3 font-medium text-white"
-  >
-    ✅ Complete Session
-  </button>
-) : (
-  <button
-    disabled
-    className="mt-6 w-full rounded-xl bg-green-700 py-3 font-medium text-white"
-  >
-    Completed
-  </button>
-)}
-  
-      </div>
-    );
+  if (status === "assigned") {
+    buttonText = "Start Preparation";
+    buttonStyle =
+      "bg-amber-500 hover:bg-amber-400 text-black";
+  } else if (status === "preparing") {
+    buttonText = "Start Speech";
+    buttonStyle =
+      "bg-amber-500 hover:bg-amber-400 text-black";
+  } else if (status === "speaking") {
+    buttonText = "End Speech";
+    buttonStyle =
+      "bg-amber-500 hover:bg-amber-400 text-black";
+  } else if (status === "evaluation") {
+    buttonText = "Finish";
+    buttonStyle =
+      "bg-amber-500 hover:bg-amber-400 text-black";
+  } else if (status === "completed") {
+    buttonText = "Completed";
+    buttonStyle =
+      "bg-zinc-800 text-zinc-400 cursor-default";
   }
+
+  return (
+    <div className="rounded-2xl border border-zinc-800 bg-zinc-900 p-5">
+
+      <div className="flex items-start justify-between">
+
+        <div>
+
+          <h3 className="text-base font-semibold text-white">
+            {station.name}
+          </h3>
+
+          <p className="mt-1 text-sm text-zinc-400">
+            {station.participantName ?? "No participant assigned"}
+          </p>
+
+        </div>
+
+        <span
+          className={`rounded-full border px-3 py-1 text-xs font-medium capitalize ${
+            badge
+              ? "border-amber-500/30 bg-amber-500/10 text-amber-300"
+              : "border-zinc-700 bg-zinc-800 text-zinc-300"
+          }`}
+        >
+          {status === "idle" ? "Available" : status}
+        </span>
+
+      </div>
+
+      <div className="mt-5">
+
+        <button
+          disabled={
+            !station.participantName ||
+            status === "completed"
+          }
+          onClick={onAction}
+          className={`w-full rounded-xl py-2.5 text-sm font-medium transition ${buttonStyle}`}
+        >
+          {buttonText}
+        </button>
+
+      </div>
+
+    </div>
+  );
+}

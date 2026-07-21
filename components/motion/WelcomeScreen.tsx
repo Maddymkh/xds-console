@@ -29,7 +29,7 @@ export default function WelcomeScreen({
 
       <button
         onClick={onBegin}
-        className="mt-10 rounded-2xl bg-indigo-600 px-8 py-4 text-xl text-white hover:bg-indigo-500"
+        className="mt-10 rounded-2xl bg-amber-500 text-black px-8 py-4 text-xl text-white hover:bg-indigo-500"
       >
         Begin Motion Draw
       </button>

@@ -61,7 +61,7 @@ const [rollNumber, setRollNumber] = useState("");
     console.log(name, rollNumber);
     onSave(name, rollNumber);
   }}
-  className="rounded-xl bg-indigo-600 px-5 py-2 text-white"
+  className="rounded-xl bg-amber-500 text-black px-5 py-2 text-white"
 >
   Save
 </button>

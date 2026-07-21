@@ -1,6 +1,17 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { Inter, Cinzel } from "next/font/google";
+
+const inter = Inter({
+  subsets: ["latin"],
+});
+
+const cinzel = Cinzel({
+  subsets: ["latin"],
+  weight: ["600", "700"],
+});
+<body className={inter.className}></body>
 
 const geistSans = Geist({
   variable: "--font-geist-sans",

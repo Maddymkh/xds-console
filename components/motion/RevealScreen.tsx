@@ -50,7 +50,7 @@ export default function RevealScreen({
 
       <button
         onClick={onContinue}
-        className="mt-16 rounded-xl bg-indigo-600 px-8 py-4 text-xl text-white hover:bg-indigo-500"
+        className="mt-16 rounded-xl bg-amber-500 text-black px-8 py-4 text-xl text-white hover:bg-indigo-500"
       >
         Continue
       </button>

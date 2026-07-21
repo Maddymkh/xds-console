@@ -129,148 +129,201 @@ console.table(
 
 <button
   onClick={() => setShowAddParticipantModal(true)}
-  className="rounded-xl bg-indigo-600 px-5 text-white hover:bg-indigo-500"
+  className="rounded-xl bg-amber-500 text-black px-5 text-white hover:bg-indigo-500"
 >
   + Add
 </button>
 
+{/* LEFT COLUMN */}
 </div>
-      
-          <div className="space-y-4">
-          {waitingParticipants
-  .filter((participant) => {
-    const q = search.toLowerCase();
 
-    return (
-      participant.name.toLowerCase().includes(q) ||
-      participant.roll_number.toLowerCase().includes(q)
-    );
-  })
-  .map((participant) => (
-    <ParticipantCard
-      key={participant.id}
-      participant={participant}
-      onAssign={(participant) => {
-        setSelectedParticipant(participant);
-        setShowAssignModal(true);
-      }}
-    />
-))}
-          
-          </div>
-          <h2 className="mt-10 text-xl font-semibold text-white">
-          Motion Draw
-</h2>
+  
+<div className="rounded-3xl border border-zinc-800 bg-zinc-950 p-6">
 
-<div className="mt-4 space-y-2">
-  {motionDrawSessions.map((session) => {
-    const participant = participants.find(
-      (p) => p.id === session.participant_id
-    );
-    
+  <div className="grid grid-cols-10 gap-6 h-[78vh]">
 
-    if (!participant) return null;
+    {/* ================= LEFT ================= */}
 
-    return (
-      <div
-        key={session.participant_id}
-        className="rounded-xl border border-zinc-800 bg-zinc-900 p-4"
-      >
-        <p className="text-white font-medium">
-          {participant.name}
-        </p>
+    <div className="col-span-4 rounded-2xl border border-zinc-800 bg-zinc-900 p-5 flex flex-col">
 
-        <p className="text-sm text-zinc-500">
-          Station {session.station_id}
-        </p>
-      </div>
-    );
-  })}
-  <h2 className="mt-10 text-xl font-semibold text-white">
-  Preparing
-</h2>
+      <h2 className="text-xl font-semibold text-white">
+        Waiting Participants
+      </h2>
 
-<div className="mt-4 space-y-2">
-  {preparingSessions.map((session) => {
-    const participant = participants.find(
-      (p) => p.id === session.participant_id
-    );
+      <p className="mt-1 text-sm text-zinc-500">
+        {waitingParticipants.length} waiting
+      </p>
 
-    if (!participant) return null;
+      <div className="mt-5 flex-1 overflow-y-auto space-y-3 pr-2">
 
-    return (
-      <div
-        key={session.id}
-        className="rounded-xl border border-zinc-800 bg-zinc-900 p-4"
-      >
-        <p className="font-medium text-white">
-          {participant.name}
-        </p>
+        {waitingParticipants
+          .filter((participant) => {
+            const q = search.toLowerCase();
 
-        <p className="text-sm text-zinc-500">
-          Station {session.station_id}
-        </p>
-      </div>
-    );
-  })}
-</div>
-</div>
-<h2 className="mt-10 text-xl font-semibold text-white">
-  Stations
-</h2>
-
-<div className="mt-4 space-y-4">
-  {stations.map((station) => {
-    const session = sessions.find(
-      (s) =>
-        s.station_id === station.id &&
-        s.status !== "completed"
-    );
-
-    const participant = participants.find(
-      (p) => p.id === session?.participant_id
-    );
-
-    return (
-      <StationCard
-      key={station.id}
-      station={{
-        ...station,
-        participantName: participant?.name,
-        status: session?.status,
-      }}
-     /* onAction={async () => {
-        if (!session) return;
-    
-        const nextStatus =
-          session.status === "assigned"
-            ? "preparing"
-            : session.status === "preparing"
-            ? "speaking"
-            : session.status === "speaking"
-            ? "evaluation"
-            : session.status === "evaluation"
-            ? "completed"
-            : session.status;
-    
-        const { error } = await supabase
-          .from("sessions")
-          .update({
-            status: nextStatus,
+            return (
+              participant.name.toLowerCase().includes(q) ||
+              participant.roll_number.toLowerCase().includes(q)
+            );
           })
-          .eq("id", session.id);
-    
-        if (error) {
-          alert(error.message);
-          return;
-        }
-    
-        router.refresh();
-      }}*/
-    />
-    );
-  })}
+          .map((participant) => (
+            <ParticipantCard
+              key={participant.id}
+              participant={participant}
+              onAssign={(participant) => {
+                setSelectedParticipant(participant);
+                setShowAssignModal(true);
+              }}
+            />
+          ))}
+
+      </div>
+
+    </div>
+
+    {/* ================= MIDDLE ================= */}
+
+    <div className="col-span-3 rounded-2xl border border-zinc-800 bg-zinc-900 p-5 flex flex-col">
+
+      <h2 className="text-xl font-semibold text-white">
+        Live Queue
+      </h2>
+
+      <div className="mt-6">
+
+        <p className="text-xs uppercase tracking-widest text-zinc-500">
+          Motion Draw
+        </p>
+
+        <div className="mt-3 space-y-3">
+
+          {motionDrawSessions.map((session) => {
+
+            const participant = participants.find(
+              (p) => p.id === session.participant_id
+            );
+
+            if (!participant) return null;
+
+            return (
+              <div
+                key={session.id}
+                className="rounded-xl border border-zinc-800 bg-zinc-950 p-4"
+              >
+                <p className="font-medium text-white">
+                  {participant.name}
+                </p>
+
+                <p className="text-sm text-zinc-500">
+                  Station {session.station_id}
+                </p>
+              </div>
+            );
+
+          })}
+
+        </div>
+
+      </div>
+
+      <div className="my-6 border-t border-zinc-800" />
+
+      <div className="flex-1 overflow-y-auto">
+
+        <p className="text-xs uppercase tracking-widest text-zinc-500">
+          Preparing
+        </p>
+
+        <div className="mt-3 space-y-3">
+
+          {preparingSessions.map((session) => {
+
+            const participant = participants.find(
+              (p) => p.id === session.participant_id
+            );
+
+            if (!participant) return null;
+
+            return (
+              <div
+                key={session.id}
+                className="rounded-xl border border-zinc-800 bg-zinc-950 p-4"
+              >
+                <p className="font-medium text-white">
+                  {participant.name}
+                </p>
+
+                <p className="text-sm text-zinc-500">
+                  Station {session.station_id}
+                </p>
+              </div>
+            );
+
+          })}
+
+        </div>
+
+      </div>
+
+    </div>
+
+    {/* ================= RIGHT ================= */}
+
+    <div className="col-span-3 rounded-2xl border border-zinc-800 bg-zinc-900 p-5 flex flex-col">
+
+      <h2 className="text-xl font-semibold text-white">
+        Stations
+      </h2>
+
+      <div className="mt-5 flex-1 overflow-y-auto space-y-4 pr-2">
+
+        {stations.map((station) => {
+
+          const session = sessions.find(
+            (s) =>
+              s.station_id === station.id &&
+              s.status !== "completed"
+          );
+
+          const participant = participants.find(
+            (p) => p.id === session?.participant_id
+          );
+
+          return (
+            <StationCard
+              key={station.id}
+              station={{
+                ...station,
+                participantName: participant?.name,
+                status: session?.status,
+              }}
+            />
+          );
+
+        })}
+
+      </div>
+
+    </div>
+
+  </div>
+
 </div>
+
+<div className="mt-8 rounded-2xl border border-zinc-800 bg-zinc-950 p-5">
+
+  <h2 className="text-xl font-semibold text-white">
+    Completed
+  </h2>
+
+</div>
+<div className="mt-10">
+
+<h2>Completed</h2>
+
+...
+
+</div>
+
           {showAssignModal && selectedParticipant && (
  <AssignStationModal
  participantName={selectedParticipant.name}

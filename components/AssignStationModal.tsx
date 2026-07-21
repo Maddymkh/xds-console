@@ -69,7 +69,7 @@ type Station = {
   className={`rounded-xl px-5 py-2 text-white ${
     selectedStation === null
       ? "bg-zinc-700 cursor-not-allowed"
-      : "bg-indigo-600 hover:bg-indigo-500"
+      : "bg-amber-500 text-black hover:bg-amber-500 text-black"
   }`}
 >
   Assign

@@ -44,7 +44,7 @@ export default function QRModal({
 
         <button
           onClick={onClose}
-          className="mt-8 rounded-xl bg-indigo-600 px-6 py-3 text-white hover:bg-indigo-500"
+          className="mt-8 rounded-xl bg-amber-500 text-black px-6 py-3 text-white hover:bg-indigo-500"
         >
           Done
         </button>

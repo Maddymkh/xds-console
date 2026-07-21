@@ -105,7 +105,7 @@ export default function SpeechEvaluation({
 
       <button
         onClick={submitEvaluation}
-        className="mt-8 rounded-xl bg-indigo-600 px-6 py-3 text-white"
+        className="mt-8 rounded-xl bg-amber-500 text-black px-6 py-3 text-white"
       >
         Submit Evaluation
       </button>

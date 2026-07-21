@@ -1,39 +1,135 @@
 import Link from "next/link";
+import { Cinzel } from "next/font/google";
+
+const cinzel = Cinzel({
+  subsets: ["latin"],
+  weight: ["700"],
+});
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen items-center justify-center bg-zinc-950">
+    <main
+      className="relative flex min-h-screen items-center justify-start px-52 overflow-hidden"
+      style={{
+        backgroundImage:
+          "linear-gradient(rgba(0,0,0,.50), rgba(0,0,0,.70)), url('/backgrounds/landing.jpg')",
+        backgroundSize: "cover",
+        backgroundPosition: "right center",
+      }}
+    >
+      {/* Vignette */}
+      <div className="absolute inset-0 bg-black/20" />
 
-      <div className="w-[500px] rounded-3xl border border-zinc-800 bg-zinc-900/70 p-10">
+      {/* Card */}
+      <div className="relative w-[620px] rounded-[36px] border border-white/10 bg-black/35 p-14 backdrop-blur-3xl shadow-[0_25px_80px_rgba(0,0,0,.45)]">
 
-        <h1 className="text-center text-5xl font-bold text-white">
-          XDS
-        </h1>
+        {/* Glow */}
+        <div
+          className="
+            absolute
+            left-1/2
+            top-24
+            h-40
+            w-40
+            -translate-x-1/2
+            rounded-full
+            bg-[#E2D2B1]/10
+            blur-3xl
+          "
+        />
 
-        <p className="mt-3 text-center text-zinc-400">
-          Recruitment Management System
-        </p>
+        <div className="relative text-center">
 
-        <div className="mt-10 space-y-4">
+          <h1
+            className={`${cinzel.className} text-7xl tracking-[0.25em] text-white`}
+          >
+            XDS
+          </h1>
+
+          <div className="mx-auto mt-6 h-px w-32 bg-gradient-to-r from-transparent via-[#CAAA98] to-transparent" />
+
+          <p className="mt-6 text-sm uppercase tracking-[0.35em] text-zinc-500">
+            Recruitment Portal
+          </p>
+
+          <p className="mt-2 text-zinc-400">
+            Xaverian Debating Society
+          </p>
+
+        </div>
+
+        <div className="mt-12 space-y-4">
 
           <Link
             href="/organizer"
-            className="block rounded-xl bg-indigo-600 py-4 text-center font-medium text-white transition hover:bg-indigo-500"
+            className="
+              block
+              rounded-2xl
+              bg-[#E2D2B1]
+              py-4
+              text-center
+              text-lg
+              font-semibold
+              text-black
+              transition-all
+              duration-200
+              hover:bg-[#D5C3A0]
+              hover:-translate-y-0.5
+              hover:shadow-lg
+            "
           >
             Organizer
           </Link>
 
           <Link
             href="/judge/login"
-            className="block rounded-xl border border-zinc-700 py-4 text-center font-medium text-white transition hover:border-indigo-500"
+            className="
+              block
+              rounded-2xl
+              border
+              border-zinc-700
+              bg-white/5
+              py-4
+              text-center
+              text-lg
+              font-semibold
+              text-white
+              transition-all
+              duration-200
+              hover:border-[#D5C3A0]
+              hover:bg-white/10
+              hover:-translate-y-0.5
+            "
           >
             Judge
+          </Link>
+
+          <Link
+            href="/results"
+            className="
+              block
+              rounded-2xl
+              border
+              border-zinc-700
+              bg-white/5
+              py-4
+              text-center
+              text-lg
+              font-semibold
+              text-white
+              transition-all
+              duration-200
+              hover:border-[#D5C3A0]
+              hover:bg-white/10
+              hover:-translate-y-0.5
+            "
+          >
+            Results
           </Link>
 
         </div>
 
       </div>
-
     </main>
   );
 }

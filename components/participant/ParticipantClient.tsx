@@ -59,7 +59,7 @@ export default function ParticipantClient({
           setStarted(true);
           router.refresh();
         }}
-        className="mt-10 w-full rounded-2xl bg-indigo-600 py-4 text-xl text-white hover:bg-indigo-500 disabled:opacity-50"
+        className="mt-10 w-full rounded-2xl bg-amber-500 text-black py-4 text-xl text-white hover:bg-indigo-500 disabled:opacity-50"
       >
         {loading ? "Starting..." : "Start Preparation"}
       </button>
