@@ -59,14 +59,47 @@ export default function InterviewEvaluation({
       return;
     }
 
-    await supabase
-      .from("sessions")
-      .update({
-        status:SessionStatus.VERTICAL,
-      })
-      .eq("id",sessionId);
+    // Find the participant for this session
+    const { data: session, error: sessionError } = await supabase
+    .from("sessions")
+    .select("participant_id")
+    .eq("id", sessionId)
+    .single();
+  
+  if (sessionError || !session) {
+    alert(sessionError?.message ?? "Could not find participant.");
+    return;
+  }
 
-    router.refresh();
+// Check if the participant selected any verticals
+const { data: verticals, error: verticalError } = await supabase
+.from("participant_verticals")
+.select("id")
+.eq("participant_id", session.participant_id);
+
+if (verticalError) {
+alert(verticalError.message);
+return;
+}
+
+const nextStatus =
+verticals && verticals.length > 0
+  ? SessionStatus.VERTICAL
+  : SessionStatus.GENERAL_REMARKS;
+
+  const { error: updateError } = await supabase
+  .from("sessions")
+  .update({
+    status: nextStatus,
+  })
+  .eq("id", sessionId);
+
+if (updateError) {
+  alert(updateError.message);
+  return;
+}
+
+router.refresh();
   }
 
   return(

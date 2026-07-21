@@ -8,6 +8,8 @@ import AssignStationModal from "./AssignStationModal";
 import { supabase } from "@/lib/supabase";
 import AddParticipantModal from "./AddParticipantModal";
 import StationCard from "./StationCard";
+import QRModal from "./QRModal";
+import MotionDrawModal from "@/components/participant/MotionDrawModal";
 
 type Participant = {
   id: number;
@@ -49,7 +51,9 @@ export default function OrganizerClient({
     const [search, setSearch] = useState("");
     const [selectedParticipant, setSelectedParticipant] =
   useState<Participant | null>(null);
-
+  const [qrSessionId, setQrSessionId] = useState<number | null>(null);
+  const [motionDrawSessionId, setMotionDrawSessionId] =
+  useState<number | null>(null);
 const [showAssignModal, setShowAssignModal] =
   useState(false);
   const [showAddParticipantModal, setShowAddParticipantModal] =
@@ -90,9 +94,23 @@ const [showAssignModal, setShowAssignModal] =
   );
   const occupiedStationIds = new Set(
     sessions
-      .filter((session) => session.status !== "completed")
+    .filter(
+      (session) =>
+        session.status === "assigned" ||
+        session.status === "preparing"
+    )
       .map((session) => session.station_id)
   );
+
+console.log("Occupied stations:", [...occupiedStationIds]);
+
+console.table(
+  sessions.map((s) => ({
+    id: s.id,
+    station: s.station_id,
+    status: s.status,
+  }))
+);
   
   const availableStations = stations.filter(
     (station) => !occupiedStationIds.has(station.id)
@@ -268,19 +286,37 @@ const [showAssignModal, setShowAssignModal] =
       session.participant_id === selectedParticipant.id &&
       session.status !== "completed"
   );
+  const blockedStatuses = [
+    "motion_reveal",
+    "assigned",
+    "preparing",
+  ];
+  
+  const stationBusy = sessions.some(
+    (session) =>
+      session.station_id === stationId &&
+      blockedStatuses.includes(session.status)
+  );
+  
+  if (stationBusy) {
+    alert("This station is currently occupied.");
+    return;
+  }
   
   if (existingSession) {
     alert("This participant is already assigned.");
     return;
   }
-  const { error } = await supabase
-    .from("sessions")
-    .insert({
-      participant_id: selectedParticipant.id,
-      station_id: stationId,
-      status: "assigned",
-      session_type: "individual",
-    });
+  const { data, error } = await supabase
+  .from("sessions")
+  .insert({
+    participant_id: selectedParticipant.id,
+    station_id: stationId,
+    status: "assigned",
+    session_type: "individual",
+  })
+  .select()
+  .single();
 
     if (error) {
       console.log(error);
@@ -290,9 +326,8 @@ const [showAssignModal, setShowAssignModal] =
     }
 
     setShowAssignModal(false);
-    setSelectedParticipant(null);
-    
-    router.refresh();
+setSelectedParticipant(null);
+setMotionDrawSessionId(data.id);
 
 }}
 />
@@ -319,6 +354,24 @@ const [showAssignModal, setShowAssignModal] =
     router.refresh();
   }}
 />
+)}
+{motionDrawSessionId && (
+  <MotionDrawModal
+    sessionId={motionDrawSessionId}
+    onClose={() => {
+      setQrSessionId(motionDrawSessionId);
+      setMotionDrawSessionId(null);
+    }}
+  />
+)}
+{qrSessionId && (
+  <QRModal
+    sessionId={qrSessionId}
+    onClose={() => {
+      setQrSessionId(null);
+      router.refresh();
+    }}
+  />
 )}
         </>
         

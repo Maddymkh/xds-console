@@ -107,7 +107,7 @@ export default async function JudgeDashboard() {
               <p className="text-zinc-400">Motion</p>
 
               <p className="mt-2 text-xl text-white">
-                {session.motions.motion}
+                {session.motions?.motion ?? "Not assigned"}
               </p>
             </div>
 

@@ -1,0 +1,99 @@
+"use client";
+import { useEffect, useState } from "react";
+import ParticipantClient from "./ParticipantClient";
+
+type Props = {
+  session: any;
+};
+
+export default function MotionReveal({
+  session,
+}: Props) {
+    const [step, setStep] = useState(0);
+
+useEffect(() => {
+  const timers = [
+    setTimeout(() => setStep(1), 800),
+    setTimeout(() => setStep(2), 1700),
+    setTimeout(() => setStep(3), 2700),
+    setTimeout(() => setStep(4), 3700),
+  ];
+
+  return () => timers.forEach(clearTimeout);
+}, []);
+
+  return (
+
+    <main className="flex min-h-screen items-center justify-center bg-zinc-950">
+
+      <div className="w-[700px] rounded-3xl bg-zinc-900 p-10">
+
+      {step >= 1 && (
+<>
+<h1
+className="text-4xl font-bold text-white transition-all duration-700"
+>
+{session.participants.name}
+</h1>
+
+<p className="mt-2 text-zinc-400">
+          {session.participants.roll_number}
+        </p>
+        </>
+
+)}
+
+        
+      
+        
+        
+        {step >= 2 && (
+            <>
+            <p className="mt-8 text-zinc-400">
+          Theme
+        </p>
+        <h2 className="text-3xl font-bold text-white">
+          {session.themes?.name ?? "Not assigned"}
+        </h2>
+        </>
+        )}
+         
+       
+        {step >= 3 && (
+            <>
+             <p className="mt-8 text-zinc-400">
+             Motion
+           </p>
+        <h2 className="text-2xl text-white">
+          {session.motions?.motion ?? "Not assigned"}
+        </h2>
+        </>
+        
+         )}
+        
+        {step >= 4 && (
+            <>
+            <p className="mt-8 text-zinc-400">
+            Side
+          </p>
+
+        <h2 className="text-3xl font-bold text-indigo-400">
+          {session.stance}
+        </h2>
+        </>
+        )}
+        {step >= 4 && (
+
+<ParticipantClient
+sessionId={session.id}
+prepStartedAt={session.prep_started_at}
+/>
+
+)}
+
+      </div>
+
+    </main>
+
+  );
+}
