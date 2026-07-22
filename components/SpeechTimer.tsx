@@ -53,7 +53,7 @@ export default function SpeechTimer({
 
   return (
     <div className="mt-10 rounded-2xl bg-zinc-900 p-8">
-      <h2 className="text-3xl font-bold text-white">
+      <h2 className="text-3xl font-bold text-[var(--text)]">
         🎤 Speech in Progress
       </h2>
 
@@ -64,7 +64,7 @@ export default function SpeechTimer({
 
       <button
         onClick={endSpeech}
-        className="mt-10 rounded-xl bg-red-600 px-6 py-3 font-semibold text-white transition hover:bg-red-700"
+        className="mt-10 rounded-xl bg-red-600 px-6 py-3 font-semibold text-[var(--text)] transition hover:bg-red-700"
       >
         End Speech
       </button>

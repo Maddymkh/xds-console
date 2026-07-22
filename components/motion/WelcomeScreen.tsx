@@ -12,13 +12,13 @@ export default function WelcomeScreen({
   onBegin,
 }: Props) {
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-zinc-950">
+    <div className="flex min-h-screen flex-col items-center justify-center bg-[var(--bg)]">
 
-      <h1 className="text-5xl font-bold text-white">
+      <h1 className="text-5xl font-bold text-[var(--text)]">
         {name}
       </h1>
 
-      <p className="mt-3 text-zinc-400">
+      <p className="mt-3 text-[var(--muted)]">
         {rollNumber}
       </p>
 
@@ -29,7 +29,7 @@ export default function WelcomeScreen({
 
       <button
         onClick={onBegin}
-        className="mt-10 rounded-2xl bg-amber-500 text-black px-8 py-4 text-xl text-white hover:bg-indigo-500"
+        className="mt-10 rounded-2xl bg-[var(--accent)] text-black px-8 py-4 text-xl text-[var(--text)] hover:bg-[var(--accent)]"
       >
         Begin Motion Draw
       </button>

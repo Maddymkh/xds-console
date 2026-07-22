@@ -28,11 +28,11 @@ export default function MotionDeskClient({
         >
           
           <div>
-  <h2 className="text-xl font-semibold text-white">
+  <h2 className="text-xl font-semibold text-[var(--text)]">
     {session.participants.name}
   </h2>
 
-  <p className="text-zinc-400">
+  <p className="text-[var(--muted)]">
     {session.participants.roll_number}
   </p>
 </div>
@@ -48,7 +48,7 @@ export default function MotionDeskClient({
                 alert("Failed to draw motion.");
               }
             }}
-            className="mt-4 rounded-xl bg-amber-500 text-black px-5 py-2 text-white hover:bg-indigo-500"
+            className="mt-4 rounded-xl bg-[var(--accent)] text-black px-5 py-2 text-[var(--text)] hover:bg-[var(--accent)]"
           >
             Draw Motion
           </button>

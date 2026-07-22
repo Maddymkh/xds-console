@@ -6,7 +6,8 @@ import WelcomeScreen from "./motion/WelcomeScreen";
 import GemJar from "./motion/GemJar";
 import { drawMotion } from "@/lib/drawMotion";
 import RevealScreen from "./motion/RevealScreen";
-
+import ThemeReveal from "./motion/ThemeReveal";
+import ParchmentChoice from "./motion/ParchmentChoice";
 
 
 export default function MotionRevealFlow({
@@ -20,7 +21,12 @@ export default function MotionRevealFlow({
 }) {
   const router = useRouter();
   const [step, setStep] = useState<
-  "welcome" | "jar" | "reveal" | "qr"
+  | "welcome"
+  | "jar"
+  | "theme"
+  | "parchment"
+  | "reveal"
+  | "qr"
 >("welcome");
 
 const [result, setResult] = useState<any>(null);
@@ -29,11 +35,24 @@ const [result, setResult] = useState<any>(null);
       <WelcomeScreen
         name={name}
         rollNumber={rollNumber}
-        onBegin={() => setStep("jar")}
+        onBegin={async () => {
+          const motion = await drawMotion(sessionId);
+        
+          setResult(motion);
+        
+          setStep("theme");
+        }}
       />
     );
   }
-
+  if (step === "theme" && result) {
+    return (
+      <ThemeReveal
+        theme={result.theme.name}
+        onContinue={() => setStep("jar")}
+      />
+    );
+  }
   if (step === "jar") {
     return (
       <GemJar
@@ -42,9 +61,27 @@ const [result, setResult] = useState<any>(null);
   
           setResult(motion);
   
-          setStep("reveal");
+          setStep("parchment");
         }}
       />
+    );
+  }
+  
+  if (step === "parchment" && result) {
+    return (
+      <ParchmentChoice
+    governmentMotion={result.motion.motion}
+    oppositionMotion={result.motion.motion}
+    sessionId={sessionId}
+    onContinue={(chosenStance) => {
+        setResult({
+            ...result,
+            stance: chosenStance,
+        });
+
+        setStep("reveal");
+    }}
+/>
     );
   }
   if (step === "reveal" && result) {

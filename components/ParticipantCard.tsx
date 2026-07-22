@@ -31,7 +31,7 @@ export default function ParticipantCard({
             {participant.roll_number}
           </p>
 
-          <h2 className="mt-1 text-xl font-semibold text-white">
+          <h2 className="mt-1 text-xl font-semibold text-[var(--text)]">
             {participant.name}
           </h2>
 

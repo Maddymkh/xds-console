@@ -38,7 +38,7 @@ export default function GeneralRemarks({ sessionId }: Props) {
 
   return (
     <div>
-      <h2 className="text-3xl font-bold text-white">
+      <h2 className="text-3xl font-bold text-[var(--text)]">
         General Remarks
       </h2>
 
@@ -46,12 +46,12 @@ export default function GeneralRemarks({ sessionId }: Props) {
         value={remarks}
         onChange={(e) => setRemarks(e.target.value)}
         placeholder="Overall comments..."
-        className="mt-8 h-48 w-full rounded-xl bg-zinc-800 p-4 text-white"
+        className="mt-8 h-48 w-full rounded-xl bg-zinc-800 p-4 text-[var(--text)]"
       />
 
       <button
         onClick={saveRemarks}
-        className="mt-8 rounded-xl bg-amber-600 text-black px-6 py-3 text-white"
+        className="mt-8 rounded-xl bg-[var(--bg)] text-black px-6 py-3 text-[var(--text)]"
       >
         Save & Finish
       </button>

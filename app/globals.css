@@ -8,19 +8,46 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+
+  --color-card: var(--card);
+  --color-card-light: var(--card-light);
+
+  --color-text: var(--text);
+  --color-muted: var(--muted);
+
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+
+  --color-glass: var(--glass);
+
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+}
+:root {
+  /* Core */
+  --background: #0f0f10;
+  --foreground: #f4f2ee;
+
+  /* Surfaces */
+  --card: #1b1b1d;
+  --card-light: #252527;
+
+  /* Text */
+  --text: #f4f2ee;
+  --muted: #9d9d9d;
+
+  /* Accent */
+  --accent: #b58a56;
+  --accent-hover: #c89c66;
+
+  /* UI */
+  --border: rgba(255,255,255,.08);
+  --glass: rgba(255,255,255,.05);
 }

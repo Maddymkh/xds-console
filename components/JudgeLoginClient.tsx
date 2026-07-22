@@ -64,7 +64,7 @@ export default function JudgeLoginClient({
 
   return (
     <>
-      <p className="mt-6 text-zinc-400">
+      <p className="mt-6 text-[var(--muted)]">
         Station
       </p>
 
@@ -73,7 +73,7 @@ export default function JudgeLoginClient({
         onChange={(e) =>
           setSelectedStation(Number(e.target.value))
         }
-        className="mt-2 w-full rounded-xl border border-zinc-700 bg-zinc-950 px-4 py-3 text-white"
+        className="mt-2 w-full rounded-xl border border-zinc-700 bg-[var(--bg)] px-4 py-3 text-[var(--text)]"
       >
         {stations.map((station) => (
           <option
@@ -85,7 +85,7 @@ export default function JudgeLoginClient({
         ))}
       </select>
 
-      <p className="mt-8 text-zinc-400">
+      <p className="mt-8 text-[var(--muted)]">
         Judges
       </p>
 
@@ -93,7 +93,7 @@ export default function JudgeLoginClient({
         {judges.map((judge) => (
           <label
             key={judge.id}
-            className="flex items-center gap-3 text-white"
+            className="flex items-center gap-3 text-[var(--text)]"
           >
             <input
               type="checkbox"
@@ -121,7 +121,7 @@ export default function JudgeLoginClient({
 
       <button
         onClick={login}
-        className="mt-8 w-full rounded-xl bg-amber-500 text-black py-3 text-white"
+        className="mt-8 w-full rounded-xl bg-[var(--accent)] text-black py-3 text-[var(--text)]"
       >
         Continue
       </button>

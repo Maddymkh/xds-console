@@ -12,27 +12,28 @@ export default function MotionDrawModal({
   onClose,
 }: Props) {
     const [loading, setLoading] = useState(false);
+    
     const [step, setStep] = useState<
-  "idle" |
-"drawing" |
-"choose" |
-"theme" |
-"motion" |
-"stance" |
-"qr"
->("idle");
+    "idle" |
+    "drawing" |
+    "theme" |
+    "motion" |
+    "stance" |
+    "qr"
+    >("idle");
 
 const [themeName, setThemeName] = useState("");
 
 const [motionText, setMotionText] = useState("");
-
+const [selectedMotionId, setSelectedMotionId] = useState<number | null>(null);
+const [selectedThemeId, setSelectedThemeId] = useState<number | null>(null);
 const [stanceText, setStanceText] = useState("");
 const [selectedTablet, setSelectedTablet] = useState<number | null>(null);
 const [availableMotions, setAvailableMotions] = useState<any[]>([]);
 useEffect(() => {
   if (step === "drawing") {
     const timer = setTimeout(() => {
-      setStep("choose");
+      setStep("theme");
     }, 2200);
 
     return () => clearTimeout(timer);
@@ -43,14 +44,6 @@ useEffect(() => {
 
       setStep("motion");
     }, 2000);
-
-    return () => clearTimeout(timer);
-  }
-
-  if (step === "motion") {
-    const timer = setTimeout(() => {
-      setStep("stance");
-    }, 2500);
 
     return () => clearTimeout(timer);
   }
@@ -67,7 +60,7 @@ useEffect(() => {
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70">
 
 <div
-  className="w-[760px] rounded-[36px] border border-white/10 bg-black/50 p-14 backdrop-blur-3xl"
+  className="max-w-3xlmax-h-[85vh] overflow-y-auto] rounded-[36px] border border-white/10 bg-black/50 p-14 backdrop-blur-3xl"
   style={{
     backgroundImage:
       "linear-gradient(rgba(0,0,0,.75), rgba(0,0,0,.82)), url('/backgrounds/motionback.jpg')",
@@ -95,11 +88,11 @@ exit={{ opacity: 0 }}
 className="text-center"
 >
 
-<h1 className="text-5xl font-bold text-white">
+<h1 className="text-5xl font-bold text-[var(--text)]">
 Motion Draw
 </h1>
 
-<p className="mt-5 text-zinc-400">
+<p className="mt-5 text-[var(--muted)]">
 The Assembly Awaits
 </p>
 
@@ -148,6 +141,8 @@ if (!motions || motions.length === 0) {
   }
   
   setThemeName(theme.name);
+  setSelectedThemeId(theme.id);
+
 
 // shuffle motions
 const shuffled = [...motions].sort(() => Math.random() - 0.5);
@@ -200,8 +195,8 @@ transition={{
 className="mx-auto h-24 w-24 rounded-full border-2 border-[#E2D2B1] border-t-transparent"
 />
 
-<h2 className="mt-10 text-4xl font-bold text-white">
-Consulting the Assembly
+<h2 className="mt-10 text-4xl font-bold text-[var(--text)]">
+Deci
 </h2>
 
 <p className="mt-4 text-zinc-500">
@@ -225,7 +220,7 @@ className="py-20 text-center"
 Theme
 </p>
 
-<h2 className="mt-8 text-6xl font-bold text-white">
+<h2 className="mt-8 text-6xl font-bold text-[var(--text)]">
 {themeName}
 </h2>
 
@@ -233,56 +228,145 @@ Theme
 )}
 {step === "motion" && (
 
-  <motion.div
+<motion.div
     key="motion"
-    initial={{ opacity: 0, y: 30 }}
-    animate={{ opacity: 1, y: 0 }}
-    exit={{ opacity: 0 }}
-    transition={{ duration: 0.6 }}
-    className="text-center py-10"
-  >
-  
-  <p className="uppercase tracking-[0.5em] text-zinc-500">
-  Motion
-  </p>
-  
-  <div className="mx-auto mt-10 max-w-3xl rounded-3xl border border-white/10 bg-white/5 p-10 backdrop-blur">
-    <h2
-        className="text-3xl leading-relaxed font-medium text-white"
-    >
-        {motionText}
-    </h2>
+    initial={{ opacity: 0 }}
+    animate={{ opacity: 1 }}
+    className="py-10"
+>
+
+<p className="text-center uppercase tracking-[0.45em] text-zinc-500">
+Choose Motion
+</p>
+
+<div className="mt-10 grid gap-5">
+
+{availableMotions.map((item, index) => (
+
+<motion.button
+key={item.id}
+whileHover={{
+    scale:1.02,
+    y:-3
+}}
+whileTap={{
+    scale:0.98
+}}
+
+onClick={() => {
+  setSelectedTablet(index);
+  setSelectedMotionId(item.id);
+  setMotionText(item.motion);
+  setStep("stance");
+}}
+
+className={`
+rounded-3xl
+border
+p-6
+text-left
+transition-all
+duration-300
+
+${
+selectedTablet===index
+? "border-[#E2D2B1] bg-[#E2D2B1]/15"
+: "border-white/10 bg-white/5 hover:border-[#E2D2B1]/60"
+}
+`}
+>
+
+<h3 className="text-xl leading-relaxed text-[var(--text)]">
+{item.motion}
+</h3>
+
+</motion.button>
+
+))}
+
 </div>
-  
-  </motion.div>
-  
-  )}
+
+</motion.div>
+
+)}
   {step === "stance" && (
 
-    <motion.div
-      key="stance"
-      initial={{ scale: 0.8, opacity: 0 }}
-      animate={{ scale: 1, opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.5 }}
-      className="text-center py-20"
-    >
-    
-    <p className="uppercase tracking-[0.4em] text-zinc-500">
-    Assigned Side
-    </p>
-    
-    <h1
-      className={`mt-8 text-7xl font-black ${
-        stanceText === "Government"
-          ? "text-emerald-300 drop-shadow-[0_0_25px_rgba(16,185,129,.5)]"
-          : "text-red-300 drop-shadow-[0_0_25px_rgba(248,113,113,.5)]"
-      }`}
-    >
-      {stanceText}
-    </h1>
-    
-    </motion.div>
+<motion.div
+key="stance"
+initial={{ opacity: 0 }}
+animate={{ opacity: 1 }}
+className="py-12 text-center"
+>
+
+<p className="uppercase tracking-[0.45em] text-zinc-500">
+Choose Side
+</p>
+
+<div className="mt-12 flex justify-center gap-10">
+
+<button
+onClick={async () => {
+
+  setStanceText("Government");
+
+  const { error } = await supabase
+    .from("sessions")
+    .update({
+      theme_id: selectedThemeId,
+      motion_id: selectedMotionId,
+      stance: "Government",
+    })
+    .eq("id", sessionId);
+
+  if (error) {
+    alert(error.message);
+    return;
+  }
+
+  setStep("qr");
+}}
+className="h-48 w-48 rounded-full border-4 border-[#E2D2B1]
+bg-[#7b5d32]/30 text-2xl font-bold text-[var(--text)]
+hover:scale-105 transition"
+>
+Government
+
+</button>
+
+<button
+onClick={async () => {
+
+  setStanceText("Opposition");
+
+  const { error } = await supabase
+    .from("sessions")
+    .update({
+      theme_id: selectedThemeId,
+      motion_id: selectedMotionId,
+      stance: "Opposition",
+    })
+    .eq("id", sessionId);
+
+  if (error) {
+    alert(error.message);
+    return;
+  }
+
+  setStep("qr");
+}}
+className="h-48 w-48 rounded-full border-4 border-[#E2D2B1]
+bg-[#5d302f]/30 text-2xl font-bold text-[var(--text)]
+hover:scale-105 transition"
+>
+
+Opposition
+
+</button>
+
+</div>
+
+
+</motion.div>
     
     )}
     {step === "qr" && (
@@ -294,11 +378,11 @@ Theme
         className="text-center py-16"
       >
       
-      <h2 className="text-4xl font-bold text-white">
+      <h2 className="text-4xl font-bold text-[var(--text)]">
       Ready to Begin
       </h2>
       
-      <p className="mt-6 text-zinc-400">
+      <p className="mt-6 text-[var(--muted)]">
       Scan the QR code or continue on this device.
       </p>
       

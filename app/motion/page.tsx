@@ -15,8 +15,8 @@ export default async function MotionPage() {
     .eq("status", "assigned");
 
   return (
-    <main className="min-h-screen bg-zinc-950 p-8">
-      <h1 className="text-4xl font-bold text-white">
+    <main className="min-h-screen bg-[var(--bg)] p-8">
+      <h1 className="text-4xl font-bold text-[var(--text)]">
         Motion Desk
       </h1>
 

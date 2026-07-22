@@ -7,13 +7,13 @@ export default function TopBar() {
     });
   
     return (
-      <header className="flex items-center justify-between border-b border-zinc-800 bg-zinc-950 px-8 py-5">
+      <header className="flex items-center justify-between border-b border-zinc-800 bg-[var(--bg)] px-8 py-5">
         <div>
-          <h1 className="text-2xl font-bold text-white tracking-tight">
+          <h1 className="text-2xl font-bold text-[var(--text)] tracking-tight">
             XDS Console
           </h1>
   
-          <p className="text-sm text-zinc-400">
+          <p className="text-sm text-[var(--muted)]">
             Recruitment Management System
           </p>
         </div>

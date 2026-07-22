@@ -32,7 +32,7 @@ if (error) {
 console.log(participants);
 console.dir(participants, { depth: null });
   return (
-    <main className="min-h-screen bg-zinc-950">
+    <main className="min-h-screen bg-[var(--bg)]">
       <TopBar />
 
       <div className="mx-auto max-w-7xl p-8">

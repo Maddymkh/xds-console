@@ -16,7 +16,7 @@ export default async function JudgeDashboard() {
 
   if (!stationId) {
     return (
-      <main className="flex min-h-screen items-center justify-center bg-zinc-950 text-white">
+      <main className="flex min-h-screen items-center justify-center bg-[var(--bg)] text-[var(--text)]">
         No station selected.
       </main>
     );
@@ -54,12 +54,12 @@ export default async function JudgeDashboard() {
   console.log("Status:", session?.status);
 
   return (
-    <main className="min-h-screen bg-zinc-950 p-8">
-      <h1 className="text-4xl font-bold text-white">
+    <main className="min-h-screen bg-[var(--bg)] p-8">
+      <h1 className="text-4xl font-bold text-[var(--text)]">
         Station {stationId}
       </h1>
 
-      <p className="mt-3 text-zinc-400">
+      <p className="mt-3 text-[var(--muted)]">
         {judges?.map((j: any) => j.judges.name).join(" • ")}
       </p>
 
@@ -95,24 +95,24 @@ export default async function JudgeDashboard() {
           />
         ) : (
           <>
-            <h2 className="text-3xl font-bold text-white">
+            <h2 className="text-3xl font-bold text-[var(--text)]">
               {session.participants.name}
             </h2>
 
-            <p className="mt-2 text-zinc-400">
+            <p className="mt-2 text-[var(--muted)]">
               {session.participants.roll_number}
             </p>
 
             <div className="mt-8">
-              <p className="text-zinc-400">Motion</p>
+              <p className="text-[var(--muted)]">Motion</p>
 
-              <p className="mt-2 text-xl text-white">
+              <p className="mt-2 text-xl text-[var(--text)]">
                 {session.motions?.motion ?? "Not assigned"}
               </p>
             </div>
 
             <div className="mt-8">
-              <p className="text-zinc-400">Side</p>
+              <p className="text-[var(--muted)]">Side</p>
 
               <p className="mt-2 text-2xl font-bold text-indigo-400">
                 {session.stance}

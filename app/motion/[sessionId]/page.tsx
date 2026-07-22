@@ -26,14 +26,14 @@ export default async function MotionRevealPage({
   
 
   return (
-    <main className="flex min-h-screen items-center justify-center bg-zinc-950">
+    <main className="flex min-h-screen items-center justify-center bg-[var(--bg)]">
       <div className="text-center">
 
-        <h1 className="text-5xl font-bold text-white">
+        <h1 className="text-5xl font-bold text-[var(--text)]">
           {session.participants.name}
         </h1>
 
-        <p className="mt-3 text-zinc-400">
+        <p className="mt-3 text-[var(--muted)]">
           {session.participants.roll_number}
         </p>
 

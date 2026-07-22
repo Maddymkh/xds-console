@@ -20,11 +20,11 @@ const [rollNumber, setRollNumber] = useState("");
   
         <div className="w-[500px] rounded-2xl bg-zinc-900 p-6">
   
-          <h2 className="text-2xl font-semibold text-white">
+          <h2 className="text-2xl font-semibold text-[var(--text)]">
             Add Participant
           </h2>
   
-          <p className="mt-2 text-zinc-400">
+          <p className="mt-2 text-[var(--muted)]">
             Walk-in registration
           </p>
   
@@ -34,14 +34,14 @@ const [rollNumber, setRollNumber] = useState("");
   placeholder="Full Name"
   value={name}
   onChange={(e) => setName(e.target.value)}
-  className="w-full rounded-xl border border-zinc-700 bg-zinc-950 px-4 py-3 text-white outline-none"
+  className="w-full rounded-xl border border-zinc-700 bg-[var(--bg)] px-4 py-3 text-[var(--text)] outline-none"
             />
   
   <input
   placeholder="Roll Number"
   value={rollNumber}
   onChange={(e) => setRollNumber(e.target.value)}
-              className="w-full rounded-xl border border-zinc-700 bg-zinc-950 px-4 py-3 text-white outline-none"
+              className="w-full rounded-xl border border-zinc-700 bg-[var(--bg)] px-4 py-3 text-[var(--text)] outline-none"
             />
   
           </div>
@@ -50,7 +50,7 @@ const [rollNumber, setRollNumber] = useState("");
   
             <button
               onClick={onClose}
-              className="rounded-xl bg-zinc-800 px-5 py-2 text-white"
+              className="rounded-xl bg-zinc-800 px-5 py-2 text-[var(--text)]"
             >
               Cancel
             </button>
@@ -61,7 +61,7 @@ const [rollNumber, setRollNumber] = useState("");
     console.log(name, rollNumber);
     onSave(name, rollNumber);
   }}
-  className="rounded-xl bg-amber-500 text-black px-5 py-2 text-white"
+  className="rounded-xl bg-[var(--accent)] text-black px-5 py-2 text-[var(--text)]"
 >
   Save
 </button>

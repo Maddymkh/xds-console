@@ -41,7 +41,7 @@ export default function Home() {
         <div className="relative text-center">
 
           <h1
-            className={`${cinzel.className} text-7xl tracking-[0.25em] text-white`}
+            className={`${cinzel.className} text-7xl tracking-[0.25em] text-[var(--text)]`}
           >
             XDS
           </h1>
@@ -52,7 +52,7 @@ export default function Home() {
             Recruitment Portal
           </p>
 
-          <p className="mt-2 text-zinc-400">
+          <p className="mt-2 text-[var(--muted)]">
             Xaverian Debating Society
           </p>
 
@@ -93,7 +93,7 @@ export default function Home() {
               text-center
               text-lg
               font-semibold
-              text-white
+              text-[var(--text)]
               transition-all
               duration-200
               hover:border-[#D5C3A0]
@@ -116,7 +116,7 @@ export default function Home() {
               text-center
               text-lg
               font-semibold
-              text-white
+              text-[var(--text)]
               transition-all
               duration-200
               hover:border-[#D5C3A0]

@@ -59,7 +59,7 @@ export default function ParticipantClient({
           setStarted(true);
           router.refresh();
         }}
-        className="mt-10 w-full rounded-2xl bg-amber-500 text-black py-4 text-xl text-white hover:bg-indigo-500 disabled:opacity-50"
+        className="mt-10 w-full rounded-2xl bg-[var(--accent)] text-black py-4 text-xl text-[var(--text)] hover:bg-[var(--accent)] disabled:opacity-50"
       >
         {loading ? "Starting..." : "Start Preparation"}
       </button>
@@ -69,11 +69,11 @@ export default function ParticipantClient({
   return (
     <div className="mt-12 text-center">
 
-      <p className="text-zinc-400">
+      <p className="text-[var(--muted)]">
         Remaining Time
       </p>
 
-      <h1 className="mt-3 text-6xl font-bold text-white">
+      <h1 className="mt-3 text-6xl font-bold text-[var(--text)]">
       {`${Math.floor(timeLeft / 60)}:${String(
   timeLeft % 60
 ).padStart(2, "0")}`}

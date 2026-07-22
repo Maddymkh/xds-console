@@ -24,19 +24,19 @@ useEffect(() => {
 
   return (
 
-    <main className="flex min-h-screen items-center justify-center bg-zinc-950">
+    <main className="flex min-h-screen items-center justify-center bg-[var(--bg)]">
 
       <div className="w-[700px] rounded-3xl bg-zinc-900 p-10">
 
       {step >= 1 && (
 <>
 <h1
-className="text-4xl font-bold text-white transition-all duration-700"
+className="text-4xl font-bold text-[var(--text)] transition-all duration-700"
 >
 {session.participants.name}
 </h1>
 
-<p className="mt-2 text-zinc-400">
+<p className="mt-2 text-[var(--muted)]">
           {session.participants.roll_number}
         </p>
         </>
@@ -49,10 +49,10 @@ className="text-4xl font-bold text-white transition-all duration-700"
         
         {step >= 2 && (
             <>
-            <p className="mt-8 text-zinc-400">
+            <p className="mt-8 text-[var(--muted)]">
           Theme
         </p>
-        <h2 className="text-3xl font-bold text-white">
+        <h2 className="text-3xl font-bold text-[var(--text)]">
           {session.themes?.name ?? "Not assigned"}
         </h2>
         </>
@@ -61,10 +61,10 @@ className="text-4xl font-bold text-white transition-all duration-700"
        
         {step >= 3 && (
             <>
-             <p className="mt-8 text-zinc-400">
+             <p className="mt-8 text-[var(--muted)]">
              Motion
            </p>
-        <h2 className="text-2xl text-white">
+        <h2 className="text-2xl text-[var(--text)]">
           {session.motions?.motion ?? "Not assigned"}
         </h2>
         </>
@@ -73,7 +73,7 @@ className="text-4xl font-bold text-white transition-all duration-700"
         
         {step >= 4 && (
             <>
-            <p className="mt-8 text-zinc-400">
+            <p className="mt-8 text-[var(--muted)]">
             Side
           </p>
 

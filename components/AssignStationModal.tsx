@@ -24,11 +24,11 @@ type Station = {
   
         <div className="w-[450px] rounded-2xl bg-zinc-900 p-6">
   
-          <h2 className="text-2xl font-semibold text-white">
+          <h2 className="text-2xl font-semibold text-[var(--text)]">
             Assign Participant
           </h2>
   
-          <p className="mt-2 text-zinc-400">
+          <p className="mt-2 text-[var(--muted)]">
             {participantName}
           </p>
   
@@ -40,8 +40,8 @@ type Station = {
               onClick={() => setSelectedStation(station.id)}
               className={`w-full rounded-xl border p-3 text-left transition ${
                 selectedStation === station.id
-                  ? "border-indigo-500 bg-indigo-500/10 text-white"
-                  : "border-zinc-700 text-white hover:border-indigo-500"
+                  ? "border-indigo-500 bg-[var(--accent)]/10 text-[var(--text)]"
+                  : "border-zinc-700 text-[var(--text)] hover:border-indigo-500"
               }`}
             >
                 {station.name}
@@ -54,7 +54,7 @@ type Station = {
   
           <button
   onClick={onClose}
-  className="rounded-xl bg-zinc-800 px-5 py-2 text-white"
+  className="rounded-xl bg-zinc-800 px-5 py-2 text-[var(--text)]"
 >
   Cancel
 </button>
@@ -66,10 +66,10 @@ type Station = {
       onAssign(selectedStation);
     }
   }}
-  className={`rounded-xl px-5 py-2 text-white ${
+  className={`rounded-xl px-5 py-2 text-[var(--text)] ${
     selectedStation === null
       ? "bg-zinc-700 cursor-not-allowed"
-      : "bg-amber-500 text-black hover:bg-amber-500 text-black"
+      : "bg-[var(--accent)] text-black hover:bg-[var(--accent)] text-black"
   }`}
 >
   Assign

@@ -28,23 +28,23 @@ export default function StationCard({
   if (status === "assigned") {
     buttonText = "Start Preparation";
     buttonStyle =
-      "bg-amber-500 hover:bg-amber-400 text-black";
+      "bg-[var(--accent)] hover:bg-[var(--muted)] text-black";
   } else if (status === "preparing") {
     buttonText = "Start Speech";
     buttonStyle =
-      "bg-amber-500 hover:bg-amber-400 text-black";
+      "bg-[var(--accent)] hover:bg-[var(--muted)] text-black";
   } else if (status === "speaking") {
     buttonText = "End Speech";
     buttonStyle =
-      "bg-amber-500 hover:bg-amber-400 text-black";
+      "bg-[var(--accent)] hover:bg-[var(--muted)] text-black";
   } else if (status === "evaluation") {
     buttonText = "Finish";
     buttonStyle =
-      "bg-amber-500 hover:bg-amber-400 text-black";
+      "bg-[var(--accent)] hover:bg-[var(--muted)] text-black";
   } else if (status === "completed") {
     buttonText = "Completed";
     buttonStyle =
-      "bg-zinc-800 text-zinc-400 cursor-default";
+      "bg-zinc-800 text-[var(--muted)] cursor-default";
   }
 
   return (
@@ -54,11 +54,11 @@ export default function StationCard({
 
         <div>
 
-          <h3 className="text-base font-semibold text-white">
+          <h3 className="text-base font-semibold text-[var(--text)]">
             {station.name}
           </h3>
 
-          <p className="mt-1 text-sm text-zinc-400">
+          <p className="mt-1 text-sm text-[var(--muted)]">
             {station.participantName ?? "No participant assigned"}
           </p>
 
@@ -67,7 +67,7 @@ export default function StationCard({
         <span
           className={`rounded-full border px-3 py-1 text-xs font-medium capitalize ${
             badge
-              ? "border-amber-500/30 bg-amber-500/10 text-amber-300"
+              ? "border-[var(--border)] bg-[var(--accent)]/10 text-[var(--text)]"
               : "border-zinc-700 bg-zinc-800 text-zinc-300"
           }`}
         >

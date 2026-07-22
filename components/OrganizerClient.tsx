@@ -124,12 +124,12 @@ console.table(
   placeholder="Search by roll number or name..."
   value={search}
   onChange={(e) => setSearch(e.target.value)}
-  className="flex-1 rounded-xl border border-zinc-700 bg-zinc-900 px-4 py-3 text-white outline-none"
+  className="flex-1 rounded-xl border border-zinc-700 bg-zinc-900 px-4 py-3 text-[var(--text)] outline-none"
 />
 
 <button
   onClick={() => setShowAddParticipantModal(true)}
-  className="rounded-xl bg-amber-500 text-black px-5 text-white hover:bg-indigo-500"
+  className="rounded-xl bg-[var(--accent)] text-black px-5 text-[var(--text)] hover:bg-[var(--accent)]"
 >
   + Add
 </button>
@@ -138,7 +138,7 @@ console.table(
 </div>
 
   
-<div className="rounded-3xl border border-zinc-800 bg-zinc-950 p-6">
+<div className="rounded-3xl border border-zinc-800 bg-[var(--bg)] p-6">
 
   <div className="grid grid-cols-10 gap-6 h-[78vh]">
 
@@ -146,7 +146,7 @@ console.table(
 
     <div className="col-span-4 rounded-2xl border border-zinc-800 bg-zinc-900 p-5 flex flex-col">
 
-      <h2 className="text-xl font-semibold text-white">
+      <h2 className="text-xl font-semibold text-[var(--text)]">
         Waiting Participants
       </h2>
 
@@ -184,7 +184,7 @@ console.table(
 
     <div className="col-span-3 rounded-2xl border border-zinc-800 bg-zinc-900 p-5 flex flex-col">
 
-      <h2 className="text-xl font-semibold text-white">
+      <h2 className="text-xl font-semibold text-[var(--text)]">
         Live Queue
       </h2>
 
@@ -207,9 +207,9 @@ console.table(
             return (
               <div
                 key={session.id}
-                className="rounded-xl border border-zinc-800 bg-zinc-950 p-4"
+                className="rounded-xl border border-zinc-800 bg-[var(--bg)] p-4"
               >
-                <p className="font-medium text-white">
+                <p className="font-medium text-[var(--text)]">
                   {participant.name}
                 </p>
 
@@ -246,9 +246,9 @@ console.table(
             return (
               <div
                 key={session.id}
-                className="rounded-xl border border-zinc-800 bg-zinc-950 p-4"
+                className="rounded-xl border border-zinc-800 bg-[var(--bg)] p-4"
               >
-                <p className="font-medium text-white">
+                <p className="font-medium text-[var(--text)]">
                   {participant.name}
                 </p>
 
@@ -270,7 +270,7 @@ console.table(
 
     <div className="col-span-3 rounded-2xl border border-zinc-800 bg-zinc-900 p-5 flex flex-col">
 
-      <h2 className="text-xl font-semibold text-white">
+      <h2 className="text-xl font-semibold text-[var(--text)]">
         Stations
       </h2>
 
@@ -309,9 +309,9 @@ console.table(
 
 </div>
 
-<div className="mt-8 rounded-2xl border border-zinc-800 bg-zinc-950 p-5">
+<div className="mt-8 rounded-2xl border border-zinc-800 bg-[var(--bg)] p-5">
 
-  <h2 className="text-xl font-semibold text-white">
+  <h2 className="text-xl font-semibold text-[var(--text)]">
     Completed
   </h2>
 

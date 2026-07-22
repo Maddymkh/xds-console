@@ -29,7 +29,7 @@ export default async function ParticipantPage({
 
   if (!session) {
     return (
-      <main className="flex min-h-screen items-center justify-center bg-zinc-950 text-white">
+      <main className="flex min-h-screen items-center justify-center bg-[var(--bg)] text-[var(--text)]">
         Session not found.
       </main>
     );
@@ -38,7 +38,7 @@ export default async function ParticipantPage({
   console.log(session.prep_started_at);
   return (
     
-    <main className="flex min-h-screen items-center justify-center bg-zinc-950">
+    <main className="flex min-h-screen items-center justify-center bg-[var(--bg)]">
 
 return (
   <MotionReveal

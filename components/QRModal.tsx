@@ -21,11 +21,11 @@ export default function QRModal({
 
       <div className="w-[420px] rounded-2xl bg-zinc-900 p-8 text-center">
 
-        <h2 className="text-2xl font-bold text-white">
+        <h2 className="text-2xl font-bold text-[var(--text)]">
           Scan to Begin
         </h2>
 
-        <p className="mt-2 text-zinc-400">
+        <p className="mt-2 text-[var(--muted)]">
           Ask the participant to scan this QR code.
         </p>
 
@@ -44,7 +44,7 @@ export default function QRModal({
 
         <button
           onClick={onClose}
-          className="mt-8 rounded-xl bg-amber-500 text-black px-6 py-3 text-white hover:bg-indigo-500"
+          className="mt-8 rounded-xl bg-[var(--accent)] text-black px-6 py-3 text-[var(--text)] hover:bg-[var(--accent)]"
         >
           Done
         </button>
