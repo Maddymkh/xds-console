@@ -27,11 +27,11 @@ export default function ParticipantCard({
 
         <div>
 
-          <p className="text-sm text-zinc-500">
+          <p className=" text-xs tracking-wide text-muted text-zinc-500">
             {participant.roll_number}
           </p>
 
-          <h2 className="mt-1 text-xl font-semibold text-[var(--text)]">
+          <h2 className="mt-1 text-2xl font-semibold text-[var(--text)]">
             {participant.name}
           </h2>
 
@@ -41,7 +41,7 @@ export default function ParticipantCard({
           className={`rounded-full px-3 py-1 text-xs font-medium ${
             participant.checked_in
               ? "bg-green-500/15 text-green-400"
-              : "bg-yellow-500/15 text-yellow-400"
+              : "bg-accent/15 text-accent"
           }`}
         >
           {participant.checked_in ? "Checked In" : "Waiting"}
@@ -50,9 +50,9 @@ export default function ParticipantCard({
       </div>
 
       <div className="mt-5 flex flex-wrap gap-2">
-  {participant.participant_verticals.map((pv) => (
-    <span
-      key={pv.verticals.name}
+      {participant.participant_verticals.map((pv, index) => (
+  <span
+    key={`${pv.verticals.name}-${index}`}
       className="rounded-full border border-zinc-700 bg-zinc-800/70 px-3 py-1 text-xs font-medium text-zinc-200"
     >
       {pv.verticals.name}
@@ -64,7 +64,7 @@ export default function ParticipantCard({
   onClick={() => onAssign(participant)}
   className="mt-5 w-full rounded-lg bg-white py-2.5 font-medium text-black transition hover:scale-[1.02]"
 >
-Assign to Station →
+Assign →
 </button>
 
     </div>

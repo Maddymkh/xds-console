@@ -27,7 +27,7 @@ export default function MotionDeskClient({
           className="rounded-xl border border-zinc-800 bg-zinc-900 p-5"
         >
           
-          <div>
+         /* <div>
   <h2 className="text-xl font-semibold text-[var(--text)]">
     {session.participants.name}
   </h2>
@@ -35,7 +35,7 @@ export default function MotionDeskClient({
   <p className="text-[var(--muted)]">
     {session.participants.roll_number}
   </p>
-</div>
+</div> */
         
 
           <button

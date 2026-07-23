@@ -39,19 +39,26 @@ type Station = {
   status?: string;
 };
 
+type Vertical = {
+  id: number;
+  name: string;
+};
+
 export default function OrganizerClient({
   participants,
   sessions,
   stations,
+  verticals,
 }: {
   participants: Participant[];
   sessions: Session[];
   stations: Station[];
+  verticals: Vertical[];
 }) {
     const [search, setSearch] = useState("");
     const [selectedParticipant, setSelectedParticipant] =
   useState<Participant | null>(null);
-  const [qrSessionId, setQrSessionId] = useState<number | null>(null);
+
   const [motionDrawSessionId, setMotionDrawSessionId] =
   useState<number | null>(null);
 const [showAssignModal, setShowAssignModal] =
@@ -91,6 +98,25 @@ const [showAssignModal, setShowAssignModal] =
   
   const preparingSessions = sessions.filter(
     (session) => session.status === "preparing"
+  );
+  const readySessions = sessions.filter(
+    (s) => s.status === "ready_for_judge"
+  );
+  
+  const speakingSessions = sessions.filter(
+    (s) => s.status === "speaking"
+  );
+  
+  const interviewSessions = sessions.filter(
+    (s) => s.status === "interview"
+  );
+  
+  const skillsSessions = sessions.filter(
+    (s) => s.status === "vertical"
+  );
+  
+  const remarksSessions = sessions.filter(
+    (s) => s.status === "general_remarks"
   );
   const occupiedStationIds = new Set(
     sessions
@@ -138,16 +164,14 @@ console.table(
 </div>
 
   
-<div className="rounded-3xl border border-zinc-800 bg-[var(--bg)] p-6">
-
-  <div className="grid grid-cols-10 gap-6 h-[78vh]">
+<div className="grid grid-cols-10 gap-6 h-[78vh]">
 
     {/* ================= LEFT ================= */}
 
-    <div className="col-span-4 rounded-2xl border border-zinc-800 bg-zinc-900 p-5 flex flex-col">
+    <div className="col-span-4 rounded-2xl border border-zinc-800 bg-black/45 p-5 flex flex-col">
 
       <h2 className="text-xl font-semibold text-[var(--text)]">
-        Waiting Participants
+         Participants
       </h2>
 
       <p className="mt-1 text-sm text-zinc-500">
@@ -182,10 +206,10 @@ console.table(
 
     {/* ================= MIDDLE ================= */}
 
-    <div className="col-span-3 rounded-2xl border border-zinc-800 bg-zinc-900 p-5 flex flex-col">
+    <div className="col-span-3 rounded-2xl border border-zinc-800 bg-black/45 p-5 flex flex-col" >
 
       <h2 className="text-xl font-semibold text-[var(--text)]">
-        Live Queue
+        In Progress
       </h2>
 
       <div className="mt-6">
@@ -193,6 +217,7 @@ console.table(
         <p className="text-xs uppercase tracking-widest text-zinc-500">
           Motion Draw
         </p>
+        
 
         <div className="mt-3 space-y-3">
 
@@ -203,6 +228,7 @@ console.table(
             );
 
             if (!participant) return null;
+            
 
             return (
               <div
@@ -214,7 +240,7 @@ console.table(
                 </p>
 
                 <p className="text-sm text-zinc-500">
-                  Station {session.station_id}
+                  Station {String.fromCharCode(64 + session.station_id)}
                 </p>
               </div>
             );
@@ -222,45 +248,211 @@ console.table(
           })}
 
         </div>
+        <div className="my-6 border-t border-zinc-800" />
+        <p className="mt-8 text-xs uppercase tracking-widest text-zinc-500">
+  Preparing
+</p>
 
+<div className="mt-3 space-y-3">
+
+  {preparingSessions.map((session) => {
+
+    const participant = participants.find(
+      (p) => p.id === session.participant_id
+    );
+
+    if (!participant) return null;
+
+    return (
+      <div
+        key={session.id}
+        className="rounded-xl border border-zinc-800 bg-[var(--bg)] p-4"
+      >
+        <p className="font-medium text-[var(--text)]">
+          {participant.name}
+        </p>
+
+        <p className="text-sm text-zinc-500">
+          Station {String.fromCharCode(64 + session.station_id)}
+        </p>
+      </div>
+    );
+
+  })}
+
+</div>
+<div className="my-6 border-t border-zinc-800" />
+<p className="mt-8 text-xs uppercase tracking-widest text-zinc-500">
+  Waiting for Judge
+</p>
+
+<div className="mt-3 space-y-3">
+
+  {readySessions.map((session) => {
+
+    const participant = participants.find(
+      (p) => p.id === session.participant_id
+    );
+
+    if (!participant) return null;
+
+    return (
+      <div
+        key={session.id}
+        className="rounded-xl border border-zinc-800 bg-[var(--bg)] p-4"
+      >
+        <p className="font-medium text-[var(--text)]">
+          {participant.name}
+        </p>
+
+        <p className="text-sm text-zinc-500">
+          Station {String.fromCharCode(64 + session.station_id)}
+        </p>
+      </div>
+    );
+
+  })}
+
+</div>
+<div className="my-6 border-t border-zinc-800" />
+<p className="mt-8 text-xs uppercase tracking-widest text-zinc-500">
+  Speaking
+</p>
+
+<div className="mt-3 space-y-3">
+
+  {speakingSessions.map((session) => {
+
+    const participant = participants.find(
+      (p) => p.id === session.participant_id
+    );
+
+    if (!participant) return null;
+
+    return (
+      <div
+        key={session.id}
+        className="rounded-xl border border-zinc-800 bg-[var(--bg)] p-4"
+      >
+        <p className="font-medium text-[var(--text)]">
+          {participant.name}
+        </p>
+
+        <p className="text-sm text-zinc-500">
+          Station {String.fromCharCode(64 + session.station_id)}
+        </p>
+      </div>
+    );
+
+  })}
+
+</div>
+<div className="my-6 border-t border-zinc-800" />
+<p className="mt-8 text-xs uppercase tracking-widest text-zinc-500">
+  General Interview
+</p>
+
+<div className="mt-3 space-y-3">
+
+  {interviewSessions.map((session) => {
+
+    const participant = participants.find(
+      (p) => p.id === session.participant_id
+    );
+
+    if (!participant) return null;
+
+    return (
+      <div
+        key={session.id}
+        className="rounded-xl border border-zinc-800 bg-[var(--bg)] p-4"
+      >
+        <p className="font-medium text-[var(--text)]">
+          {participant.name}
+        </p>
+
+        <p className="text-sm text-zinc-500">
+          Station {String.fromCharCode(64 + session.station_id)}
+        </p>
+      </div>
+    );
+
+  })}
+
+</div>
+<div className="my-6 border-t border-zinc-800" />
+<p className="mt-8 text-xs uppercase tracking-widest text-zinc-500">
+  Vertical Interview
+</p>
+
+<div className="mt-3 space-y-3">
+
+  {skillsSessions.map((session) => {
+
+    const participant = participants.find(
+      (p) => p.id === session.participant_id
+    );
+
+    if (!participant) return null;
+
+    return (
+      <div
+        key={session.id}
+        className="rounded-xl border border-zinc-800 bg-[var(--bg)] p-4"
+      >
+        <p className="font-medium text-[var(--text)]">
+          {participant.name}
+        </p>
+
+        <p className="text-sm text-zinc-500">
+          Station {String.fromCharCode(64 + session.station_id)}
+        </p>
+      </div>
+    );
+
+  })}
+
+</div>
+<div className="my-6 border-t border-zinc-800" />
+<p className="mt-8 text-xs uppercase tracking-widest text-zinc-500">
+  Remarks
+</p>
+
+<div className="mt-3 space-y-3">
+
+  {remarksSessions.map((session) => {
+
+    const participant = participants.find(
+      (p) => p.id === session.participant_id
+    );
+
+    if (!participant) return null;
+
+    return (
+      <div
+        key={session.id}
+        className="rounded-xl border border-zinc-800 bg-[var(--bg)] p-4"
+      >
+        <p className="font-medium text-[var(--text)]">
+          {participant.name}
+        </p>
+
+        <p className="text-sm text-zinc-500">
+          Station {String.fromCharCode(64 + session.station_id)}
+        </p>
+      </div>
+    );
+
+  })}
+
+</div>
       </div>
 
       <div className="my-6 border-t border-zinc-800" />
 
       <div className="flex-1 overflow-y-auto">
 
-        <p className="text-xs uppercase tracking-widest text-zinc-500">
-          Preparing
-        </p>
 
-        <div className="mt-3 space-y-3">
-
-          {preparingSessions.map((session) => {
-
-            const participant = participants.find(
-              (p) => p.id === session.participant_id
-            );
-
-            if (!participant) return null;
-
-            return (
-              <div
-                key={session.id}
-                className="rounded-xl border border-zinc-800 bg-[var(--bg)] p-4"
-              >
-                <p className="font-medium text-[var(--text)]">
-                  {participant.name}
-                </p>
-
-                <p className="text-sm text-zinc-500">
-                  Station {session.station_id}
-                </p>
-              </div>
-            );
-
-          })}
-
-        </div>
 
       </div>
 
@@ -268,7 +460,7 @@ console.table(
 
     {/* ================= RIGHT ================= */}
 
-    <div className="col-span-3 rounded-2xl border border-zinc-800 bg-zinc-900 p-5 flex flex-col">
+    <div className="col-span-3 rounded-2xl border border-zinc-800 bg-black/45 p-5 flex flex-col">
 
       <h2 className="text-xl font-semibold text-[var(--text)]">
         Stations
@@ -307,22 +499,6 @@ console.table(
 
   </div>
 
-</div>
-
-<div className="mt-8 rounded-2xl border border-zinc-800 bg-[var(--bg)] p-5">
-
-  <h2 className="text-xl font-semibold text-[var(--text)]">
-    Completed
-  </h2>
-
-</div>
-<div className="mt-10">
-
-<h2>Completed</h2>
-
-...
-
-</div>
 
           {showAssignModal && selectedParticipant && (
  <AssignStationModal
@@ -388,23 +564,65 @@ setMotionDrawSessionId(data.id);
 )}
 {showAddParticipantModal && (
   <AddParticipantModal
+  verticals={verticals}
   onClose={() => setShowAddParticipantModal(false)}
-  onSave={async (name, rollNumber) => {
-    const { error } = await supabase
-      .from("participants")
-      .insert({
-        name,
-        roll_number: rollNumber,
-        checked_in: false,
-      });
+  onSave={async (
+    name,
+    rollNumber,
+    email,
+    phone,
+    course,
+    year,
+    selectedVerticals
+  ) => {
+    const { data: participant, error } = await supabase
+  .from("participants")
+  .insert({
+    name,
+    roll_number: rollNumber,
+    email,
+    phone,
+    course,
+    year,
+    checked_in: false,
+  })
+  .select()
+  .single();
+
+
   
     if (error) {
       alert(error.message);
       return;
     }
+    const rows = selectedVerticals.map((verticalId) => ({
+      participant_id: participant.id,
+      vertical_id: verticalId,
+    }));
+    console.log("Participant inserted");
+
+if (selectedVerticals.length > 0) {
+  const { error: verticalError } = await supabase
+    .from("participant_verticals")
+    .insert(rows);
+
+  if (verticalError) {
+    console.log(verticalError);
+    alert(verticalError.message);
+    return;
+  }
+
+  console.log("Verticals inserted");
+}
+
+console.log("Closing modal");
+setShowAddParticipantModal(false);
+console.log("Modal state updated");
+//router.refresh();
+
   
     setShowAddParticipantModal(false);
-    router.refresh();
+     router.refresh();
   }}
 />
 )}
@@ -412,20 +630,11 @@ setMotionDrawSessionId(data.id);
   <MotionDrawModal
     sessionId={motionDrawSessionId}
     onClose={() => {
-      setQrSessionId(motionDrawSessionId);
       setMotionDrawSessionId(null);
     }}
   />
 )}
-{qrSessionId && (
-  <QRModal
-    sessionId={qrSessionId}
-    onClose={() => {
-      setQrSessionId(null);
-      router.refresh();
-    }}
-  />
-)}
+
         </>
         
       );

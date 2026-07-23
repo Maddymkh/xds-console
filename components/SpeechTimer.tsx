@@ -17,6 +17,7 @@ export default function SpeechTimer({
   const router = useRouter();
 
   const [elapsedSeconds, setElapsedSeconds] = useState(0);
+  const overtime = elapsedSeconds >= 300;
 
   useEffect(() => {
     const started = new Date(speechStartedAt).getTime();
@@ -29,7 +30,6 @@ export default function SpeechTimer({
     };
 
     updateTimer();
-
     const interval = setInterval(updateTimer, 1000);
 
     return () => clearInterval(interval);
@@ -52,22 +52,38 @@ export default function SpeechTimer({
   }
 
   return (
-    <div className="mt-10 rounded-2xl bg-zinc-900 p-8">
-      <h2 className="text-3xl font-bold text-[var(--text)]">
-        🎤 Speech in Progress
-      </h2>
+    <div className="mt-10 flex flex-col items-center text-center">
+      <h2 className="display text-4xl text-[var(--accent)]">
+    Speech In Progress
+</h2>
 
-      <p className="mt-8 text-5xl font-bold text-indigo-400">
+<p
+  className={`display mt-8 text-9xl tracking-wider text-[var(--accent) ${
+    overtime
+      ? "text-red-500"
+      : "text-[var(--accent)]"
+  }`}
+>
         {String(Math.floor(elapsedSeconds / 60)).padStart(2, "0")}:
         {String(elapsedSeconds % 60).padStart(2, "0")}
       </p>
+      {overtime && (
+  <p className="mt-4 font-semibold tracking-wider text-red-500">
+    ⚠ OVERTIME
+  </p>
+)}
+      <p className="mt-6 text-[var(--muted)]">
+  The timer will continue until you end the speech.
+</p>
 
-      <button
-        onClick={endSpeech}
-        className="mt-10 rounded-xl bg-red-600 px-6 py-3 font-semibold text-[var(--text)] transition hover:bg-red-700"
-      >
-        End Speech
-      </button>
+<div className="divider my-10 w-full" />
+
+<button
+  onClick={endSpeech}
+  className="copper-button mt-8 w-full py-4 text-lg"
+>
+  End Speech & Begin Interview
+</button>
     </div>
   );
 }

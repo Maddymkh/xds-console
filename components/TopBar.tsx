@@ -13,9 +13,9 @@ export default function TopBar() {
             XDS Console
           </h1>
   
-          <p className="text-sm text-[var(--muted)]">
-            Recruitment Management System
-          </p>
+          <p className="mt-1 font-serif italic text-sm text-[var(--muted)]">
+  Recruitment Management System
+</p>
         </div>
   
         <div className="text-right">

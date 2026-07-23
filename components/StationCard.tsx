@@ -15,11 +15,53 @@ export default function StationCard({
 }) {
   const status = station.status ?? "idle";
 
-  const badge =
-    status === "assigned" ||
-    status === "preparing" ||
-    status === "speaking" ||
-    status === "evaluation";
+  const statusConfig = {
+    idle: {
+      label: "Available",
+      className:
+        "border-zinc-700 bg-zinc-800 text-zinc-300",
+    },
+    
+    assigned: {
+      label: "Assigned",
+      className:
+        "border-[#A86A2A]/40 bg-[#A86A2A]/10 text-[#D9A164]",
+    },
+    
+    motion_revealed: {
+      label: "Motion Draw",
+      className:
+        "border-[#A86A2A]/55 bg-[#A86A2A]/14 text-[#E4AE73]",
+    },
+    
+    preparing: {
+      label: "Preparing",
+      className:
+        "border-[#A86A2A]/70 bg-[#A86A2A]/18 text-[#F0BF84]",
+    },
+    
+    speaking: {
+      label: "Speaking",
+      className:
+        "border-[#A86A2A] bg-[#A86A2A]/22 text-[#FFD39C]",
+    },
+    
+    evaluation: {
+      label: "Evaluation",
+      className:
+        "border-[#A86A2A] bg-[#A86A2A]/30 text-[#FFE5BC]",
+    },
+    
+    completed: {
+      label: "Completed",
+      className:
+        "border-zinc-600 bg-zinc-800 text-zinc-400",
+    },
+  } as const;
+  
+  const config =
+    statusConfig[status as keyof typeof statusConfig] ??
+    statusConfig.idle;
 
   let buttonText = "Waiting...";
   let buttonStyle =
@@ -28,8 +70,13 @@ export default function StationCard({
   if (status === "assigned") {
     buttonText = "Start Preparation";
     buttonStyle =
+      "bg-[var(--accent)] hover:bg-[var(--muted)] text-white";
+  } else if (status === "motion_revealed") {
+    buttonText = "Begin Speech";
+    buttonStyle =
       "bg-[var(--accent)] hover:bg-[var(--muted)] text-black";
-  } else if (status === "preparing") {
+  }
+  else if (status === "preparing") {
     buttonText = "Start Speech";
     buttonStyle =
       "bg-[var(--accent)] hover:bg-[var(--muted)] text-black";
@@ -46,6 +93,35 @@ export default function StationCard({
     buttonStyle =
       "bg-zinc-800 text-[var(--muted)] cursor-default";
   }
+  else if (status === "ready_for_judge") {
+    buttonText = "Waiting for Judge";
+    buttonStyle =
+      "bg-[var(--accent)] text-white cursor-default";
+  }
+  
+  else if (status === "interview") {
+    buttonText = "Interview";
+    buttonStyle =
+      "bg-zinc-800 text-white cursor-default";
+  }
+  
+  else if (status === "interview_evaluation") {
+    buttonText = "Interview Evaluation";
+    buttonStyle =
+      "bg-zinc-800 text-white cursor-default";
+  }
+  
+  else if (status === "vertical") {
+    buttonText = "Skills Evaluation";
+    buttonStyle =
+      "bg-zinc-800 text-white cursor-default";
+  }
+  
+  else if (status === "general_remarks") {
+    buttonText = "General Remarks";
+    buttonStyle =
+      "bg-zinc-800 text-white cursor-default";
+  }
 
   return (
     <div className="rounded-2xl border border-zinc-800 bg-zinc-900 p-5">
@@ -54,25 +130,29 @@ export default function StationCard({
 
         <div>
 
-          <h3 className="text-base font-semibold text-[var(--text)]">
+          <h3 className="text-lg font-semibold text-[var(--text)]">
             {station.name}
           </h3>
 
           <p className="mt-1 text-sm text-[var(--muted)]">
-            {station.participantName ?? "No participant assigned"}
+            {station.participantName ?? "Awaiting assignment"}
           </p>
 
         </div>
 
         <span
-          className={`rounded-full border px-3 py-1 text-xs font-medium capitalize ${
-            badge
-              ? "border-[var(--border)] bg-[var(--accent)]/10 text-[var(--text)]"
-              : "border-zinc-700 bg-zinc-800 text-zinc-300"
-          }`}
-        >
-          {status === "idle" ? "Available" : status}
-        </span>
+  className={`
+    rounded-full
+    border
+    px-3
+    py-1
+    text-xs
+    font-medium
+    ${config.className}
+  `}
+>
+  {config.label}
+</span>
 
       </div>
 

@@ -1,60 +1,94 @@
 "use client";
-
+import { motion } from "framer-motion";
 type Props = {
   theme: string;
-  motion: string;
+  debateMotion: string;
   stance: string;
   onContinue: () => void;
 };
 
 export default function RevealScreen({
   theme,
-  motion,
+  debateMotion,
   stance,
   onContinue,
 }: Props) {
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-[var(--bg)] px-8">
+    <motion.div
+      initial={{
+        opacity: 0,
+        scale: 0.9,
+        y: 40,
+      }}
+      animate={{
+        opacity: 1,
+        scale: 1,
+        y: 0,
+      }}
+      transition={{
+        duration: 0.6,
+        ease: "easeOut",
+      }}
+      className="flex min-h-screen flex-col items-center justify-center bg-[var(--bg)] px-8"
+    >
 
-      <p className="text-[var(--muted)]">
-        Theme
-      </p>
+<motion.div
+  initial={{ opacity: 0, y: 20 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ delay: 0.2 }}
+  className="text-center"
+>
+  <p className="text-[var(--muted)]">
+    Theme
+  </p>
 
-      <h1 className="mt-3 text-5xl font-bold text-[var(--text)]">
-        {theme}
-      </h1>
-
-      <div className="mt-16 max-w-3xl rounded-2xl border border-zinc-800 bg-zinc-900 p-8">
+  <h1 className="mt-3 text-4xl font-bold text-[var(--text)]">
+    {theme}
+  </h1>
+</motion.div>
+<motion.div
+  initial={{ opacity: 0, y: 20 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ delay: 0.5 }}
+>
 
         <p className="text-[var(--muted)]">
           Motion
         </p>
 
         <h2 className="mt-4 text-3xl font-semibold text-[var(--text)]">
-          {motion}
+          {debateMotion}
         </h2>
 
-      </div>
+      </motion.div>
 
-      <div className="mt-12">
+      <motion.div
+  initial={{ opacity: 0, y: 20 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ delay: 0.8 }}
+  className="mt-12 text-center"
+>
 
         <p className="text-[var(--muted)]">
           Side
         </p>
 
-        <h2 className="mt-3 text-4xl font-bold text-indigo-400">
+        <h2 className="mt-3 text-4xl font-bold text-accent">
           {stance}
         </h2>
 
-      </div>
+      </motion.div>
 
-      <button
-        onClick={onContinue}
-        className="mt-16 rounded-xl bg-[var(--accent)] text-black px-8 py-4 text-xl text-[var(--text)] hover:bg-[var(--accent)]"
-      >
-        Continue
-      </button>
+      <motion.button
+  initial={{ opacity: 0, scale: 0.9 }}
+  animate={{ opacity: 1, scale: 1 }}
+  transition={{ delay: 1.1 }}
+  onClick={onContinue}
+  className="mt-16 rounded-xl bg-[var(--accent)] px-8 py-4 text-xl font-semibold text-black hover:scale-105 transition"
+>
+  Begin Preparation →
+</motion.button>
 
-    </div>
+      </motion.div>
   );
 }

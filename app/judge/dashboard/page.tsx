@@ -47,7 +47,9 @@ export default async function JudgeDashboard() {
     `)
     .eq("station_id", stationId)
     .neq("status", "completed")
-    .single();
+    .order("id", { ascending: false })
+.limit(1)
+.single();
 
   console.log("Session ID:", session?.id);
   console.log("Speech started:", session?.speech_started_at);
@@ -65,7 +67,7 @@ export default async function JudgeDashboard() {
 
       <div className="mt-10 rounded-2xl bg-zinc-900 p-8">
         {!session ? (
-          <p className="text-zinc-500">
+          <p className="caption">
             Waiting for participant...
           </p>
         ) : session.status === SessionStatus.SPEAKING ? (
@@ -87,13 +89,14 @@ export default async function JudgeDashboard() {
           />
         ) : session.status === SessionStatus.VERTICAL ? (
           <SkillsEvaluation
-            sessionId={session.id}
-          />
+    sessionId={session.id}
+    participantId={session.participant_id}
+/>
         ) : session.status === SessionStatus.GENERAL_REMARKS ? (
           <GeneralRemarks
             sessionId={session.id}
           />
-        ) : (
+        ) :(
           <>
             <h2 className="text-3xl font-bold text-[var(--text)]">
               {session.participants.name}
@@ -114,7 +117,7 @@ export default async function JudgeDashboard() {
             <div className="mt-8">
               <p className="text-[var(--muted)]">Side</p>
 
-              <p className="mt-2 text-2xl font-bold text-indigo-400">
+              <p className="mt-2 text-2xl font-bold text-accent">
                 {session.stance}
               </p>
             </div>

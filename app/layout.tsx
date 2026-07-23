@@ -10,8 +10,9 @@ const inter = Inter({
 const cinzel = Cinzel({
   subsets: ["latin"],
   weight: ["600", "700"],
+  variable: "--font-cinzel",
 });
-<body className={inter.className}></body>
+
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -35,10 +36,31 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
-    >
-      <body className="min-h-full flex flex-col">{children}</body>
-    </html>
+  lang="en"
+  className={`
+    ${geistSans.variable}
+    ${geistMono.variable}
+    ${cinzel.variable}
+    h-full
+    antialiased
+  `}
+>
+<body className={`${inter.className} min-h-full flex flex-col`}>
+  <div
+    className="min-h-screen"
+    style={{
+      backgroundImage: `
+        linear-gradient(rgba(7,7,7,.78), rgba(7,7,7,.90)),
+        url('/backgrounds/greek.jpg')
+      `,
+      backgroundAttachment: "fixed",
+      backgroundPosition: "center",
+      backgroundSize: "cover",
+    }}
+  >
+    {children}
+  </div>
+</body>
+</html>
   );
 }

@@ -64,16 +64,27 @@ export default function JudgeLoginClient({
 
   return (
     <>
-      <p className="mt-6 text-[var(--muted)]">
-        Station
-      </p>
+      <p className="subtitle mt-6">Station</p>
 
       <select
         value={selectedStation}
         onChange={(e) =>
           setSelectedStation(Number(e.target.value))
         }
-        className="mt-2 w-full rounded-xl border border-zinc-700 bg-[var(--bg)] px-4 py-3 text-[var(--text)]"
+        className="
+mt-2
+w-full
+rounded-2xl
+border border-white/10
+bg-white/5
+backdrop-blur-xl
+px-4
+py-3
+text-[var(--text)]
+outline-none
+transition
+focus:border-[var(--accent)]
+"
       >
         {stations.map((station) => (
           <option
@@ -85,17 +96,31 @@ export default function JudgeLoginClient({
         ))}
       </select>
 
-      <p className="mt-8 text-[var(--muted)]">
-        Judges
-      </p>
+      <p className="subtitle mt-8">Judges</p>
 
       <div className="mt-3 space-y-3">
         {judges.map((judge) => (
           <label
             key={judge.id}
-            className="flex items-center gap-3 text-[var(--text)]"
+            className="
+flex
+items-center
+gap-3
+rounded-2xl
+border
+border-white/10
+bg-white/5
+px-4
+py-3
+transition
+hover:border-[var(--accent)]/30
+hover:bg-white/10
+cursor-pointer
+"
           >
             <input
+            
+  className="h-4 w-4 accent-[var(--accent)]"
               type="checkbox"
               checked={selectedJudges.includes(judge.id)}
               onChange={(e) => {
@@ -121,7 +146,13 @@ export default function JudgeLoginClient({
 
       <button
         onClick={login}
-        className="mt-8 w-full rounded-xl bg-[var(--accent)] text-black py-3 text-[var(--text)]"
+        className="
+copper-button
+mt-8
+w-full
+py-3
+font-semibold
+"
       >
         Continue
       </button>

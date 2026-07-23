@@ -1,9 +1,5 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
 
 @theme inline {
   --color-background: var(--background);
@@ -43,11 +39,124 @@ body {
   --text: #f4f2ee;
   --muted: #9d9d9d;
 
-  /* Accent */
-  --accent: #b58a56;
-  --accent-hover: #c89c66;
+ /* Polished Copper */
+--accent: #C97847;
+--accent-light: #F1C49A;
+--accent-hover: #DD9365;
+--accent-dark: #9F5B37;
 
   /* UI */
   --border: rgba(255,255,255,.08);
   --glass: rgba(255,255,255,.05);
+
+  --radius-card: 28px;
+
+--shadow-soft: 0 8px 40px rgba(0,0,0,.35);
+
+--shadow-copper: 0 0 45px rgba(201,120,71,.22);
+
+--transition: 250ms ease;
+}
+/* ---------------- Typography ---------------- */
+
+.display {
+  font-family: var(--font-cinzel);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+}
+.subtitle {
+  font-family: "Times New Roman", Georgia, serif;
+  font-style: italic;
+  font-size: 0.95rem;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+}
+.section-title {
+  font-family: var(--font-cinzel);
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.body-ui {
+  font-family: var(--font-geist-sans);
+}
+
+.caption {
+  font-family: var(--font-geist-sans);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.panel {
+  background: linear-gradient(
+    180deg,
+    #212123,
+    #19191b
+  );
+
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+
+  box-shadow:
+    var(--shadow-soft),
+    inset 0 1px rgba(255,255,255,.04);
+
+  transition: var(--transition);
+}
+
+.panel:hover {
+  border-color: rgba(201,120,71,.35);
+
+  box-shadow:
+    var(--shadow-soft),
+    0 0 60px rgba(201,120,71,.08),
+    inset 0 1px rgba(255,255,255,.05);
+}
+.copper-button {
+  background:
+    radial-gradient(circle at 25% 20%, rgba(255,255,255,.20) 0 2px, transparent 3px),
+    radial-gradient(circle at 70% 65%, rgba(255,255,255,.12) 0 1px, transparent 2px),
+    linear-gradient(
+      180deg,
+      var(--accent-light) 0%,
+      var(--accent) 38%,
+      var(--accent-dark) 100%
+    );
+
+  color: #181818;
+
+  border: 1px solid rgba(255,255,255,.08);
+
+  border-radius: 18px;
+
+  transition: .25s;
+
+  box-shadow:
+    0 8px 28px rgba(201,120,71,.22);
+}
+
+.copper-button:hover {
+  transform: translateY(-3px);
+
+  filter: brightness(1.05);
+
+  box-shadow:
+    0 14px 40px rgba(201,120,71,.35);
+}
+
+
+.divider {
+  width: 140px;
+  height: 1px;
+
+  margin: 18px auto;
+
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(201,120,71,.75)
+    transparent
+  );
 }

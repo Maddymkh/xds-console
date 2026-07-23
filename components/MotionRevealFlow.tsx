@@ -8,6 +8,7 @@ import { drawMotion } from "@/lib/drawMotion";
 import RevealScreen from "./motion/RevealScreen";
 import ThemeReveal from "./motion/ThemeReveal";
 import ParchmentChoice from "./motion/ParchmentChoice";
+import MotionReveal from "./motion/MotionReveal";
 
 
 export default function MotionRevealFlow({
@@ -22,29 +23,29 @@ export default function MotionRevealFlow({
   const router = useRouter();
   const [step, setStep] = useState<
   | "welcome"
-  | "jar"
   | "theme"
+  | "jar"
+  | "motionReveal"
   | "parchment"
   | "reveal"
   | "qr"
 >("welcome");
 
 const [result, setResult] = useState<any>(null);
-  if (step === "welcome") {
-    return (
-      <WelcomeScreen
-        name={name}
-        rollNumber={rollNumber}
-        onBegin={async () => {
-          const motion = await drawMotion(sessionId);
-        
-          setResult(motion);
-        
-          setStep("theme");
-        }}
-      />
-    );
-  }
+if (step === "welcome") {
+  return (
+    <WelcomeScreen
+      name={name}
+      rollNumber={rollNumber}
+      onBegin={async() => {
+        const motion = await drawMotion(sessionId);
+
+  setResult(motion);
+        setStep("theme");
+      }}
+    />
+  );
+}
   if (step === "theme" && result) {
     return (
       <ThemeReveal
@@ -57,16 +58,20 @@ const [result, setResult] = useState<any>(null);
     return (
       <GemJar
         onSelect={async () => {
-          const motion = await drawMotion(sessionId);
-  
-          setResult(motion);
-  
-          setStep("parchment");
+          
+          setStep("motionReveal");
         }}
       />
     );
   }
-  
+  if (step === "motionReveal" && result) {
+    return (
+      <MotionReveal
+        motionText={result.motion.motion}
+        onComplete={() => setStep("parchment")}
+      />
+    );
+  }
   if (step === "parchment" && result) {
     return (
       <ParchmentChoice
@@ -88,7 +93,7 @@ const [result, setResult] = useState<any>(null);
     return (
       <RevealScreen
         theme={result.theme.name}
-        motion={result.motion.motion}
+        debateMotion={result.motion.motion}
         stance={result.stance}
         onContinue={() => {
           router.push(`/participant/${sessionId}`);

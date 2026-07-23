@@ -17,6 +17,7 @@ useEffect(() => {
     setTimeout(() => setStep(2), 1700),
     setTimeout(() => setStep(3), 2700),
     setTimeout(() => setStep(4), 3700),
+    setTimeout(() => setStep(5), 5200),
   ];
 
   return () => timers.forEach(clearTimeout);
@@ -26,17 +27,26 @@ useEffect(() => {
 
     <main className="flex min-h-screen items-center justify-center bg-[var(--bg)]">
 
-      <div className="w-[700px] rounded-3xl bg-zinc-900 p-10">
+<div
+  className="
+    panel
+    mx-auto
+    w-full
+    max-w-3xl
+    rounded-[36px]
+    px-14
+    py-16
+    text-center
+  "
+>
 
       {step >= 1 && (
 <>
-<h1
-className="text-4xl font-bold text-[var(--text)] transition-all duration-700"
->
+<h1 className="display text-4xl text-[var(--text)]">
 {session.participants.name}
 </h1>
 
-<p className="mt-2 text-[var(--muted)]">
+<p className="caption mt-2">
           {session.participants.roll_number}
         </p>
         </>
@@ -44,49 +54,51 @@ className="text-4xl font-bold text-[var(--text)] transition-all duration-700"
 )}
 
         
-      
+<div className="divider my-10" />     
         
         
         {step >= 2 && (
             <>
-            <p className="mt-8 text-[var(--muted)]">
-          Theme
-        </p>
+            <p className="caption tracking-[0.35em] uppercase">
+    THEME
+</p>
         <h2 className="text-3xl font-bold text-[var(--text)]">
           {session.themes?.name ?? "Not assigned"}
         </h2>
         </>
         )}
          
-       
+         <div className="divider my-10" />    
         {step >= 3 && (
             <>
-             <p className="mt-8 text-[var(--muted)]">
-             Motion
-           </p>
+             <p className="caption tracking-[0.35em] uppercase">
+    MOTION
+</p>
         <h2 className="text-2xl text-[var(--text)]">
           {session.motions?.motion ?? "Not assigned"}
         </h2>
         </>
         
          )}
-        
+       <div className="divider my-10" /> 
         {step >= 4 && (
             <>
-            <p className="mt-8 text-[var(--muted)]">
-            Side
-          </p>
+            <p className="caption tracking-[0.35em] uppercase">
+    STANCE
+</p>
 
-        <h2 className="text-3xl font-bold text-indigo-400">
+        <h2 className="text-3xl font-bold text-accent">
           {session.stance}
         </h2>
         </>
         )}
-        {step >= 4 && (
+        <div className="divider my-10" />
+        {step >= 5 && (
 
 <ParticipantClient
-sessionId={session.id}
-prepStartedAt={session.prep_started_at}
+  sessionId={session.id}
+  prepStartedAt={session.prep_started_at}
+  status={session.status}
 />
 
 )}

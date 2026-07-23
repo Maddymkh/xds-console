@@ -25,6 +25,10 @@ export default async function Page() {
 const { data: sessions } = await supabase
   .from("sessions")
   .select("*");
+  const { data: verticals } = await supabase
+  .from("verticals")
+  .select("*")
+  .order("id");
 
 if (error) {
   console.error(error);
@@ -32,10 +36,10 @@ if (error) {
 console.log(participants);
 console.dir(participants, { depth: null });
   return (
-    <main className="min-h-screen bg-[var(--bg)]">
+    <main className="min-h-screen">
       <TopBar />
 
-      <div className="mx-auto max-w-7xl p-8">
+      <div className="mx-auto max-w-6xl p-6">
         {/* LEFT */}
         <div className="space-y-6">
         <div className="flex items-center gap-4">
@@ -48,6 +52,7 @@ console.dir(participants, { depth: null });
   participants={participants ?? []}
   sessions={sessions ?? []}
   stations={stations ?? []}
+  verticals={verticals ?? []}
 />
         </div>
 

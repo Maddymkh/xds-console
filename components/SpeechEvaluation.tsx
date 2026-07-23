@@ -27,12 +27,12 @@ export default function SpeechEvaluation({
       return "bg-red-600";
 
     if(score<=6)
-      return "bg-yellow-500";
+      return "bg-accent";
 
     if(score<=9)
       return "bg-green-600";
 
-    return "bg-blue-600";
+    return "bg-accent";
   }
 
   async function submitEvaluation(){
@@ -73,21 +73,39 @@ export default function SpeechEvaluation({
 
     <div>
 
-      <h2 className="text-3xl font-bold text-[var(--text)]">
-        Speech Evaluation
-      </h2>
+<div className="text-center">
+  <h2 className="display text-4xl text-[var(--accent)]">
+    Speech Evaluation
+  </h2>
 
-      <div className="mt-8 flex flex-wrap gap-3">
+  <p className="caption mt-3">
+    Rate the participant's speech out of 10
+  </p>
+
+  <div className="divider my-8" />
+</div>
+
+<div className="mt-8 flex justify-center gap-4">
 
         {SCORES.map((s)=>(
 
           <button
             key={s}
-            onClick={()=>setScore(s)}
-            className={`h-12 w-12 rounded-full text-[var(--text)] font-bold transition
-              ${colour(s)}
-              ${score===s ? "ring-4 ring-white":"opacity-70"}
-            `}
+            onClick={() => setScore(score === s ? null : s)}
+            className={`
+              h-14
+              w-14
+              rounded-full
+              border
+              border-[var(--accent)]/30
+              font-bold
+              transition
+              ${
+                score === s
+                  ? "bg-[var(--accent)] text-black ring-2 ring-[var(--accent)]"
+                  : "bg-[var(--panel)] hover:border-[var(--accent)]"
+              }
+              `}
           >
             {s}
           </button>
@@ -95,20 +113,38 @@ export default function SpeechEvaluation({
         ))}
 
       </div>
-
+      <div className="mx-auto mt-3 flex w-[640px] justify-between text-sm text-[var(--muted)]">
+  <span>Poor</span>
+  <span>Average</span>
+  <span>Excellent</span>
+</div>
       <textarea
-        value={remarks}
-        onChange={(e)=>setRemarks(e.target.value)}
-        placeholder="Remarks..."
-        className="mt-8 h-40 w-full rounded-xl bg-zinc-800 p-4 text-[var(--text)]"
-      />
+  value={remarks}
+  onChange={(e) => setRemarks(e.target.value)}
+  placeholder="Remarks..."
+  className="
+    mt-8
+    h-40
+    w-full
+    rounded-2xl
+    border
+    border-white/10
+    bg-[var(--panel)]
+    p-5
+    text-[var(--text)]
+    placeholder:text-[var(--muted)]
+    focus:border-[var(--accent)]
+    focus:outline-none
+  "
+/>
 
-      <button
-        onClick={submitEvaluation}
-        className="mt-8 rounded-xl bg-[var(--accent)] text-black px-6 py-3 text-[var(--text)]"
-      >
-        Submit Evaluation
-      </button>
+<button
+  onClick={submitEvaluation}
+  className="copper-button mt-8 w-full py-4 text-lg"
+>
+  Continue to Interview →
+</button>
+
 
     </div>
 

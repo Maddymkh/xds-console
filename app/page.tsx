@@ -33,7 +33,7 @@ export default function Home() {
             w-40
             -translate-x-1/2
             rounded-full
-            bg-[#E2D2B1]/10
+            bg-[var(--accent)]/10
             blur-3xl
           "
         />
@@ -46,7 +46,7 @@ export default function Home() {
             XDS
           </h1>
 
-          <div className="mx-auto mt-6 h-px w-32 bg-gradient-to-r from-transparent via-[#CAAA98] to-transparent" />
+          <div className="mx-auto mt-6 h-px w-32 bg-gradient-to-r from-transparent via-[var(--accent)] to-transparent" />
 
           <p className="mt-6 text-sm uppercase tracking-[0.35em] text-zinc-500">
             Recruitment Portal
@@ -65,7 +65,7 @@ export default function Home() {
             className="
               block
               rounded-2xl
-              bg-[#E2D2B1]
+              bg-[var(--accent)]
               py-4
               text-center
               text-lg
@@ -73,7 +73,7 @@ export default function Home() {
               text-black
               transition-all
               duration-200
-              hover:bg-[#D5C3A0]
+              hover:bg-[var(--accent-hover)]
               hover:-translate-y-0.5
               hover:shadow-lg
             "
@@ -96,7 +96,7 @@ export default function Home() {
               text-[var(--text)]
               transition-all
               duration-200
-              hover:border-[#D5C3A0]
+              hover:border-[var(--accent)]
               hover:bg-white/10
               hover:-translate-y-0.5
             "
@@ -119,7 +119,7 @@ export default function Home() {
               text-[var(--text)]
               transition-all
               duration-200
-              hover:border-[#D5C3A0]
+              hover:border-[var(--accent)]
               hover:bg-white/10
               hover:-translate-y-0.5
             "

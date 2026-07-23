@@ -37,14 +37,8 @@ export default async function ParticipantPage({
   
   console.log(session.prep_started_at);
   return (
-    
     <main className="flex min-h-screen items-center justify-center bg-[var(--bg)]">
-
-return (
-  <MotionReveal
-    session={session}
-  />
-);
+      <MotionReveal session={session} />
 
     </main>
   );

@@ -38,9 +38,14 @@ export default function QRModal({
 
         </div>
 
-        <p className="mt-6 text-xs text-zinc-500 break-all">
-          {url}
-        </p>
+        <a
+  href={url}
+  target="_blank"
+  rel="noopener noreferrer"
+  className="mt-6 block break-all text-sm text-[var(--accent)] underline underline-offset-4 transition hover:text-[#f3c78f]"
+>
+  Continue on this device →
+</a>
 
         <button
           onClick={onClose}
