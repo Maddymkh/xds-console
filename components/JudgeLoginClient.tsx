@@ -72,18 +72,15 @@ export default function JudgeLoginClient({
           setSelectedStation(Number(e.target.value))
         }
         className="
-mt-2
-w-full
-rounded-2xl
-border border-white/10
-bg-white/5
-backdrop-blur-xl
-px-4
-py-3
-text-[var(--text)]
-outline-none
-transition
-focus:border-[var(--accent)]
+        w-full
+        rounded-xl
+        border
+        border-white/10
+        bg-zinc-900
+        text-[var(--text)]
+        px-4
+        py-3
+      
 "
       >
         {stations.map((station) => (

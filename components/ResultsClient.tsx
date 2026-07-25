@@ -182,11 +182,11 @@ const filteredResults = results.filter((r) => {
     onClick={() => setSelectedResult(null)}
   >
     <div
-      className="w-full max-w-3xl rounded-3xl border border-white/10 bg-zinc-900 p-8 shadow-2xl"
+     className="w-full max-w-2xl rounded-2xl border border-white/10 bg-zinc-900/90 backdrop-blur-xl p-6 shadow-2xl"
       onClick={(e) => e.stopPropagation()}
     >
-      <div className="mb-8">
-        <h2 className="text-3xl font-bold text-[var(--text)]">
+      <div className="mb-6">
+      <h2 className="text-2xl font-bold text-[var(--text)]">
           {selectedResult.sessions.participants.name}
         </h2>
 
@@ -195,55 +195,64 @@ const filteredResults = results.filter((r) => {
         </p>
       </div>
 
-      <div className="space-y-8">
+      <div className="space-y-5">
 
-      <h3 className="font-semibold text-[var(--accent)]">
-  Speech Remarks
-</h3>
+      <div className="rounded-0.5xl border border-white/10 bg-white/5 p-2">
+  <h3 className="font-semibold text-[var(--accent)]">
+    Speech Remarks
+  </h3>
 
-<p className="mt-2 text-[var(--muted)] whitespace-pre-wrap">
-  {selectedResult.speech_remarks || "No remarks provided."}
-</p>
-
-<hr className="border-white/10" />
-
-<h3 className="font-semibold text-[var(--accent)]">
-  Interview Remarks
-</h3>
-
-<p className="mt-2 text-[var(--muted)] whitespace-pre-wrap">
-  {selectedResult.interview_remarks || "No remarks provided."}
-</p>
+  <p className="mt-2 text-[var(--muted)] whitespace-pre-wrap">
+    {selectedResult.speech_remarks || "No remarks provided."}
+  </p>
+</div>
 
 <hr className="border-white/10" />
 
-<h3 className="font-semibold text-[var(--accent)]">
-  Skills Remarks
-</h3>
+<div className="rounded-0.5xl border border-white/10 bg-white/5 p-2">
+  <h3 className="font-semibold text-[var(--accent)]">
+    Interview Remarks
+  </h3>
 
-<p className="mt-2 text-[var(--muted)] whitespace-pre-wrap">
-  {selectedResult.skills_remarks || "No remarks provided."}
-</p>
-
-<hr className="border-white/10" />
-
-<h3 className="font-semibold text-[var(--accent)]">
-  General Remarks
-</h3>
-
-<p className="mt-2 text-[var(--muted)] whitespace-pre-wrap">
-  {selectedResult.general_remarks || "No remarks provided."}
-</p>
+  <p className="mt-2 text-[var(--muted)] whitespace-pre-wrap">
+    {selectedResult.speech_remarks || "No remarks provided."}
+  </p>
+</div>
 
 <hr className="border-white/10" />
 
-<h3 className="font-semibold text-[var(--accent)]">
-  Recommendation
-</h3>
+<div className="rounded-0.5xl border border-white/10 bg-white/5 p-2">
+  <h3 className="font-semibold text-[var(--accent)]">
+    Skills Remarks
+  </h3>
 
-<p className="mt-2">
-  {selectedResult.final_recommendation || "Not specified"}
-</p>
+  <p className="mt-2 text-[var(--muted)] whitespace-pre-wrap">
+    {selectedResult.speech_remarks || "No remarks provided."}
+  </p>
+</div>
+
+<hr className="border-white/10" />
+
+<div className="rounded-0.5xl border border-white/10 bg-white/5 p-2">
+  <h3 className="font-semibold text-[var(--accent)]">
+    General Remarks
+  </h3>
+
+  <p className="mt-2 text-[var(--muted)] whitespace-pre-wrap">
+    {selectedResult.speech_remarks || "No remarks provided."}
+  </p>
+</div>
+
+<hr className="border-white/10" />
+
+<div className="rounded-0.5xl border border-white/10 bg-white/5 p-2">
+  <h3 className="font-semibold text-[var(--accent)]">
+    Recommendation  </h3>
+
+  <p className="mt-2 text-[var(--muted)] whitespace-pre-wrap">
+    {selectedResult.speech_remarks || "Not specified"}
+  </p>
+</div>
       </div>
 
       <button
