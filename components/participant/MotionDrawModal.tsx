@@ -11,11 +11,13 @@ import QRModal from "../QRModal";
 type Props = {
   sessionId: number;
   onClose: () => void;
+  manual?: boolean;
 };
 
 export default function MotionDrawModal({
   sessionId,
   onClose,
+  manual = false,
 }: Props) {
     const [loading, setLoading] = useState(false);
     const [showQR, setShowQR] = useState(false);
@@ -37,6 +39,34 @@ const [selectedThemeId, setSelectedThemeId] = useState<number | null>(null);
 const [stanceText, setStanceText] = useState("");
 const [selectedTablet, setSelectedTablet] = useState<number | null>(null);
 const [availableMotions, setAvailableMotions] = useState<any[]>([]);
+useEffect(() => {
+  if (!manual) return;
+
+  async function loadManual() {
+    const { data: session } = await supabase
+      .from("sessions")
+      .select(`
+        *,
+        themes(*),
+        motions(*)
+      `)
+      .eq("id", sessionId)
+      .single();
+
+    if (!session) return;
+
+    setThemeName(session.themes.name);
+    setMotionText(session.motions.motion);
+
+    setSelectedThemeId(session.theme_id);
+    setSelectedMotionId(session.motion_id);
+    setStanceText(session.stance);
+
+    setStep("motion");
+  }
+
+  loadManual();
+}, [manual, sessionId]);
 useEffect(() => {
   
 }, [step]);
@@ -188,12 +218,17 @@ className="mt-10 rounded-2xl bg-[var(--accent)] px-8 py-4 text-lg font-semibold 
 {step === "motion" && (
   <MotionReveal
   motionText={motionText}
+  manual={manual}
   onComplete={() => {
-    setStep("stance");
-  }}
+    if (manual) {
+        setShowQR(true);
+    } else {
+        setStep("stance");
+    }
+}}
 />
 )}
-{step === "stance" && (
+{!manual && step === "stance" && (
  <ParchmentChoice
  governmentMotion={motionText}
  oppositionMotion={motionText}

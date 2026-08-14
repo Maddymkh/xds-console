@@ -39,7 +39,7 @@ if (step === "welcome") {
       rollNumber={rollNumber}
       onBegin={async() => {
         const motion = await drawMotion(sessionId);
-
+        console.log("DRAW RESULT", motion);
   setResult(motion);
         setStep("theme");
       }}
@@ -49,9 +49,13 @@ if (step === "welcome") {
   if (step === "theme" && result) {
     return (
       <ThemeReveal
-        theme={result.theme.name}
-        onContinue={() => setStep("jar")}
-      />
+  theme={result.theme.name}
+  onContinue={() =>
+    result.manuallyAssigned
+      ? setStep("motionReveal")
+      : setStep("jar")
+  }
+/>
     );
   }
   if (step === "jar") {

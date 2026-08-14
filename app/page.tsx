@@ -78,7 +78,7 @@ export default function Home() {
               hover:shadow-lg
             "
           >
-            Organizer
+            Organiser
           </Link>
 
           <Link

@@ -10,6 +10,7 @@ import AddParticipantModal from "./AddParticipantModal";
 import StationCard from "./StationCard";
 import QRModal from "./QRModal";
 import MotionDrawModal from "@/components/participant/MotionDrawModal";
+import ManualMotionModal from "./ManualMotionModal";
 
 type Participant = {
   id: number;
@@ -23,6 +24,12 @@ type Participant = {
     };
   }[];
 };
+type Motion = {
+  id: number;
+  theme_id: number;
+  motion: string;
+};
+
 
 type Session = {
   id: number;
@@ -49,15 +56,20 @@ export default function OrganizerClient({
   sessions,
   stations,
   verticals,
+  motions,
 }: {
   participants: Participant[];
   sessions: Session[];
   stations: Station[];
   verticals: Vertical[];
+  motions: Motion[];
 }) {
     const [search, setSearch] = useState("");
+    console.log(motions);
     const [selectedParticipant, setSelectedParticipant] =
   useState<Participant | null>(null);
+  const [manualSessionId, setManualSessionId] =
+  useState<number | null>(null);
 
   const [motionDrawSessionId, setMotionDrawSessionId] =
   useState<number | null>(null);
@@ -66,6 +78,9 @@ const [showAssignModal, setShowAssignModal] =
   const [showAddParticipantModal, setShowAddParticipantModal] =
   useState(false);
   const router = useRouter();
+  const [manualMotionDrawSessionId,
+    setManualMotionDrawSessionId] =
+    useState<number | null>(null);
   useEffect(() => {
     const channel = supabase
       .channel("sessions-live")
@@ -120,12 +135,10 @@ const [showAssignModal, setShowAssignModal] =
   );
   const occupiedStationIds = new Set(
     sessions
-    .filter(
-      (session) =>
-        session.status === "assigned" ||
+      .filter(session =>
         session.status === "preparing"
-    )
-      .map((session) => session.station_id)
+      )
+      .map(session => session.station_id)
   );
 
 console.log("Occupied stations:", [...occupiedStationIds]);
@@ -191,13 +204,13 @@ console.table(
           })
           .map((participant) => (
             <ParticipantCard
-              key={participant.id}
-              participant={participant}
-              onAssign={(participant) => {
-                setSelectedParticipant(participant);
-                setShowAssignModal(true);
-              }}
-            />
+  key={participant.id}
+  participant={participant}
+  onAssign={(participant) => {
+    setSelectedParticipant(participant);
+    setShowAssignModal(true);
+  }}
+/>
           ))}
 
       </div>
@@ -508,7 +521,7 @@ console.table(
    setShowAssignModal(false);
  }}
  
- onAssign={async (stationId) => {
+ onAssign={async (stationId, mode) => {
   if (!selectedParticipant) return;
   const existingSession = sessions.find(
     (session) =>
@@ -541,8 +554,15 @@ console.table(
   .insert({
     participant_id: selectedParticipant.id,
     station_id: stationId,
-    status: "assigned",
     session_type: "individual",
+  
+    status:
+      mode === "online"
+        ? "ready_for_judge"
+        : "assigned",
+  
+    online_interview:
+      mode === "online",
   })
   .select()
   .single();
@@ -553,10 +573,27 @@ console.table(
       alert(error.message);
       return;
     }
-
     setShowAssignModal(false);
-setSelectedParticipant(null);
-setMotionDrawSessionId(data.id);
+
+    if (mode === "normal") {
+      setMotionDrawSessionId(data.id);
+    }
+    
+    if (mode === "manual") {
+      setManualSessionId(data.id);
+    }
+    
+    if (mode === "online") {
+      setShowAssignModal(false);
+      setSelectedParticipant(null);
+  
+      router.push(`/judge/dashboard`);
+      return;
+  }
+
+
+    
+    setSelectedParticipant(null);
 
 }}
 />
@@ -629,10 +666,30 @@ console.log("Modal state updated");
 {motionDrawSessionId && (
   <MotionDrawModal
     sessionId={motionDrawSessionId}
+    manual={false}
     onClose={() => {
       setMotionDrawSessionId(null);
     }}
   />
+)}
+{manualSessionId && (
+  <ManualMotionModal
+    sessionId={manualSessionId}
+    motions={motions}
+    onClose={(sessionId) => {
+      setManualSessionId(null);
+      setManualMotionDrawSessionId(sessionId);
+    }}
+  />
+)}
+{manualMotionDrawSessionId && (
+    <MotionDrawModal
+        sessionId={manualMotionDrawSessionId}
+        manual={true}
+        onClose={()=>{
+            setManualMotionDrawSessionId(null);
+        }}
+    />
 )}
 
         </>

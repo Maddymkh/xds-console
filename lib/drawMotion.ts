@@ -5,7 +5,49 @@ function randomItem<T>(items: T[]): T {
 }
 
 export async function drawMotion(sessionId: number) {
+  const { data: existingSession } = await supabase
+  .from("sessions")
+  .select("*")
+  .eq("id", sessionId)
+  .single();
+  console.log("SESSION FROM DB", existingSession);
+  console.log(
+    "manual?",
+    existingSession?.manually_assigned,
+    "theme",
+    existingSession?.theme_id,
+    "motion",
+    existingSession?.motion_id
+  );
+if (
+  existingSession?.manually_assigned &&
+  existingSession.motion_id &&
+  existingSession.theme_id
+) {
+  console.log("USING MANUAL MOTION");
+  
+  const { data: theme } = await supabase
+    .from("themes")
+    .select("*")
+    .eq("id", existingSession.theme_id)
+    .single();
+
+  const { data: motion } = await supabase
+    .from("motions")
+    .select("*")
+    .eq("id", existingSession.motion_id)
+    .single();
+
+  return {
+    sessionId,
+    theme,
+    motion,
+    stance: existingSession.stance,
+    manuallyAssigned: true,
+  };
+}
   // Fetch all themes
+  console.log("USING RANDOM DRAW");
   const { data: themes, error: themeError } = await supabase
     .from("themes")
     .select("*");
@@ -58,5 +100,6 @@ export async function drawMotion(sessionId: number) {
     theme,
     motion,
     stance,
+    manuallyAssigned: false,
   };
 }

@@ -19,7 +19,7 @@ export default function ParticipantCard({
 }: {
   participant: Participant;
   onAssign: (participant: Participant) => void;
-}) { 
+}) {
   return (
     <div className="rounded-2xl border border-zinc-800 bg-zinc-900/60 p-6 transition-all duration-300 hover:border-zinc-700 hover:bg-zinc-900">
 
@@ -60,12 +60,16 @@ export default function ParticipantCard({
   ))}
 </div>
 
+<div className="mt-5 space-y-2">
+
 <button
   onClick={() => onAssign(participant)}
-  className="mt-5 w-full rounded-lg bg-white py-2.5 font-medium text-black transition hover:scale-[1.02]"
+  className="w-full rounded-lg bg-[var(--accent)] py-2.5 font-medium text-black"
 >
-Assign →
+  Assign Station
 </button>
+
+</div>
 
     </div>
   );

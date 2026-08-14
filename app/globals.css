@@ -145,7 +145,24 @@ body {
   box-shadow:
     0 14px 40px rgba(201,120,71,.35);
 }
+.site-background {
+  background-image:
+    linear-gradient(rgba(7,7,7,.78), rgba(7,7,7,.90)),
+    url("/backgrounds/greek.jpg");
 
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+
+.mm-mode .site-background {
+  background-image:
+      linear-gradient(rgba(18,0,14,.82), rgba(8,0,8,.92)),
+      url("/backgrounds/mm.jpg");   /* or whatever image */
+
+  background-size: cover;
+  background-position: center;
+}
 
 .divider {
   width: 140px;
@@ -159,4 +176,28 @@ body {
     rgba(201,120,71,.75)
     transparent
   );
+}
+
+.mm-mode {
+  --background: #090406;
+  --card: rgba(25,12,18,.92);
+  --text: #FFE6EF;
+  --muted: #C69AAE;
+  --accent: #D98BB3;
+  --accent: #D98BB3;
+--accent-light: #FFD8EC;
+--accent-dark: #A14F7D;
+--accent-hover: #F1A8CF;
+
+--border: rgba(255,192,220,.2);
+
+  background:
+    radial-gradient(circle at top,#55203d 0%,#12060d 65%);
+}
+
+.mm-mode * {
+  transition:
+      background .4s,
+      color .4s,
+      border-color .4s;
 }

@@ -15,10 +15,16 @@ type Station = {
   }: {
     participantName: string;
     stations: Station[];
-    onAssign: (stationId: number) => void;
+    onAssign: (
+      stationId: number,
+      mode: "normal" | "manual" | "online"
+    ) => void;
     onClose: () => void;
   }) {
     const [selectedStation, setSelectedStation] = useState<number | null>(null); 
+    const [mode, setMode] = useState<
+  "normal" | "manual" | "online"
+>("normal");
     return (
       <div className="fixed inset-0 flex items-center justify-center bg-black/70">
   
@@ -46,9 +52,56 @@ type Station = {
             >
                 {station.name}
               </button>
+              
+
             ))}
   
           </div>
+
+          <div className="mt-6">
+
+  <p className="mb-3 text-sm text-zinc-400">
+    Interview Mode
+  </p>
+
+  <div className="grid grid-cols-3 gap-2">
+
+    <button
+      onClick={() => setMode("normal")}
+      className={`rounded-lg p-2 ${
+        mode === "normal"
+          ? "bg-[var(--accent)] text-black"
+          : "bg-zinc-800"
+      }`}
+    >
+      Normal
+    </button>
+
+    <button
+      onClick={() => setMode("manual")}
+      className={`rounded-lg p-2 ${
+        mode === "manual"
+          ? "bg-[var(--accent)] text-black"
+          : "bg-zinc-800"
+      }`}
+    >
+      Manual
+    </button>
+
+    <button
+      onClick={() => setMode("online")}
+      className={`rounded-lg p-2 ${
+        mode === "online"
+          ? "bg-[var(--accent)] text-black"
+          : "bg-zinc-800"
+      }`}
+    >
+      Online
+    </button>
+
+  </div>
+
+</div>
   
           <div className="mt-6 flex justify-end gap-3">
   
@@ -63,7 +116,7 @@ type Station = {
   disabled={selectedStation === null}
   onClick={() => {
     if (selectedStation !== null) {
-      onAssign(selectedStation);
+      onAssign(selectedStation, mode);
     }
   }}
   className={`rounded-xl px-5 py-2 text-[var(--text)] ${

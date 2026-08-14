@@ -25,31 +25,31 @@ export default function StationCard({
     assigned: {
       label: "Assigned",
       className:
-        "border-[#A86A2A]/40 bg-[#A86A2A]/10 text-[#D9A164]",
+        "border-[var(--accent)]/40 bg-[var(--accent)]/10 text-[var(--accent)]",
     },
     
     motion_revealed: {
       label: "Motion Draw",
       className:
-        "border-[#A86A2A]/55 bg-[#A86A2A]/14 text-[#E4AE73]",
+        "border-[var(--accent)]/40 bg-[var(--accent)]/10 text-[var(--accent)]",
     },
     
     preparing: {
       label: "Preparing",
       className:
-        "border-[#A86A2A]/70 bg-[#A86A2A]/18 text-[#F0BF84]",
+        "border-[var(--accent)]/40 bg-[var(--accent)]/10 text-[var(--accent)]",
     },
     
     speaking: {
       label: "Speaking",
       className:
-        "border-[#A86A2A] bg-[#A86A2A]/22 text-[#FFD39C]",
+        "border-[var(--accent)]/40 bg-[var(--accent)]/10 text-[var(--accent)]",
     },
     
     evaluation: {
       label: "Evaluation",
       className:
-        "border-[#A86A2A] bg-[#A86A2A]/30 text-[#FFE5BC]",
+        "border-[var(--accent)]/40 bg-[var(--accent)]/10 text-[var(--accent)]",
     },
     
     completed: {

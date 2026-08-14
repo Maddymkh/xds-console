@@ -1,3 +1,7 @@
+
+import MMModeProvider from "@/components/components/MMModeProvider";
+
+
 export default function TopBar() {
     const today = new Date().toLocaleDateString("en-IN", {
       weekday: "long",
@@ -10,10 +14,12 @@ export default function TopBar() {
       <header className="flex items-center justify-between border-b border-zinc-800 bg-[var(--bg)] px-8 py-5">
         <div>
           <h1 className="text-2xl font-bold text-[var(--text)] tracking-tight">
-            XDS Console
+        
+  XDS Console
+
           </h1>
   
-          <p className="mt-1 font-serif italic text-sm text-[var(--muted)]">
+          <p className="mt-1 font-serif italic text-sm text-[var(--muted)]"> 
   Recruitment Management System
 </p>
         </div>

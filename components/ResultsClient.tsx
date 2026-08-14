@@ -215,7 +215,7 @@ const filteredResults = results.filter((r) => {
   </h3>
 
   <p className="mt-2 text-[var(--muted)] whitespace-pre-wrap">
-    {selectedResult.speech_remarks || "No remarks provided."}
+    {selectedResult.interview_remarks || "No remarks provided."}
   </p>
 </div>
 
@@ -227,7 +227,7 @@ const filteredResults = results.filter((r) => {
   </h3>
 
   <p className="mt-2 text-[var(--muted)] whitespace-pre-wrap">
-    {selectedResult.speech_remarks || "No remarks provided."}
+    {selectedResult.skills_remarks || "No remarks provided."}
   </p>
 </div>
 
@@ -239,7 +239,7 @@ const filteredResults = results.filter((r) => {
   </h3>
 
   <p className="mt-2 text-[var(--muted)] whitespace-pre-wrap">
-    {selectedResult.speech_remarks || "No remarks provided."}
+    {selectedResult.general_remarks || "No remarks provided."}
   </p>
 </div>
 
@@ -250,7 +250,7 @@ const filteredResults = results.filter((r) => {
     Recommendation  </h3>
 
   <p className="mt-2 text-[var(--muted)] whitespace-pre-wrap">
-    {selectedResult.speech_remarks || "Not specified"}
+    {selectedResult.final_recommendation || "Not specified"}
   </p>
 </div>
       </div>

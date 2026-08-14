@@ -6,11 +6,13 @@ import CeremonyLayout from "../ui/CeremonyLayout";
 type Props = {
   motionText: string;
   onComplete: () => void;
+  manual?: boolean;
 };
 
 export default function MotionReveal({
   motionText,
   onComplete,
+  manual = false,
 }: Props) {
     
       
@@ -107,7 +109,9 @@ text-[var(--text)]
   onClick={onComplete}
   className="copper-button mt-14 px-8 py-4"
 >
-  Choose Your Side →
+{manual
+    ? "Continue to QR →"
+    : "Continue to choose your stance →"}
 </motion.button>
 </motion.div>
 

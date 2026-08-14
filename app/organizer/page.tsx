@@ -22,6 +22,11 @@ export default async function Page() {
   .select("*")
   .order("id");
 
+  const { data: motions } = await supabase
+  .from("motions")
+  .select("*")
+  .order("motion");
+
 const { data: sessions } = await supabase
   .from("sessions")
   .select("*");
@@ -53,6 +58,7 @@ console.dir(participants, { depth: null });
   sessions={sessions ?? []}
   stations={stations ?? []}
   verticals={verticals ?? []}
+  motions={motions ?? []}
 />
         </div>
 
