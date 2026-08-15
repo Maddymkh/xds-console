@@ -1,5 +1,4 @@
 import { supabase } from "@/lib/supabase";
-import ResultsClient from "@/components/ResultsClient";
 
 export default async function ResultsPage() {
   const { data: results, error } = await supabase
@@ -19,5 +18,9 @@ export default async function ResultsPage() {
   console.log("RESULTS:", results);
   console.log("ERROR:", error);
 
-  return <ResultsClient results={results ?? []} />;
+  return (
+    <pre className="p-10 text-white whitespace-pre-wrap">
+      {JSON.stringify(results, null, 2)}
+    </pre>
+  );
 }
