@@ -53,7 +53,7 @@ type Vertical = {
 
 export default function OrganizerClient({
   participants,
-  sessions,
+  sessions: initialSessions,
   stations,
   verticals,
   motions,
@@ -64,6 +64,7 @@ export default function OrganizerClient({
   verticals: Vertical[];
   motions: Motion[];
 }) {
+  const [sessions, setSessions] = useState<Session[]>(initialSessions);
     const [search, setSearch] = useState("");
     console.log(motions);
     const [selectedParticipant, setSelectedParticipant] =
@@ -140,6 +141,8 @@ const [showAssignModal, setShowAssignModal] =
       )
       .map(session => session.station_id)
   );
+
+  
 
 console.log("Occupied stations:", [...occupiedStationIds]);
 
@@ -575,11 +578,10 @@ console.table(
   }
   
   setShowAssignModal(false);
-  setSelectedParticipant(null);
-  
-  // Immediately refresh the server data so the participant
-  // disappears from the waiting list.
-  router.refresh();
+setSelectedParticipant(null);
+
+// Immediately update the Organizer UI
+setSessions((prev) => [...prev, data]);
 
     if (mode === "normal") {
       setMotionDrawSessionId(data.id);
@@ -596,10 +598,6 @@ console.table(
       router.push(`/judge/dashboard`);
       return;
   }
-
-
-    
-    setSelectedParticipant(null);
 
 }}
 />
