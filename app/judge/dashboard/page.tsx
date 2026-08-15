@@ -94,8 +94,11 @@ export default async function JudgeDashboard() {
 />
         ) : session.status === SessionStatus.GENERAL_REMARKS ? (
           <GeneralRemarks
-            sessionId={session.id}
-          />
+  sessionId={session.id}
+  judgeIds={
+    judges?.map((j: any) => j.judges.id) ?? []
+  }
+/>
         ) :(
           <>
             <h2 className="text-3xl font-bold text-[var(--text)]">

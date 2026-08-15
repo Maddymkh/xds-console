@@ -7,37 +7,87 @@ import { SessionStatus } from "@/lib/sessionStatus";
 
 type Props = {
   sessionId: number;
+  judgeIds: number[];
 };
 
-export default function GeneralRemarks({ sessionId }: Props) {
+export default function GeneralRemarks({
+  sessionId,
+  judgeIds,
+}: Props) {
   const router = useRouter();
   const [remarks, setRemarks] = useState("");
   const [recommendation, setRecommendation] = useState<string | null>(null);
 
   async function saveRemarks() {
-    const { error } = await supabase
-  .from("evaluations")
-  .update({
-    general_remarks: remarks,
-    final_recommendation: recommendation,
-  })
-  .eq("session_id", sessionId);
-
-    if (error) {
-      alert(error.message);
+    if (!recommendation) {
+      alert("Select a final recommendation.");
       return;
     }
-
-    await supabase
+  
+    // Save the final remarks/recommendation
+    const { error: evaluationError } = await supabase
+      .from("evaluations")
+      .update({
+        general_remarks: remarks,
+        final_recommendation: recommendation,
+      })
+      .eq("session_id", sessionId);
+  
+    if (evaluationError) {
+      alert(evaluationError.message);
+      return;
+    }
+  
+    // Get the evaluation ID
+    const { data: evaluation, error: evaluationFetchError } =
+      await supabase
+        .from("evaluations")
+        .select("id")
+        .eq("session_id", sessionId)
+        .single();
+  
+    if (evaluationFetchError || !evaluation) {
+      alert(
+        evaluationFetchError?.message ||
+          "Could not find evaluation."
+      );
+      return;
+    }
+  
+    // Record every judge currently logged into this station
+    if (judgeIds.length > 0) {
+      const judgeRows = judgeIds.map((judgeId) => ({
+        evaluation_id: evaluation.id,
+        judge_id: judgeId,
+      }));
+  
+      const { error: judgeError } = await supabase
+        .from("evaluation_judges")
+        .upsert(judgeRows, {
+          onConflict: "evaluation_id,judge_id",
+        });
+  
+      if (judgeError) {
+        alert(judgeError.message);
+        return;
+      }
+    }
+  
+    // Mark session completed
+    const { error: sessionError } = await supabase
       .from("sessions")
       .update({
         status: SessionStatus.COMPLETED,
       })
       .eq("id", sessionId);
-
+  
+    if (sessionError) {
+      alert(sessionError.message);
+      return;
+    }
+  
     router.refresh();
   }
-
   return (
     <div>
   

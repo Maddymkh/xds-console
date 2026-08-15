@@ -152,6 +152,7 @@ const filteredResults = [...results]
         <tr className="border-b border-white/10 bg-white/5">
             <th className="p-4 text-left">Roll</th>
             <th className="p-4 text-left">Name</th>
+            <th className="p-4 text-left">Judge</th>
             <th className="p-4">Speech</th>
             <th className="p-4">Interview</th>
             <th className="p-4">Skills</th>
@@ -172,12 +173,21 @@ const filteredResults = [...results]
               </td>
 
               <td className="px-4 py-5">
-                {r.sessions.participants.name}
-              </td>
+  {r.sessions.participants.name}
+</td>
 
-              <td className="text-center">
-                {r.speech_score}
-              </td>
+<td className="px-4 py-5 text-left text-sm text-[var(--muted)]">
+  {r.evaluation_judges?.length
+    ? r.evaluation_judges
+        .map((ej: any) => ej.judges?.name)
+        .filter(Boolean)
+        .join(" • ")
+    : "—"}
+</td>
+
+<td className="text-center">
+  {r.speech_score}
+</td>
 
               <td className="text-center">
                 {r.interview_score}
@@ -225,6 +235,17 @@ const filteredResults = [...results]
         <p className="mt-2 text-[var(--muted)]">
           {selectedResult.sessions.participants.roll_number}
         </p>
+        <p className="mt-2 text-sm text-[var(--muted)]">
+  Judge(s):{" "}
+  <span className="text-[var(--text)]">
+    {selectedResult.evaluation_judges?.length
+      ? selectedResult.evaluation_judges
+          .map((ej: any) => ej.judges?.name)
+          .filter(Boolean)
+          .join(" • ")
+      : "Not recorded"}
+  </span>
+</p>
       </div>
 
       <div className="space-y-5">
