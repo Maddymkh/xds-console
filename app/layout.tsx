@@ -48,7 +48,7 @@ export default function RootLayout({
     antialiased
   `}
 >
-<body className={`${inter.variable} min-h-full flex flex-col`}>
+<body className={`${inter.variable} min-h-screen`}>
   <div
     className="app-background min-h-screen"
     style={{

@@ -209,7 +209,7 @@ console.table(
 </div>
 
   
-<div className="grid grid-cols-10 gap-6 h-[78vh]">
+<div className="grid grid-cols-10 gap-6 min-h-[78vh]">
 
     {/* ================= LEFT ================= */}
 
