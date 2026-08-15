@@ -51,11 +51,11 @@ export default function RootLayout({
 <body
   className={`${inter.variable} min-h-full flex flex-col`}
 >
-<MMModeProvider>
-  <div className="site-background min-h-screen">
-    {children}
-  </div>
-</MMModeProvider>
+  <MMModeProvider>
+    <div className="site-background min-h-screen">
+      {children}
+    </div>
+  </MMModeProvider>
 </body>
 </html>
   );

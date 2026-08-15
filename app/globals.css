@@ -146,24 +146,38 @@ body {
     0 14px 40px rgba(201,120,71,.35);
 }
 .site-background {
-  background-image:
-    linear-gradient(rgba(7,7,7,.78), rgba(7,7,7,.90)),
-    url("/backgrounds/greek.jpg");
+  position: relative;
+  min-height: 100vh;
 
+  background-image: url("/backgrounds/greek.jpg");
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
 }
 
-.mm-mode .site-background {
-  background-image:
-      linear-gradient(rgba(18,0,14,.82), rgba(8,0,8,.92)),
-      url("/backgrounds/mm.jpg");   /* or whatever image */
+.site-background::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
 
-  background-size: cover;
-  background-position: center;
+  background: rgba(7, 7, 7, 0.78);
+
+  pointer-events: none;
 }
 
+.site-background > * {
+  position: relative;
+  z-index: 1;
+}
+
+.mm-mode .site-background {
+  background-image: url("/backgrounds/mm.jpg");
+}
+
+.mm-mode .site-background::before {
+  background: rgba(18, 0, 14, 0.82);
+}
 .divider {
   width: 140px;
   height: 1px;
