@@ -1,15 +1,40 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { Search } from "lucide-react";
+import { supabase } from "@/lib/supabase";
 
 type Props = {
   results: any[];
 };
 
 export default function ResultsClient({ results }: Props) {
+  const router = useRouter();
     const [selectedResult, setSelectedResult] = useState<any | null>(null);
     const [search, setSearch] = useState("");
+
+    useEffect(() => {
+      const channel = supabase
+        .channel("results-live")
+        .on(
+          "postgres_changes",
+          {
+            event: "*",
+            schema: "public",
+            table: "evaluations",
+          },
+          () => {
+            router.refresh();
+          }
+        )
+        .subscribe();
+    
+      return () => {
+        supabase.removeChannel(channel);
+      };
+    }, [router]);
+
     const completed = results.length;
 
 const averageScore =

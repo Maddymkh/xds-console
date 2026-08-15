@@ -527,13 +527,37 @@ console.table(
 
           return (
             <StationCard
-              key={station.id}
-              station={{
-                ...station,
-                participantName: participant?.name,
-                status: session?.status,
-              }}
-            />
+  key={station.id}
+  station={{
+    ...station,
+    participantName: participant?.name,
+    status: session?.status,
+  }}
+  onAction={async () => {
+    if (!session) return;
+
+    if (session.status === "assigned") {
+      const { error } = await supabase
+        .from("sessions")
+        .update({ status: "preparing" })
+        .eq("id", session.id);
+
+      if (error) {
+        console.error(error);
+        alert(error.message);
+        return;
+      }
+
+      setSessions((prev) =>
+        prev.map((s) =>
+          s.id === session.id
+            ? { ...s, status: "preparing" }
+            : s
+        )
+      );
+    }
+  }}
+/>
           );
 
         })}

@@ -25,6 +25,7 @@
 body {
   background: var(--background);
   color: var(--foreground);
+  min-height: 100vh;
 }
 :root {
   /* Core */
@@ -147,9 +148,18 @@ body {
 }
 .app-background {
   min-height: 100vh;
+
+  background-image:
+    linear-gradient(
+      rgba(7, 7, 7, 0.78),
+      rgba(7, 7, 7, 0.90)
+    ),
+    url("/backgrounds/greek.jpg");
+
   background-size: cover;
-  background-position: center;
+  background-position: center top;
   background-repeat: no-repeat;
+  background-attachment: scroll;
 }
 .mm-mode .site-background {
   background-image: url("/backgrounds/mm.jpg") !important;
