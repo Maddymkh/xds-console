@@ -48,13 +48,22 @@ export default function RootLayout({
   `}
 >
 <body className={`${inter.className} min-h-full flex flex-col`}>
-  <MMModeProvider>
+<MMModeProvider>
   <div
-  className="site-background min-h-screen"
->
-      {children}
-    </div>
-  </MMModeProvider>
+    className="min-h-screen"
+    style={{
+      backgroundImage: `
+        linear-gradient(rgba(7,7,7,.78), rgba(7,7,7,.90)),
+        url('/backgrounds/greek.jpg')
+      `,
+      backgroundAttachment: "fixed",
+      backgroundPosition: "center",
+      backgroundSize: "cover",
+    }}
+  >
+    {children}
+  </div>
+</MMModeProvider>
 </body>
 </html>
   );
