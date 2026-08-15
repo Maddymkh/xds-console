@@ -61,13 +61,21 @@ const recommended = results.filter(
 const maybe = results.filter(
   (r) => r.final_recommendation === "Maybe"
 ).length;
-const filteredResults = results.filter((r) => {
+const getFinalScore = (r: any) =>
+  r.skills_score != null
+    ? (2 * r.speech_score + 2 * r.skills_score + r.interview_score) / 5
+    : (2 * r.speech_score + r.interview_score) / 3;
+
+const filteredResults = [...results]
+  .sort((a, b) => getFinalScore(b) - getFinalScore(a))
+  .filter((r) => {
     const name = r.sessions.participants.name.toLowerCase();
     const roll = r.sessions.participants.roll_number.toLowerCase();
-  
+    const q = search.toLowerCase();
+
     return (
-      name.includes(search.toLowerCase()) ||
-      roll.includes(search.toLowerCase())
+      name.includes(q) ||
+      roll.includes(q)
     );
   });
 
@@ -180,11 +188,7 @@ const filteredResults = results.filter((r) => {
               </td>
 
               <td className="text-center text-lg font-bold text-[var(--accent)]">
-  {(
-    r.skills_score != null
-      ? (2 * r.speech_score + 2 * r.skills_score + r.interview_score) / 5
-      : (2 * r.speech_score + r.interview_score) / 3
-  ).toFixed(1)}
+  {getFinalScore(r).toFixed(1)}
 </td>
 <td className="text-center">
   <span className="rounded-full border border-[var(--accent)]/30 bg-[var(--accent)]/10 px-3 py-1 text-sm font-medium text-[var(--accent)]">
