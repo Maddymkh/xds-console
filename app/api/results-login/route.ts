@@ -6,7 +6,7 @@ export async function POST(req: Request) {
 
   if (password !== process.env.RESULTS_PASSWORD) {
     return NextResponse.json(
-      { error: "Unauthorized" },
+      { error: "Invalid password" },
       { status: 401 }
     );
   }

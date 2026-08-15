@@ -1,21 +1,22 @@
 import { NextRequest, NextResponse } from "next/server";
 
 export function middleware(req: NextRequest) {
-  const path = req.nextUrl.pathname;
+  const pathname = req.nextUrl.pathname;
 
-  // PUBLIC
+  // Public login pages
   if (
-    path.startsWith("/participant") ||
-    path.startsWith("/login") ||
-    path.startsWith("/results/login") ||
-    path === "/api/login" ||
-    path === "/api/results-login"
+    pathname.startsWith("/login") ||
+    pathname.startsWith("/judge/login") ||
+    pathname.startsWith("/results/login") ||
+    pathname === "/api/login" ||
+    pathname === "/api/results-login" ||
+    pathname.startsWith("/participant")
   ) {
     return NextResponse.next();
   }
 
-  // RESULTS — separate password
-  if (path.startsWith("/results")) {
+  // Results has a SECOND password
+  if (pathname.startsWith("/results")) {
     const resultsAuth = req.cookies.get("xds-results-auth");
 
     if (!resultsAuth || resultsAuth.value !== "yes") {
@@ -27,7 +28,7 @@ export function middleware(req: NextRequest) {
     return NextResponse.next();
   }
 
-  // ORGANIZER / JUDGE / OTHER STAFF PAGES
+  // Everything else uses the NORMAL login
   const auth = req.cookies.get("xds-auth");
 
   if (!auth || auth.value !== "yes") {

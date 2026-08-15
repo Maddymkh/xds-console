@@ -3,9 +3,11 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
+
 export default function LoginPage() {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  
   const router = useRouter();
 
   async function login() {
@@ -23,8 +25,7 @@ export default function LoginPage() {
       });
 
       if (res.ok) {
-        router.push("/organizer");
-        router.refresh();
+        router.push("/");
       } else {
         alert("Incorrect password.");
         setPassword("");
@@ -47,7 +48,7 @@ export default function LoginPage() {
         <div className="mb-8 text-center">
 
           <p className="mb-3 text-xs uppercase tracking-[0.35em] text-[var(--muted)]">
-            St. Xavier's College
+            St. Xavier's College (Autonomous), Kolkata
           </p>
 
           <h1 className="display text-4xl text-[var(--text)]">
@@ -64,7 +65,7 @@ export default function LoginPage() {
 
           <div className="mb-7">
             <h2 className="text-xl font-semibold text-[var(--text)]">
-              Organizer Access
+              Board Access
             </h2>
 
             <p className="mt-2 text-sm text-[var(--muted)]">

@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 export default function ResultsLoginPage() {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+
   const router = useRouter();
 
   async function login() {
@@ -13,67 +14,59 @@ export default function ResultsLoginPage() {
 
     setLoading(true);
 
-    try {
-      const res = await fetch("/api/results-login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ password }),
-      });
+    const res = await fetch("/api/results-login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ password }),
+    });
 
-      if (res.ok) {
-        router.push("/results");
-        router.refresh();
-      } else {
-        alert("Incorrect results password.");
-        setPassword("");
-      }
-    } catch {
-      alert("Something went wrong.");
-    } finally {
-      setLoading(false);
+    if (res.ok) {
+      router.push("/results");
+      router.refresh();
+    } else {
+      alert("Incorrect results password.");
+      setPassword("");
     }
+
+    setLoading(false);
   }
 
   return (
     <main className="relative flex min-h-screen items-center justify-center px-6">
 
-      <div className="relative w-full max-w-md">
+      <div className="w-full max-w-md">
 
         <div className="mb-8 text-center">
 
-          <p className="mb-3 text-xs uppercase tracking-[0.35em] text-[var(--muted)]">
+          <p className="caption">
             XDS Recruitment 2026–27
           </p>
 
-          <h1 className="display text-4xl text-[var(--text)]">
+          <h1 className="display mt-4 text-5xl text-[var(--text)]">
             Results
           </h1>
 
           <p className="subtitle mt-3">
-            Restricted Evaluation Records
+            Restricted Access
           </p>
 
         </div>
 
-        <div className="panel rounded-[28px] p-8 backdrop-blur-xl">
+        <div className="panel p-8">
 
           <h2 className="text-xl font-semibold text-[var(--text)]">
             Results Access
           </h2>
 
           <p className="mt-2 text-sm text-[var(--muted)]">
-            Enter the results access password to continue.
+            Enter the results password to continue.
           </p>
-
-          <label className="mb-2 mt-7 block text-xs uppercase tracking-[0.18em] text-[var(--muted)]">
-            Password
-          </label>
 
           <input
             type="password"
-            placeholder="Enter results password"
+            placeholder="Password"
             value={password}
             autoFocus
             onChange={(e) => setPassword(e.target.value)}
@@ -83,16 +76,18 @@ export default function ResultsLoginPage() {
               }
             }}
             className="
-              w-full rounded-xl
-              border border-white/10
+              mt-6
+              w-full
+              rounded-xl
+              border
+              border-white/10
               bg-black/40
-              px-4 py-3
+              px-4
+              py-3
               text-[var(--text)]
               outline-none
               placeholder:text-zinc-600
               focus:border-[var(--accent)]
-              focus:ring-1
-              focus:ring-[var(--accent)]
             "
           />
 
@@ -103,8 +98,9 @@ export default function ResultsLoginPage() {
               copper-button
               mt-5
               w-full
-              px-5 py-3
-              text-sm font-semibold
+              px-5
+              py-3
+              font-semibold
               disabled:cursor-not-allowed
               disabled:opacity-50
             "
