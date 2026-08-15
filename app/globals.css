@@ -157,13 +157,14 @@ body {
 
 .site-background::before {
   content: "";
+  display: block;
   position: fixed;
   inset: 0;
-  z-index: 0;
 
   background: rgba(7, 7, 7, 0.78);
 
   pointer-events: none;
+  z-index: 0;
 }
 
 .site-background > * {
