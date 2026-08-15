@@ -124,23 +124,42 @@ className="
 {v.verticals.name}
 
 <button
+  type="button"
   onClick={async () => {
+    const verticalId = v.vertical_id;
+
     const { error } = await supabase
       .from("participant_verticals")
       .delete()
       .eq("participant_id", participantId)
-      .eq("vertical_id", v.vertical_id);
+      .eq("vertical_id", verticalId);
 
     if (error) {
+      console.error("REMOVE VERTICAL ERROR:", error);
       alert(error.message);
       return;
     }
 
-    loadVerticals();
+    // Immediately update UI
+    setSelectedVerticals((prev) =>
+      prev.filter(
+        (selected) => selected.vertical_id !== verticalId
+      )
+    );
   }}
-  className="text-sm opacity-70 hover:opacity-100"
+  className="
+    flex h-6 w-6
+    items-center justify-center
+    rounded-full
+    text-sm
+    opacity-70
+    transition
+    hover:bg-white/10
+    hover:opacity-100
+  "
+  aria-label={`Remove ${v.verticals.name}`}
 >
-  ✕
+  ×
 </button>
 </span>
     
@@ -155,6 +174,7 @@ className="
   {availableVerticals.map((vertical: any) => (
 
     <button
+     type="button"
       key={vertical.id}
       onClick={async () => {
 
