@@ -82,26 +82,55 @@ const [showAssignModal, setShowAssignModal] =
   const [manualMotionDrawSessionId,
     setManualMotionDrawSessionId] =
     useState<number | null>(null);
-  useEffect(() => {
-    const channel = supabase
-      .channel("sessions-live")
-      .on(
-        "postgres_changes",
-        {
-          event: "*",
-          schema: "public",
-          table: "sessions",
-        },
-        () => {
-          router.refresh();
-        }
-      )
-      .subscribe();
-  
-    return () => {
-      supabase.removeChannel(channel);
-    };
-  }, [router]);
+    useEffect(() => {
+      const channel = supabase
+        .channel("sessions-live")
+        .on(
+          "postgres_changes",
+          {
+            event: "*",
+            schema: "public",
+            table: "sessions",
+          },
+          (payload) => {
+            console.log("SESSION CHANGE:", payload);
+    
+            if (payload.eventType === "INSERT") {
+              setSessions((prev) => {
+                if (prev.some((s) => s.id === payload.new.id)) {
+                  return prev;
+                }
+    
+                return [...prev, payload.new as Session];
+              });
+            }
+    
+            if (payload.eventType === "UPDATE") {
+              setSessions((prev) =>
+                prev.map((s) =>
+                  s.id === payload.new.id
+                    ? (payload.new as Session)
+                    : s
+                )
+              );
+            }
+    
+            if (payload.eventType === "DELETE") {
+              setSessions((prev) =>
+                prev.filter((s) => s.id !== payload.old.id)
+              );
+            }
+          }
+        )
+        .subscribe((status) => {
+          console.log("SESSIONS REALTIME:", status);
+        });
+    
+      return () => {
+        supabase.removeChannel(channel);
+      };
+    }, []);
+           
   const waitingParticipants = participants.filter(
     (participant) =>
       !sessions.some(
@@ -136,10 +165,10 @@ const [showAssignModal, setShowAssignModal] =
   );
   const occupiedStationIds = new Set(
     sessions
-      .filter(session =>
-        session.status === "preparing"
+      .filter((session) =>
+        ["motion_reveal", "assigned", "preparing"].includes(session.status)
       )
-      .map(session => session.station_id)
+      .map((session) => session.station_id)
   );
 
   
