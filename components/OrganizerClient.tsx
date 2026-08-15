@@ -537,16 +537,20 @@ console.table(
     if (!session) return;
 
     if (session.status === "assigned") {
-      const { error } = await supabase
-        .from("sessions")
-        .update({ status: "preparing" })
-        .eq("id", session.id);
+      const { data: updatedSession, error } = await supabase
+  .from("sessions")
+  .update({ status: "preparing" })
+  .eq("id", session.id)
+  .select()
+  .single();
 
-      if (error) {
-        console.error(error);
-        alert(error.message);
-        return;
-      }
+  if (error) {
+    console.error("START PREP ERROR:", error);
+    alert(error.message);
+    return;
+  }
+  
+  console.log("START PREP DB RESULT:", updatedSession);
 
       setSessions((prev) =>
         prev.map((s) =>
@@ -555,6 +559,7 @@ console.table(
             : s
         )
       );
+      router.refresh();
     }
   }}
 />
@@ -633,7 +638,15 @@ console.table(
 setSelectedParticipant(null);
 
 // Immediately update the Organizer UI
-setSessions((prev) => [...prev, data]);
+setSessions((prev) => {
+  if (prev.some((s) => s.id === data.id)) {
+    return prev;
+  }
+
+  return [...prev, data];
+});
+
+router.refresh();
 
     if (mode === "normal") {
       setMotionDrawSessionId(data.id);
