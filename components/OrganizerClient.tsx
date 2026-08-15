@@ -567,13 +567,19 @@ console.table(
   .select()
   .single();
 
-    if (error) {
-      console.log(error);
-      console.log(JSON.stringify(error, null, 2));
-      alert(error.message);
-      return;
-    }
-    setShowAssignModal(false);
+  if (error) {
+    console.log(error);
+    console.log(JSON.stringify(error, null, 2));
+    alert(error.message);
+    return;
+  }
+  
+  setShowAssignModal(false);
+  setSelectedParticipant(null);
+  
+  // Immediately refresh the server data so the participant
+  // disappears from the waiting list.
+  router.refresh();
 
     if (mode === "normal") {
       setMotionDrawSessionId(data.id);
