@@ -49,25 +49,25 @@ export default function RootLayout({
   `}
 >
 <body className={`${inter.variable} min-h-full flex flex-col`}>
-  <MMModeProvider>
-    <div
-      className="app-background min-h-screen"
-      style={{
-        backgroundImage: `
-          linear-gradient(
-            rgba(7, 7, 7, 0.78),
-            rgba(7, 7, 7, 0.90)
-          ),
-          url("/backgrounds/greek.jpg")
-        `,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-      }}
-    >
+  <div
+    className="app-background min-h-screen"
+    style={{
+      backgroundImage: `
+        linear-gradient(
+          rgba(7, 7, 7, 0.78),
+          rgba(7, 7, 7, 0.90)
+        ),
+        url("/backgrounds/greek.jpg")
+      `,
+      backgroundSize: "cover",
+      backgroundPosition: "center",
+      backgroundRepeat: "no-repeat",
+    }}
+  >
+    <MMModeProvider>
       {children}
-    </div>
-  </MMModeProvider>
+    </MMModeProvider>
+  </div>
 </body>
 </html>
   );

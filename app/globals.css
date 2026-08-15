@@ -145,6 +145,12 @@ body {
   box-shadow:
     0 14px 40px rgba(201,120,71,.35);
 }
+.app-background {
+  min-height: 100vh;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
 .mm-mode .site-background {
   background-image: url("/backgrounds/mm.jpg") !important;
 }
