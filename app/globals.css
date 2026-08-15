@@ -16,8 +16,8 @@
 
   --color-glass: var(--glass);
 
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-inter);
+--font-mono: var(--font-geist-mono);
 }
 
 
@@ -173,7 +173,7 @@ body {
   background: linear-gradient(
     90deg,
     transparent,
-    rgba(201,120,71,.75)
+    rgba(201,120,71,.75),
     transparent
   );
 }
@@ -183,7 +183,6 @@ body {
   --card: rgba(25,12,18,.92);
   --text: #FFE6EF;
   --muted: #C69AAE;
-  --accent: #D98BB3;
   --accent: #D98BB3;
 --accent-light: #FFD8EC;
 --accent-dark: #A14F7D;

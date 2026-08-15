@@ -7,6 +7,7 @@ import MMModeProvider from "@/components/components/MMModeProvider";
 
 const inter = Inter({
   subsets: ["latin"],
+  variable: "--font-inter",
 });
 
 const cinzel = Cinzel({
@@ -47,20 +48,11 @@ export default function RootLayout({
     antialiased
   `}
 >
-<body className={`${inter.className} min-h-full flex flex-col`}>
+<body
+  className={`${inter.variable} min-h-full flex flex-col`}
+>
 <MMModeProvider>
-  <div
-    className="min-h-screen"
-    style={{
-      backgroundImage: `
-        linear-gradient(rgba(7,7,7,.78), rgba(7,7,7,.90)),
-        url('/backgrounds/greek.jpg')
-      `,
-      backgroundAttachment: "fixed",
-      backgroundPosition: "center",
-      backgroundSize: "cover",
-    }}
-  >
+  <div className="site-background min-h-screen">
     {children}
   </div>
 </MMModeProvider>
