@@ -38,27 +38,6 @@ useEffect(() => {
   };
 }, [router]);
 
-    useEffect(() => {
-      const channel = supabase
-        .channel("results-live")
-        .on(
-          "postgres_changes",
-          {
-            event: "*",
-            schema: "public",
-            table: "evaluations",
-          },
-          () => {
-            router.refresh();
-          }
-        )
-        .subscribe();
-    
-      return () => {
-        supabase.removeChannel(channel);
-      };
-    }, [router]);
-
     const completed = results.length;
 
 const averageScore =
