@@ -145,35 +145,35 @@ body {
   box-shadow:
     0 14px 40px rgba(201,120,71,.35);
 }
-.site-background {
+.app-background {
   position: relative;
   min-height: 100vh;
-
-  background-image: url("/backgrounds/greek.jpg") !important;
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
 }
 
-.mm-mode .site-background {
-  background-image: url("/backgrounds/mm.jpg") !important;
-}
-
-.site-background::before {
+.app-background::before {
   content: "";
-  display: block;
   position: fixed;
   inset: 0;
+  z-index: -1;
 
-  background: rgba(7, 7, 7, 0.78);
+  background-image:
+    linear-gradient(
+      rgba(7, 7, 7, 0.78),
+      rgba(7, 7, 7, 0.90)
+    ),
+    url("/backgrounds/greek.jpg");
 
-  pointer-events: none;
-  z-index: 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
-.site-background > * {
+.app-content {
   position: relative;
-  z-index: 1;
+  min-height: 100vh;
+}
+.mm-mode .site-background {
+  background-image: url("/backgrounds/mm.jpg") !important;
 }
 
 .mm-mode .site-background::before {
