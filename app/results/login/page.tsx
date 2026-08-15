@@ -23,11 +23,13 @@ export default function ResultsLoginPage() {
     });
 
     if (res.ok) {
-      router.push("/results");
-      router.refresh();
+      window.location.href = "/results";
+      return;
+    
     } else {
       alert("Incorrect results password.");
       setPassword("");
+      setLoading(false);
     }
 
     setLoading(false);
