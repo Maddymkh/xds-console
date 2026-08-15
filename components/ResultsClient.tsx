@@ -14,6 +14,30 @@ export default function ResultsClient({ results }: Props) {
     const [selectedResult, setSelectedResult] = useState<any | null>(null);
     const [search, setSearch] = useState("");
 
+useEffect(() => {
+  const channel = supabase
+    .channel("results-live")
+    .on(
+      "postgres_changes",
+      {
+        event: "*",
+        schema: "public",
+        table: "evaluations",
+      },
+      (payload) => {
+        console.log("EVALUATION CHANGE:", payload);
+        router.refresh();
+      }
+    )
+    .subscribe((status) => {
+      console.log("RESULTS REALTIME:", status);
+    });
+
+  return () => {
+    supabase.removeChannel(channel);
+  };
+}, [router]);
+
     useEffect(() => {
       const channel = supabase
         .channel("results-live")

@@ -581,8 +581,7 @@ console.table(
   if (!selectedParticipant) return;
   const existingSession = sessions.find(
     (session) =>
-      session.participant_id === selectedParticipant.id &&
-      session.status !== "completed"
+      session.participant_id === selectedParticipant.id
   );
   const blockedStatuses = [
     "motion_reveal",
@@ -648,7 +647,7 @@ setSessions((prev) => [...prev, data]);
       setShowAssignModal(false);
       setSelectedParticipant(null);
   
-      router.push(`/judge/dashboard`);
+      router.push(`/judge/login`);
       return;
   }
 
