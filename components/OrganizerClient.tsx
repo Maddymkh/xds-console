@@ -36,6 +36,9 @@ type Session = {
   participant_id: number;
   station_id: number;
   status: string;
+  participant_page_state?: "active" | "hidden" | null;
+  last_page_hidden_at?: string | null;
+  page_leave_count?: number | null;
 };
 
 type Station = {
@@ -182,12 +185,42 @@ console.table(
     status: s.status,
   }))
 );
+const participantsOffPage = sessions.filter(
+  (session) =>
+    session.status !== "completed" &&
+    session.participant_page_state === "hidden"
+);
   
   const availableStations = stations.filter(
     (station) => !occupiedStationIds.has(station.id)
   );
   return (
         <>
+        {participantsOffPage.length > 0 && (
+  <div className="mb-4 rounded-2xl border border-yellow-500/30 bg-yellow-500/10 px-5 py-4">
+    <div className="flex items-center justify-between">
+      <div>
+        <p className="font-semibold text-yellow-400">
+          ⚠ Participant left the page
+        </p>
+
+        <p className="mt-1 text-sm text-zinc-400">
+          {participantsOffPage.map((session) => {
+            const participant = participants.find(
+              (p) => p.id === session.participant_id
+            );
+
+            return participant?.name;
+          }).filter(Boolean).join(", ")}
+        </p>
+      </div>
+
+      <span className="rounded-full bg-yellow-500/10 px-3 py-1 text-xs text-yellow-400">
+        {participantsOffPage.length} away
+      </span>
+    </div>
+  </div>
+)}
          <div className="mb-4 flex gap-3">
 
 <input
