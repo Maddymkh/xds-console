@@ -48,9 +48,7 @@ export default function RootLayout({
     antialiased
   `}
 >
-<body
-  className={`${inter.variable} min-h-full flex flex-col`}
->
+<body className={`${inter.variable} min-h-full flex flex-col`}>
   <MMModeProvider>
     <div className="site-background min-h-screen">
       {children}

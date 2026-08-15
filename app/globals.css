@@ -149,10 +149,14 @@ body {
   position: relative;
   min-height: 100vh;
 
-  background-image: url("/backgrounds/greek.jpg");
+  background-image: url("/backgrounds/greek.jpg") !important;
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
+}
+
+.mm-mode .site-background {
+  background-image: url("/backgrounds/mm.jpg") !important;
 }
 
 .site-background::before {
@@ -170,10 +174,6 @@ body {
 .site-background > * {
   position: relative;
   z-index: 1;
-}
-
-.mm-mode .site-background {
-  background-image: url("/backgrounds/mm.jpg");
 }
 
 .mm-mode .site-background::before {
