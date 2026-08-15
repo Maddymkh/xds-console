@@ -62,6 +62,7 @@ export default function RootLayout({
       backgroundSize: "cover",
       backgroundPosition: "center",
       backgroundRepeat: "no-repeat",
+      backgroundAttachment: "fixed",
     }}
   >
     <MMModeProvider>
