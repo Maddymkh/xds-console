@@ -219,14 +219,14 @@ const filteredResults = [...results]
       </table>
       </div>
       {selectedResult && (
-  <div
-    className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm"
-    onClick={() => setSelectedResult(null)}
-  >
-    <div
-     className="w-full max-w-2xl rounded-2xl border border-white/10 bg-zinc-900/90 backdrop-blur-xl p-6 shadow-2xl"
-      onClick={(e) => e.stopPropagation()}
-    >
+ <div
+ className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-black/70 px-4 py-8 backdrop-blur-sm"
+ onClick={() => setSelectedResult(null)}
+>
+ <div
+   className="w-full max-w-2xl rounded-2xl border border-white/10 bg-zinc-900/90 p-6 shadow-2xl"
+   onClick={(e) => e.stopPropagation()}
+ >
       <div className="mb-6">
       <h2 className="text-2xl font-bold text-[var(--text)]">
           {selectedResult.sessions.participants.name}
