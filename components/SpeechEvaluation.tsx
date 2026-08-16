@@ -83,8 +83,56 @@ export default function SpeechEvaluation({
   </p>
 
   <div className="divider my-8" />
+  
 </div>
+<details className="panel mx-auto mt-6 max-w-3xl p-4">
+  <summary className="cursor-pointer text-sm font-semibold text-[var(--text)]">
+    Scoring Guidelines
+  </summary>
 
+  <div className="mt-4 space-y-3 text-sm leading-relaxed text-[var(--muted)]">
+    <p>
+      <strong className="text-[var(--text)]">3–4:</strong>{" "}
+      Limited relevant arguments, rudimentary analysis, and weak engagement
+      with the core issues.
+    </p>
+
+    <p>
+      <strong className="text-[var(--text)]">5–5.5:</strong>{" "}
+      Some relevant engagement and analysis, but inconsistent or lacking
+      depth.
+    </p>
+
+    <p>
+      <strong className="text-[var(--text)]">6:</strong>{" "}
+      Average speech — full allotted time, relevant arguments, and basic
+      analysis.
+    </p>
+
+    <p>
+      <strong className="text-[var(--text)]">7–7.5:</strong>{" "}
+      Multiple relevant arguments, good understanding and structure, but
+      arguments could be developed further.
+    </p>
+
+    <p>
+      <strong className="text-[var(--text)]">8–8.5:</strong>{" "}
+      Strong speech with decent analysis and engagement with the core issues.
+    </p>
+
+    <p>
+      <strong className="text-[var(--text)]">9–9.5:</strong>{" "}
+      Excellent setup, argumentation and analysis with strong logical flow,
+      polish and strategy.
+    </p>
+
+    <p>
+      <strong className="text-[var(--text)]">10:</strong>{" "}
+      Exceptional — highly persuasive, with excellent argumentation, setup
+      and analysis.
+    </p>
+  </div>
+</details>
 <div className="mt-8 flex justify-center gap-4">
 
         {SCORES.map((s)=>(
