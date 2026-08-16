@@ -92,44 +92,66 @@ export default function SpeechEvaluation({
 
   <div className="mt-4 space-y-3 text-sm leading-relaxed text-[var(--muted)]">
     <p>
-      <strong className="text-[var(--text)]">3–4:</strong>{" "}
-      Limited relevant arguments, rudimentary analysis, and weak engagement
-      with the core issues.
+      <strong className="text-[var(--text)]">1:</strong>{" "}
+      The speaker did not speak at all, or their speech was equivalent to not
+      speaking at all.
     </p>
 
     <p>
-      <strong className="text-[var(--text)]">5–5.5:</strong>{" "}
-      Some relevant engagement and analysis, but inconsistent or lacking
-      depth.
+      <strong className="text-[var(--text)]">2:</strong>{" "}
+      The speech rarely makes relevant claims, only occasionally formulates
+      arguments, and has shallow or rudimentary analysis. The speech is
+      difficult to follow due to little or no structure or clarity.
+    </p>
+
+    <p>
+      <strong className="text-[var(--text)]">3:</strong>{" "}
+      A few sentences are coherent and make sense with additional analysis,
+      but they are relatively minimal or rudimentary. The speaker struggles
+      to engage effectively with the core issues of the debate.
+    </p>
+
+    <p>
+      <strong className="text-[var(--text)]">4:</strong>{" "}
+      Relevant arguments are occasionally made but with very rudimentary
+      explanations. The speaker attempts to engage with the core issues but
+      often fails to develop their arguments or fulfil their role.
+    </p>
+
+    <p>
+      <strong className="text-[var(--text)]">5:</strong>{" "}
+      The speaker is clear enough to be understood at some moments but is
+      inconsistent in quality. They occasionally engage with core issues and
+      provide some analysis but struggle to sustain a compelling argument.
     </p>
 
     <p>
       <strong className="text-[var(--text)]">6:</strong>{" "}
-      Average speech — full allotted time, relevant arguments, and basic
-      analysis.
+      The speaker spoke the full allotted time and made relevant arguments to
+      the motion. This represents an average speech.
     </p>
 
     <p>
-      <strong className="text-[var(--text)]">7–7.5:</strong>{" "}
-      Multiple relevant arguments, good understanding and structure, but
-      arguments could be developed further.
+      <strong className="text-[var(--text)]">7:</strong>{" "}
+      Multiple relevant arguments or good arguments. The speaker demonstrates
+      a good understanding of the topic but could have developed stronger
+      arguments to be more persuasive.
     </p>
 
     <p>
-      <strong className="text-[var(--text)]">8–8.5:</strong>{" "}
-      Strong speech with decent analysis and engagement with the core issues.
+      <strong className="text-[var(--text)]">8:</strong>{" "}
+      A speech that would work in a PD. Decent analysis and engagement with
+      the core issues.
     </p>
 
     <p>
-      <strong className="text-[var(--text)]">9–9.5:</strong>{" "}
-      Excellent setup, argumentation and analysis with strong logical flow,
-      polish and strategy.
+      <strong className="text-[var(--text)]">9:</strong>{" "}
+      A speech with proper setup and arguments. Relevant and engaging.
     </p>
 
     <p>
       <strong className="text-[var(--text)]">10:</strong>{" "}
-      Exceptional — highly persuasive, with excellent argumentation, setup
-      and analysis.
+      A NG-winning debate speech.
     </p>
   </div>
 </details>
