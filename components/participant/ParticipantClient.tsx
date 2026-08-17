@@ -13,12 +13,14 @@ type Props = {
   sessionId: number;
   prepStartedAt: string | null;
   status: string;
+  stationName: string;
 };
 
 export default function ParticipantClient({
   sessionId,
   prepStartedAt,
   status,
+  stationName,
 }: Props) {
   const router = useRouter();
 
@@ -387,7 +389,13 @@ export default function ParticipantClient({
             </button>
           </div>
         )}
+<p className="caption">
+  STATION
+</p>
 
+<p className="mt-2 text-2xl font-semibold text-[var(--accent)]">
+  {stationName}
+</p>
         <p className="text-zinc-400">
           Remaining Time
         </p>

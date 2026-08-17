@@ -49,6 +49,13 @@ useEffect(() => {
 <p className="caption mt-2">
           {session.participants.roll_number}
         </p>
+        <p className="mt-4 text-sm uppercase tracking-[0.25em] text-[var(--muted)]">
+  Station
+</p>
+
+<p className="mt-1 text-xl font-semibold text-[var(--accent)]">
+  {session.stations?.name ?? "Not assigned"}
+</p>
         </>
 
 )}
@@ -99,6 +106,7 @@ useEffect(() => {
   sessionId={session.id}
   prepStartedAt={session.prep_started_at}
   status={session.status}
+  stationName={session.stations?.name ?? "Not assigned"}
 />
 
 )}

@@ -190,7 +190,19 @@ const participantsOffPage = sessions.filter(
     session.participant_page_state === "hidden"
 );
   
-const availableStations = stations;
+const occupiedStationIds = new Set(
+  sessions
+    .filter((session) =>
+      ["assigned", "preparing", "ready_for_judge", "speaking"].includes(
+        session.status
+      )
+    )
+    .map((session) => session.station_id)
+);
+
+const availableStations = stations.filter(
+  (station) => !occupiedStationIds.has(station.id)
+);
   return (
         <>
         {participantsOffPage.length > 0 && (

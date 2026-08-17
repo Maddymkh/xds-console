@@ -17,12 +17,15 @@ export default async function ParticipantPage({
           name,
           roll_number
         ),
-        motions (
-          motion
-        ),
-        themes (
-          name
-        )
+       motions (
+  motion
+),
+themes (
+  name
+),
+stations (
+  name
+)
       `)
     .eq("id", Number(sessionId))
     .single();
