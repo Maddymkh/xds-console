@@ -12,7 +12,8 @@ export default async function JudgeLogin() {
     supabase
       .from("stations")
       .select("*")
-      .order("id"),
+      .order("id")
+      .range(0, 99),
   ]);
   console.log("STATIONS FROM SUPABASE:", stations);
   return (
