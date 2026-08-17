@@ -14,7 +14,7 @@ export default async function JudgeLogin() {
       .select("*")
       .order("id"),
   ]);
-
+  console.log("STATIONS FROM SUPABASE:", stations);
   return (
     <main className="flex min-h-screen items-center justify-center px-6">
 
