@@ -317,26 +317,6 @@ const availableStations = stations;
 <p className="text-sm text-zinc-500">
   Station {String.fromCharCode(64 + session.station_id)}
 </p>
-
-{session.prep_started_at && (() => {
-  const elapsed = now - new Date(session.prep_started_at).getTime();
-  const remaining = Math.max(0, 10 * 60 * 1000 - elapsed);
-
-  const minutes = Math.floor(remaining / 60000);
-  const seconds = Math.floor((remaining % 60000) / 1000);
-
-  return (
-    <p
-      className={`mt-2 font-mono text-lg font-semibold ${
-        remaining <= 60000
-          ? "text-red-400"
-          : "text-[var(--accent)]"
-      }`}
-    >
-      Prep {minutes}:{seconds.toString().padStart(2, "0")}
-    </p>
-  );
-})()}
               </div>
             );
 
@@ -370,6 +350,30 @@ const availableStations = stations;
         <p className="text-sm text-zinc-500">
           Station {String.fromCharCode(64 + session.station_id)}
         </p>
+        {session.prep_started_at && (() => {
+  const elapsed =
+    now - new Date(session.prep_started_at).getTime();
+
+  const remaining = Math.max(
+    0,
+    10 * 60 * 1000 - elapsed
+  );
+
+  const minutes = Math.floor(remaining / 60000);
+  const seconds = Math.floor((remaining % 60000) / 1000);
+
+  return (
+    <p
+      className={`mt-2 font-mono text-lg font-semibold ${
+        remaining <= 60000
+          ? "text-red-400"
+          : "text-[var(--accent)]"
+      }`}
+    >
+      Prep {minutes}:{seconds.toString().padStart(2, "0")}
+    </p>
+  );
+})()}
       </div>
     );
 
@@ -605,13 +609,17 @@ const availableStations = stations;
   
   console.log("START PREP DB RESULT:", updatedSession);
 
-      setSessions((prev) =>
-        prev.map((s) =>
-          s.id === session.id
-            ? { ...s, status: "preparing" }
-            : s
-        )
-      );
+  setSessions((prev) =>
+    prev.map((s) =>
+      s.id === session.id
+        ? {
+            ...s,
+            status: "preparing",
+            prep_started_at: updatedSession.prep_started_at,
+          }
+        : s
+    )
+  );
       router.refresh();
     }
   }}
