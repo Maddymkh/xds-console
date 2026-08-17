@@ -38,6 +38,7 @@ type Session = {
   status: string;
   participant_page_state?: "active" | "hidden" | null;
   last_page_hidden_at?: string | null;
+  prep_started_at?: string | null;
   page_leave_count?: number | null;
 };
 
@@ -68,6 +69,15 @@ export default function OrganizerClient({
   motions: Motion[];
 }) {
   const [sessions, setSessions] = useState<Session[]>(initialSessions);
+  const [now, setNow] = useState(Date.now());
+
+useEffect(() => {
+  const timer = setInterval(() => {
+    setNow(Date.now());
+  }, 1000);
+
+  return () => clearInterval(timer);
+}, []);
     const [search, setSearch] = useState("");
     console.log(motions);
     const [selectedParticipant, setSelectedParticipant] =
@@ -301,12 +311,32 @@ const availableStations = stations;
                 className="rounded-xl border border-zinc-800 bg-[var(--bg)] p-4"
               >
                 <p className="font-medium text-[var(--text)]">
-                  {participant.name}
-                </p>
+  {participant.name}
+</p>
 
-                <p className="text-sm text-zinc-500">
-                  Station {String.fromCharCode(64 + session.station_id)}
-                </p>
+<p className="text-sm text-zinc-500">
+  Station {String.fromCharCode(64 + session.station_id)}
+</p>
+
+{session.prep_started_at && (() => {
+  const elapsed = now - new Date(session.prep_started_at).getTime();
+  const remaining = Math.max(0, 10 * 60 * 1000 - elapsed);
+
+  const minutes = Math.floor(remaining / 60000);
+  const seconds = Math.floor((remaining % 60000) / 1000);
+
+  return (
+    <p
+      className={`mt-2 font-mono text-lg font-semibold ${
+        remaining <= 60000
+          ? "text-red-400"
+          : "text-[var(--accent)]"
+      }`}
+    >
+      Prep {minutes}:{seconds.toString().padStart(2, "0")}
+    </p>
+  );
+})()}
               </div>
             );
 
@@ -559,7 +589,10 @@ const availableStations = stations;
     if (session.status === "assigned") {
       const { data: updatedSession, error } = await supabase
   .from("sessions")
-  .update({ status: "preparing" })
+  .update({
+    status: "preparing",
+    prep_started_at: new Date().toISOString(),
+  })
   .eq("id", session.id)
   .select()
   .single();

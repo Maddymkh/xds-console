@@ -71,10 +71,28 @@ export default async function JudgeDashboard() {
             Waiting for participant...
           </p>
         ) : session.status === SessionStatus.SPEAKING ? (
-          <SpeechTimer
-            speechStartedAt={session.speech_started_at}
-            sessionId={session.id}
-          />
+          <>
+            <div className="mb-8">
+              <p className="caption">
+                Motion
+              </p>
+        
+              <p className="mt-3 text-2xl font-semibold leading-relaxed text-[var(--text)]">
+                {session.motions?.motion ?? "Not assigned"}
+              </p>
+        
+              <div className="mt-4">
+                <span className="rounded-full border border-[var(--accent)]/40 bg-[var(--accent)]/10 px-4 py-2 text-sm font-semibold uppercase tracking-wider text-[var(--accent)]">
+                  {session.stance}
+                </span>
+              </div>
+            </div>
+        
+            <SpeechTimer
+              speechStartedAt={session.speech_started_at}
+              sessionId={session.id}
+            />
+          </>
         ) : session.status === SessionStatus.SPEECH_EVALUATION ? (
           <SpeechEvaluation
             sessionId={session.id}
