@@ -166,17 +166,6 @@ const [showAssignModal, setShowAssignModal] =
   const remarksSessions = sessions.filter(
     (s) => s.status === "general_remarks"
   );
-  const occupiedStationIds = new Set(
-    sessions
-      .filter((session) =>
-        ["motion_reveal", "assigned", "preparing"].includes(session.status)
-      )
-      .map((session) => session.station_id)
-  );
-
-  
-
-console.log("Occupied stations:", [...occupiedStationIds]);
 
 console.table(
   sessions.map((s) => ({
@@ -191,9 +180,7 @@ const participantsOffPage = sessions.filter(
     session.participant_page_state === "hidden"
 );
   
-  const availableStations = stations.filter(
-    (station) => !occupiedStationIds.has(station.id)
-  );
+const availableStations = stations;
   return (
         <>
         {participantsOffPage.length > 0 && (
@@ -621,22 +608,7 @@ const participantsOffPage = sessions.filter(
     (session) =>
       session.participant_id === selectedParticipant.id
   );
-  const blockedStatuses = [
-    "motion_reveal",
-    "assigned",
-    "preparing",
-  ];
-  
-  const stationBusy = sessions.some(
-    (session) =>
-      session.station_id === stationId &&
-      blockedStatuses.includes(session.status)
-  );
-  
-  if (stationBusy) {
-    alert("This station is currently occupied.");
-    return;
-  }
+ 
   
   if (existingSession) {
     alert("This participant is already assigned.");
