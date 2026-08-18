@@ -13,6 +13,10 @@ export default function ResultsClient({ results }: Props) {
   const router = useRouter();
     const [selectedResult, setSelectedResult] = useState<any | null>(null);
     const [search, setSearch] = useState("");
+    const [judgeFilter, setJudgeFilter] = useState("All");
+const [verticalFilter, setVerticalFilter] = useState("All");
+const [recommendationFilter, setRecommendationFilter] = useState("All");
+const [sortBy, setSortBy] = useState("score");
 
 useEffect(() => {
   const channel = supabase
@@ -66,18 +70,84 @@ const getFinalScore = (r: any) =>
     ? (2 * r.speech_score + 2 * r.skills_score + r.interview_score) / 5
     : (2 * r.speech_score + r.interview_score) / 3;
 
-const filteredResults = [...results]
-  .sort((a, b) => getFinalScore(b) - getFinalScore(a))
-  .filter((r) => {
-    const name = r.sessions.participants.name.toLowerCase();
-    const roll = r.sessions.participants.roll_number.toLowerCase();
-    const q = search.toLowerCase();
+    const judges = Array.from(
+      new Set(
+        results.flatMap((r) =>
+          r.evaluation_judges
+            ?.map((ej: any) => ej.judges?.name)
+            .filter(Boolean) ?? []
+        )
+      )
+    ).sort();
+    
+    const verticals = Array.from(
+      new Set(
+        results.flatMap(
+          (r) =>
+            r.sessions?.participants?.participant_verticals
+              ?.map((pv: any) => pv.verticals?.name)
+              .filter(Boolean) ?? []
+        )
+      )
+    ).sort();
 
-    return (
-      name.includes(q) ||
-      roll.includes(q)
-    );
-  });
+    const filteredResults = [...results]
+    .filter((r) => {
+      const name =
+        r.sessions?.participants?.name?.toLowerCase() ?? "";
+  
+      const roll =
+        r.sessions?.participants?.roll_number?.toLowerCase() ?? "";
+  
+      const q = search.toLowerCase();
+  
+      const matchesSearch =
+        name.includes(q) || roll.includes(q);
+  
+      const participantJudges =
+        r.evaluation_judges
+          ?.map((ej: any) => ej.judges?.name)
+          .filter(Boolean) ?? [];
+  
+      const matchesJudge =
+        judgeFilter === "All" ||
+        participantJudges.includes(judgeFilter);
+  
+      const participantVerticals =
+        r.sessions?.participants?.participant_verticals
+          ?.map((pv: any) => pv.verticals?.name)
+          .filter(Boolean) ?? [];
+  
+      const matchesVertical =
+        verticalFilter === "All" ||
+        participantVerticals.includes(verticalFilter);
+  
+      const matchesRecommendation =
+        recommendationFilter === "All" ||
+        r.final_recommendation === recommendationFilter;
+  
+      return (
+        matchesSearch &&
+        matchesJudge &&
+        matchesVertical &&
+        matchesRecommendation
+      );
+    })
+    .sort((a, b) => {
+      if (sortBy === "name") {
+        return a.sessions.participants.name.localeCompare(
+          b.sessions.participants.name
+        );
+      }
+  
+      if (sortBy === "roll") {
+        return a.sessions.participants.roll_number.localeCompare(
+          b.sessions.participants.roll_number
+        );
+      }
+  
+      return getFinalScore(b) - getFinalScore(a);
+    });
 
 
   return (
@@ -118,8 +188,10 @@ const filteredResults = [...results]
   </div>
 
 </div>
-<div className="mb-8 flex justify-end">
-  <div className="relative">
+<div className="mb-8 grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-5">
+
+  {/* Search */}
+  <div className="relative lg:col-span-2">
     <Search
       size={18}
       className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--muted)]"
@@ -127,12 +199,11 @@ const filteredResults = [...results]
 
     <input
       type="text"
-      placeholder="Search by name or roll number..."
+      placeholder="Search name or roll number..."
       value={search}
       onChange={(e) => setSearch(e.target.value)}
       className="
-        w-80
-        rounded-2xl
+        w-full rounded-2xl
         border border-white/10
         bg-white/5
         py-3 pl-11 pr-4
@@ -144,6 +215,67 @@ const filteredResults = [...results]
       "
     />
   </div>
+
+  {/* Judge */}
+  <select
+    value={judgeFilter}
+    onChange={(e) => setJudgeFilter(e.target.value)}
+    className="
+      rounded-2xl border border-white/10
+      bg-zinc-900 px-4 py-3
+      text-[var(--text)]
+      outline-none
+      focus:border-[var(--accent)]
+    "
+  >
+    <option value="All">All Judges</option>
+
+    {judges.map((judge) => (
+      <option key={judge} value={judge}>
+        {judge}
+      </option>
+    ))}
+  </select>
+
+  {/* Vertical */}
+  <select
+    value={verticalFilter}
+    onChange={(e) => setVerticalFilter(e.target.value)}
+    className="
+      rounded-2xl border border-white/10
+      bg-zinc-900 px-4 py-3
+      text-[var(--text)]
+      outline-none
+      focus:border-[var(--accent)]
+    "
+  >
+    <option value="All">All Verticals</option>
+
+    {verticals.map((vertical) => (
+      <option key={vertical} value={vertical}>
+        {vertical}
+      </option>
+    ))}
+  </select>
+
+  {/* Recommendation */}
+  <select
+    value={recommendationFilter}
+    onChange={(e) => setRecommendationFilter(e.target.value)}
+    className="
+      rounded-2xl border border-white/10
+      bg-zinc-900 px-4 py-3
+      text-[var(--text)]
+      outline-none
+      focus:border-[var(--accent)]
+    "
+  >
+    <option value="All">All Recommendations</option>
+    <option value="Recommend">Recommend</option>
+    <option value="Maybe">Maybe</option>
+    <option value="Reject">Reject</option>
+  </select>
+
 </div>
 <div className="rounded-3xl border border-white/10 bg-white/[0.03] p-4 backdrop-blur-xl">
   
@@ -152,6 +284,7 @@ const filteredResults = [...results]
         <tr className="border-b border-white/10 bg-white/5">
             <th className="p-4 text-left">Roll</th>
             <th className="p-4 text-left">Name</th>
+            <th className="p-4 text-left">Verticals</th>
             <th className="p-4 text-left">Judge</th>
             <th className="p-4">Speech</th>
             <th className="p-4">Interview</th>
@@ -174,6 +307,27 @@ const filteredResults = [...results]
 
               <td className="px-4 py-5">
   {r.sessions.participants.name}
+</td>
+<td className="px-4 py-5">
+  <div className="flex flex-wrap gap-1">
+    {r.sessions.participants.participant_verticals?.map(
+      (pv: any, index: number) => (
+        <span
+          key={index}
+          className="
+            rounded-full
+            border border-white/10
+            bg-white/5
+            px-2 py-1
+            text-xs
+            text-[var(--muted)]
+          "
+        >
+          {pv.verticals?.name}
+        </span>
+      )
+    )}
+  </div>
 </td>
 
 <td className="px-4 py-5 text-left text-sm text-[var(--muted)]">

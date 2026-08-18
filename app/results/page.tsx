@@ -13,7 +13,12 @@ export default async function ResultsPage() {
       participant_id,
       participants (
         name,
-        roll_number
+        roll_number,
+        participant_verticals (
+    verticals (
+      name
+    )
+  )
       )
     ),
     evaluation_judges (
