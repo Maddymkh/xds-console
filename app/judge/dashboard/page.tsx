@@ -72,27 +72,13 @@ export default async function JudgeDashboard() {
           </p>
         ) : session.status === SessionStatus.SPEAKING ? (
           <>
-            <div className="mb-8">
-              <p className="caption">
-                Motion
-              </p>
-        
-              <p className="mt-3 text-2xl font-semibold leading-relaxed text-[var(--text)]">
-                {session.motions?.motion ?? "Not assigned"}
-              </p>
-        
-              <div className="mt-4">
-                <span className="rounded-full border border-[var(--accent)]/40 bg-[var(--accent)]/10 px-4 py-2 text-sm font-semibold uppercase tracking-wider text-[var(--accent)]">
-                  {session.stance}
-                </span>
-              </div>
-            </div>
-        
-            <SpeechTimer
-              speechStartedAt={session.speech_started_at}
-              sessionId={session.id}
-            />
-          </>
+ <SpeechTimer
+  speechStartedAt={session.speech_started_at}
+  sessionId={session.id}
+  motion={session.motions?.motion}
+  showMotion={session.session_type !== "online"}
+/>
+</>
         ) : session.status === SessionStatus.SPEECH_EVALUATION ? (
           <SpeechEvaluation
             sessionId={session.id}
@@ -127,13 +113,15 @@ export default async function JudgeDashboard() {
               {session.participants.roll_number}
             </p>
 
-            <div className="mt-8">
-              <p className="text-[var(--muted)]">Motion</p>
+            {session.session_type !== "online" && (
+  <div className="mt-8">
+    <p className="text-[var(--muted)]">Motion</p>
 
-              <p className="mt-2 text-xl text-[var(--text)]">
-                {session.motions?.motion ?? "Not assigned"}
-              </p>
-            </div>
+    <p className="mt-2 text-xl text-[var(--text)]">
+      {session.motions?.motion ?? "Not assigned"}
+    </p>
+  </div>
+)}
 
             <div className="mt-8">
               <p className="text-[var(--muted)]">Side</p>

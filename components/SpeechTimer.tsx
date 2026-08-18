@@ -8,11 +8,15 @@ import { SessionStatus } from "@/lib/sessionStatus";
 type SpeechTimerProps = {
   speechStartedAt: string;
   sessionId: number;
+  motion?: string | null;
+  showMotion?: boolean;
 };
 
 export default function SpeechTimer({
   speechStartedAt,
   sessionId,
+  motion,
+  showMotion = true,
 }: SpeechTimerProps) {
   const router = useRouter();
 
@@ -30,6 +34,7 @@ export default function SpeechTimer({
     };
 
     updateTimer();
+
     const interval = setInterval(updateTimer, 1000);
 
     return () => clearInterval(interval);
@@ -53,37 +58,57 @@ export default function SpeechTimer({
 
   return (
     <div className="mt-10 flex flex-col items-center text-center">
-      <h2 className="display text-4xl text-[var(--accent)]">
-    Speech In Progress
-</h2>
 
-<p
-  className={`display mt-8 text-9xl tracking-wider text-[var(--accent) ${
-    overtime
-      ? "text-red-500"
-      : "text-[var(--accent)]"
-  }`}
->
+      {/* MOTION */}
+      {showMotion && motion && (
+        <div className="mb-10 w-full max-w-4xl px-6">
+          <p className="mb-3 text-xs font-medium uppercase tracking-[0.3em] text-[var(--muted)]">
+            Motion
+          </p>
+
+          <h2 className="font-serif text-3xl leading-relaxed tracking-tight text-[var(--text)] md:text-4xl">
+            {motion}
+          </h2>
+        </div>
+      )}
+
+      {/* SPEECH STATUS */}
+      <p className="text-sm font-medium uppercase tracking-[0.25em] text-[var(--muted)]">
+        Speech In Progress
+      </p>
+
+      {/* TIMER */}
+      <p
+        className={`mt-4 font-mono text-8xl font-medium tabular-nums tracking-tight md:text-9xl ${
+          overtime
+            ? "text-red-500"
+            : "text-[var(--accent)]"
+        }`}
+      >
         {String(Math.floor(elapsedSeconds / 60)).padStart(2, "0")}:
         {String(elapsedSeconds % 60).padStart(2, "0")}
       </p>
+
+      {/* OVERTIME */}
       {overtime && (
-  <p className="mt-4 font-semibold tracking-wider text-red-500">
-    ⚠ OVERTIME
-  </p>
-)}
-      <p className="mt-6 text-[var(--muted)]">
-  The timer will continue until you end the speech.
-</p>
+        <p className="mt-4 font-semibold uppercase tracking-[0.2em] text-red-500">
+          ⚠ Overtime
+        </p>
+      )}
 
-<div className="divider my-10 w-full" />
+      <p className="mt-6 text-sm text-[var(--muted)]">
+        The timer will continue until you end the speech.
+      </p>
 
-<button
-  onClick={endSpeech}
-  className="copper-button mt-8 w-full py-4 text-lg"
->
-  End Speech & Begin Interview
-</button>
+      <div className="divider my-10 w-full" />
+
+      <button
+        onClick={endSpeech}
+        className="copper-button mt-8 w-full py-4 text-lg"
+      >
+        End Speech & Begin Interview
+      </button>
+
     </div>
   );
 }
