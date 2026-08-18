@@ -188,98 +188,113 @@ const getFinalScore = (r: any) =>
   </div>
 
 </div>
-<div className="mb-8 grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-5">
+<div className="mb-6 rounded-2xl border border-white/10 bg-white/[0.035] p-3">
+  <div className="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-[2fr_1fr_1fr_1fr]">
 
-  {/* Search */}
-  <div className="relative lg:col-span-2">
-    <Search
-      size={18}
-      className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--muted)]"
-    />
+    {/* Search */}
+    <div className="relative">
+      <Search
+        size={18}
+        className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--muted)]"
+      />
 
-    <input
-      type="text"
-      placeholder="Search name or roll number..."
-      value={search}
-      onChange={(e) => setSearch(e.target.value)}
+      <input
+        type="text"
+        placeholder="Search name or roll number..."
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+        className="
+          w-full rounded-xl
+          border border-white/10
+          bg-black/30
+          py-2.5 pl-11 pr-4
+          text-sm text-[var(--text)]
+          placeholder:text-[var(--muted)]
+          outline-none
+          transition
+          hover:border-white/20
+          focus:border-[var(--accent)]
+        "
+      />
+    </div>
+
+    {/* Judge */}
+    <select
+      value={judgeFilter}
+      onChange={(e) => setJudgeFilter(e.target.value)}
       className="
-        w-full rounded-2xl
+        w-full rounded-xl
         border border-white/10
-        bg-white/5
-        py-3 pl-11 pr-4
-        text-[var(--text)]
-        placeholder:text-[var(--muted)]
+        bg-black/30
+        px-4 py-2.5
+        text-sm text-[var(--text)]
         outline-none
         transition
+        hover:border-white/20
         focus:border-[var(--accent)]
       "
-    />
+    >
+      <option value="All">All Judges</option>
+
+      {judges.map((judge) => (
+        <option key={judge} value={judge}>
+          {judge}
+        </option>
+      ))}
+    </select>
+
+    {/* Vertical */}
+    <select
+      value={verticalFilter}
+      onChange={(e) => setVerticalFilter(e.target.value)}
+      className="
+        w-full rounded-xl
+        border border-white/10
+        bg-black/30
+        px-4 py-2.5
+        text-sm text-[var(--text)]
+        outline-none
+        transition
+        hover:border-white/20
+        focus:border-[var(--accent)]
+      "
+    >
+      <option value="All">All Verticals</option>
+
+      {verticals.map((vertical) => (
+        <option key={vertical} value={vertical}>
+          {vertical}
+        </option>
+      ))}
+    </select>
+
+    {/* Recommendation */}
+    <select
+      value={recommendationFilter}
+      onChange={(e) => setRecommendationFilter(e.target.value)}
+      className="
+        w-full rounded-xl
+        border border-white/10
+        bg-black/30
+        px-4 py-2.5
+        text-sm text-[var(--text)]
+        outline-none
+        transition
+        hover:border-white/20
+        focus:border-[var(--accent)]
+      "
+    >
+      <option value="All">All Recommendations</option>
+      <option value="Recommend">Recommend</option>
+      <option value="Maybe">Maybe</option>
+      <option value="Reject">Reject</option>
+    </select>
+
   </div>
-
-  {/* Judge */}
-  <select
-    value={judgeFilter}
-    onChange={(e) => setJudgeFilter(e.target.value)}
-    className="
-      rounded-2xl border border-white/10
-      bg-zinc-900 px-4 py-3
-      text-[var(--text)]
-      outline-none
-      focus:border-[var(--accent)]
-    "
-  >
-    <option value="All">All Judges</option>
-
-    {judges.map((judge) => (
-      <option key={judge} value={judge}>
-        {judge}
-      </option>
-    ))}
-  </select>
-
-  {/* Vertical */}
-  <select
-    value={verticalFilter}
-    onChange={(e) => setVerticalFilter(e.target.value)}
-    className="
-      rounded-2xl border border-white/10
-      bg-zinc-900 px-4 py-3
-      text-[var(--text)]
-      outline-none
-      focus:border-[var(--accent)]
-    "
-  >
-    <option value="All">All Verticals</option>
-
-    {verticals.map((vertical) => (
-      <option key={vertical} value={vertical}>
-        {vertical}
-      </option>
-    ))}
-  </select>
-
-  {/* Recommendation */}
-  <select
-    value={recommendationFilter}
-    onChange={(e) => setRecommendationFilter(e.target.value)}
-    className="
-      rounded-2xl border border-white/10
-      bg-zinc-900 px-4 py-3
-      text-[var(--text)]
-      outline-none
-      focus:border-[var(--accent)]
-    "
-  >
-    <option value="All">All Recommendations</option>
-    <option value="Recommend">Recommend</option>
-    <option value="Maybe">Maybe</option>
-    <option value="Reject">Reject</option>
-  </select>
-
 </div>
-<div className="rounded-3xl border border-white/10 bg-white/[0.03] p-4 backdrop-blur-xl">
-  
-      <table className="w-full border-collapse">
+<div className="overflow-x-auto rounded-3xl border border-white/10 bg-white/[0.03] p-4 backdrop-blur-xl">
+
+  <table className="w-full min-w-[1100px] border-collapse">
         <thead>
         <tr className="border-b border-white/10 bg-white/5">
             <th className="p-4 text-left">Roll</th>
@@ -301,26 +316,28 @@ const getFinalScore = (r: any) =>
               key={r.id}
               className="border-b border-white/10 transition-all duration-200 hover:bg-white/5"
             >
-              <td className="px-4 py-5">
-                {r.sessions.participants.roll_number}
-              </td>
+              <td className="whitespace-nowrap px-4 py-5">
+  {r.sessions.participants.roll_number}
+</td>
 
-              <td className="px-4 py-5">
+<td className="whitespace-nowrap px-4 py-5 font-medium">
   {r.sessions.participants.name}
 </td>
-<td className="px-4 py-5">
-  <div className="flex flex-wrap gap-1">
+<td className="max-w-[280px] px-4 py-5">
+  <div className="flex flex-wrap gap-1.5">
     {r.sessions.participants.participant_verticals?.map(
       (pv: any, index: number) => (
         <span
           key={index}
           className="
+            inline-flex
             rounded-full
             border border-white/10
-            bg-white/5
-            px-2 py-1
+            bg-white/[0.06]
+            px-2.5 py-1
             text-xs
-            text-[var(--muted)]
+            leading-tight
+            text-zinc-300
           "
         >
           {pv.verticals?.name}
@@ -339,27 +356,27 @@ const getFinalScore = (r: any) =>
     : "—"}
 </td>
 
-<td className="text-center">
+<td className="whitespace-nowrap px-4 py-5 text-center">
   {r.speech_score}
 </td>
 
-              <td className="text-center">
+<td className="whitespace-nowrap px-4 py-5 text-center">
                 {r.interview_score}
               </td>
 
-              <td className="text-center">
+              <td className="whitespace-nowrap px-4 py-5 text-center">
                 {r.skills_score ?? "-"}
               </td>
 
-              <td className="text-center text-lg font-bold text-[var(--accent)]">
+              <td className="whitespace-nowrap px-4 py-5 text-center text-lg font-bold text-[var(--accent)]">
   {getFinalScore(r).toFixed(1)}
 </td>
-<td className="text-center">
+<td className="whitespace-nowrap px-4 py-5 text-center">
   <span className="rounded-full border border-[var(--accent)]/30 bg-[var(--accent)]/10 px-3 py-1 text-sm font-medium text-[var(--accent)]">
     {r.final_recommendation}
   </span>
 </td>
-<td className="text-center">
+<td className="whitespace-nowrap px-4 py-5 text-center">
 <button
   onClick={() => setSelectedResult(r)}
   className="rounded-xl bg-[var(--accent)] px-4 py-2 font-semibold text-black transition hover:opacity-90"
