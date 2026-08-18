@@ -58,9 +58,11 @@ const averageScore =
         }, 0) / results.length
       ).toFixed(1);
 
-const recommended = results.filter(
-  (r) => r.final_recommendation === "Recommend"
-).length;
+      const recommended = results.filter(
+        (r) =>
+          r.final_recommendation === "Recommend" ||
+          r.final_recommendation === "Strongly Recommend"
+      ).length;
 
 const maybe = results.filter(
   (r) => r.final_recommendation === "Maybe"
@@ -288,9 +290,10 @@ const getFinalScore = (r: any) =>
       "
     >
       <option value="All">All Recommendations</option>
+      <option value="Strongly Recommend">Strongly Recommend</option>
       <option value="Recommend">Recommend</option>
       <option value="Maybe">Maybe</option>
-      <option value="Reject">Reject</option>
+      <option value="Do Not Recommend">Do Not Recommend</option>
     </select>
 
   </div>
