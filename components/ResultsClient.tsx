@@ -151,8 +151,8 @@ const getFinalScore = (r: any) =>
 
 
   return (
-    <main className="min-h-screen bg-[var(--bg)] p-10">
-        <div className="mx-auto max-w-6xl rounded-[32px] border border-white/10 bg-black/30 p-10 backdrop-blur-3xl shadow-[0_20px_80px_rgba(0,0,0,.45)]">
+    <main className="min-h-screen bg-[var(--bg)] px-4 py-6 md:px-6 lg:px-8">
+        <div className="mx-auto w-full max-w-[1500px] rounded-[32px] border border-white/10 bg-black/30 p-6 md:p-8 lg:p-10 backdrop-blur-3xl shadow-[0_20px_80px_rgba(0,0,0,.45)]">
       <h1 className="text-4xl font-bold mb-10">
         Recruitment Results
       </h1>
@@ -222,6 +222,7 @@ const getFinalScore = (r: any) =>
     <select
       value={judgeFilter}
       onChange={(e) => setJudgeFilter(e.target.value)}
+      style={{ colorScheme: "dark" }}
       className="
         w-full rounded-xl
         border border-white/10
@@ -247,6 +248,7 @@ const getFinalScore = (r: any) =>
     <select
       value={verticalFilter}
       onChange={(e) => setVerticalFilter(e.target.value)}
+      style={{ colorScheme: "dark" }}
       className="
         w-full rounded-xl
         border border-white/10
@@ -272,6 +274,7 @@ const getFinalScore = (r: any) =>
     <select
       value={recommendationFilter}
       onChange={(e) => setRecommendationFilter(e.target.value)}
+      style={{ colorScheme: "dark" }}
       className="
         w-full rounded-xl
         border border-white/10
@@ -292,9 +295,9 @@ const getFinalScore = (r: any) =>
 
   </div>
 </div>
-<div className="overflow-x-auto rounded-3xl border border-white/10 bg-white/[0.03] p-4 backdrop-blur-xl">
+<div className="rounded-3xl border border-white/10 bg-white/[0.03] p-4 backdrop-blur-xl">
 
-  <table className="w-full min-w-[1100px] border-collapse">
+  <table className="w-full border-collapse">
         <thead>
         <tr className="border-b border-white/10 bg-white/5">
             <th className="p-4 text-left">Roll</th>
